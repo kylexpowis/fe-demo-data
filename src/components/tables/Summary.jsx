@@ -20,6 +20,7 @@ export const Summary = () => {
   if (isLoading) return <p>Loading...</p>;
   return (
     <div>
+      <h2>Summary Table</h2>
       {pairs.map((pair) => (
         <p>
           {pair.coin_name}
