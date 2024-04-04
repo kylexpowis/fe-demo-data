@@ -20,6 +20,7 @@ export default function NewCoinTable() {
     const handleChange = (event) => setTimeFrame(event.target.value);
     return (
         <div>
+            <h2>New Coins Table</h2>
             {Array.isArray(newCoins) && newCoins.length > 0 ? newCoins.map((coin) => (
                 <p>
                     {coin.id}

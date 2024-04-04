@@ -53,3 +53,13 @@ export const getCoinById = (coin_id) => {
 
 }
 
+export const getNewPairs = () => {
+    return fetch('https://pairs-sniper-api-v1-0-release.onrender.com/api/pairs/new')
+        .then(res => res.json())
+        .then((data) => {
+            return data.pairs;
+        }).catch((error) => {
+            console.log(error);
+        });
+}
+
