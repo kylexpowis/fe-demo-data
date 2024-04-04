@@ -4,6 +4,7 @@ import { Summary } from "../../tables/Summary";
 import { SingleCoinSummary } from "../singleCoin/SingleCoinSummary";
 import NewPairTable from "../../tables/NewPairTable";
 import MCROCTable from "../../tables/MCTable";
+import Vol24HrTable from "../../tables/Vol24HourTable";
 
 export default function Dashboard() {
   return (
@@ -12,6 +13,7 @@ export default function Dashboard() {
       <NewPairTable />
       <Summary />
       <MCROCTable />
+      <Vol24HrTable />
     </div>
   );
 }

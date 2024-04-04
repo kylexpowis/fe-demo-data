@@ -77,3 +77,16 @@ export const getMarketCapROC = () => {
       console.log(error);
     });
 };
+
+export const get24HrVol = () => {
+  return fetch(
+    "https://pairs-sniper-api-v1-0-release.onrender.com/api/rankings/volumeroc"
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      return data.coins;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
