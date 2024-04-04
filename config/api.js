@@ -1,3 +1,4 @@
+
 export const getNewCoins = (timeFrame = '1 day') => {
     console.log(timeFrame);
     let apiUrl = "https://pairs-sniper-api-v1-0-release.onrender.com/api/coins/new";
@@ -25,4 +26,28 @@ export const getNewCoins = (timeFrame = '1 day') => {
             console.error("Error fetching data:", error);
             throw error;
         });
+
+export const getSummary = () => {
+  return fetch(
+    "https://pairs-sniper-api-v1-0-release.onrender.com/api/pairs/summary"
+  )
+    .then((res) => {
+      return res.json();
+    })
+    .then((data) => {
+      return data.pairs;
+    });
+};
+
+export const getCoinById = (coin_id) => {
+  return fetch(
+    `https://pairs-sniper-api-v1-0-release.onrender.com/api/coins/${coin_id}`
+  )
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      return data.coin;
+    });
+
 };
