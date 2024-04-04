@@ -1,9 +1,9 @@
-
-import React from 'react'
-import NewCoinTable from '../../tables/NewCoinTable'
+import React from "react";
+import NewCoinTable from "../../tables/NewCoinTable";
 import { Summary } from "../../tables/Summary";
 import { SingleCoinSummary } from "../singleCoin/SingleCoinSummary";
-import NewPairTable from '../../tables/NewPairTable';
+import NewPairTable from "../../tables/NewPairTable";
+import MCROCTable from "../../tables/MCTable";
 
 export default function Dashboard() {
   return (
@@ -11,7 +11,7 @@ export default function Dashboard() {
       <NewCoinTable />
       <NewPairTable />
       <Summary />
+      <MCROCTable />
     </div>
-  )
+  );
 }
-
