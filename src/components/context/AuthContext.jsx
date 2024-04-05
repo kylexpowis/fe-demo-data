@@ -21,7 +21,7 @@ export const SessionProvider = ({ children }) => {
         return () => {
             authListener.unsubscribe();
         };
-    }, []);
+    }, [navigate]);
 
     return (
         <SessionContext.Provider value={session}>
