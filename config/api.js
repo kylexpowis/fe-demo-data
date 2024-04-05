@@ -78,6 +78,7 @@ export const getMarketCapROC = () => {
     });
 };
 
+
 export const getPairsByCoinId = (coin_id) => {
     return fetch(
         `https://pairs-sniper-api-v1-0-release.onrender.com/api/pairs/${coin_id}`
@@ -88,4 +89,17 @@ export const getPairsByCoinId = (coin_id) => {
         .then((data) => {
             return data.pairById;
         });
+
+export const get24HrVol = () => {
+  return fetch(
+    "https://pairs-sniper-api-v1-0-release.onrender.com/api/rankings/volumeroc"
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      return data.coins;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
 };
