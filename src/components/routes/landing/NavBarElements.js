@@ -104,6 +104,7 @@ export const NavBtn = styled.nav`
     }
 `
 export const NavBtnLink = styled(Link)`
+    color: #fff;
     border-radius: 5px;
     background: #40a677;
     white-space: no-wrap;
