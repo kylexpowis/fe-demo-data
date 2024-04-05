@@ -6,10 +6,14 @@ import NewPairTable from "../../tables/NewPairTable";
 import MCROCTable from "../../tables/MCTable";
 import Vol24HrTable from "../../tables/Vol24HourTable";
 import { Container, Grid, Typography } from "@mui/material";
+import DashboardHeader from "@/components/ui/DashboardHeader";
 
 function Dashboard() {
   return (
     <>
+      <div>
+        <DashboardHeader  />
+      </div>
       <div className="main-container">
         <Container maxWidth="xl" sx={{ padding: "0", margin: "0" }}>
           <Grid
