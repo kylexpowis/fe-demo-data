@@ -7,7 +7,7 @@
     "config": "final-fe-pairsniper/tailwind.config.js",
     "css": "final-fe-pairsniper/src/app.css",
     "baseColor": "slate",
-    "cssVariables": false,
+    "cssVariables": true,
     "prefix": ""
   },
   "aliases": {

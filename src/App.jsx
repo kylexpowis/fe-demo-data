@@ -6,12 +6,14 @@ import MCROCTable from "./components/tables/MCTable";
 import Vol24HrTable from "./components/tables/Vol24HourTable";
 import { ThemeProvider } from "./components/theme-provider";
 import LandingPage from "./components/routes/landing/LandingPage";
+import LogIn from "./components/routes/signin/SignIn";
 
 function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <Routes>
-      <Route path="/landing-page" element={<LandingPage />} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/sign-in" element={<LogIn />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/coins/:coin_id" element={<SingleCoinSummary />} />
         <Route path="/rankings/marketcap" element={<MCROCTable />} />

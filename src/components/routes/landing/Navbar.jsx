@@ -18,7 +18,7 @@ function Navbar() {
                         </NavItem>
                         <ModeToggleContainer>
                             <NavBtn>
-                                <NavBtnLink to='/signin'>Log In</NavBtnLink>
+                                <NavBtnLink to='/sign-in'>Log In</NavBtnLink>
                             </NavBtn>
                             <Spacer />
                             <ModeToggle />
