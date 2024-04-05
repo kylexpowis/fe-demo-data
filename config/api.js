@@ -77,3 +77,15 @@ export const getMarketCapROC = () => {
       console.log(error);
     });
 };
+
+export const getPairsByCoinId = (coin_id) => {
+    return fetch(
+        `https://pairs-sniper-api-v1-0-release.onrender.com/api/pairs/${coin_id}`
+    )
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            return data.pairById;
+        });
+};
