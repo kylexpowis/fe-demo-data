@@ -25,7 +25,7 @@ export default function NewCoinTable() {
                 <p>
                     {coin.id}
                     {coin.coin_name}
-                    {dateadded}
+                    {coin.dateadded}
                 </p>
             )) : (
                 <p>
