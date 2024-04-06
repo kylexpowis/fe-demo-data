@@ -4,7 +4,7 @@ import styled from 'styled-components';
 export const Nav = styled.nav`
     background: none;
     height: 80px;
-    /* margin-top: -80px; */
+    width: 100%;
     display: flex; /
     justify-content: center; 
     align-items: center;
@@ -13,7 +13,6 @@ export const Nav = styled.nav`
     top: 0;
     z-index: 10;
 
-
     @media screen and (max-width: 960px){
         transition: 0.8s all ease;
     }
@@ -21,27 +20,16 @@ export const Nav = styled.nav`
 
 export const NavBarContainer = styled.div`
     display: flex;
-    justify-content: center; 
+    justify-content: space-between; 
     align-items: center;
-    position: relative; 
+    position: relative;
     height: 80px;
-    width: 100%;
-    padding: 0 24px;
+    width: 100%; 
+    padding: 0 24px; 
+    max-width: 1440px; 
+    margin: auto; 
 `;
 
-export const ModeToggleContainer = styled.div`
-    display: flex;
-    align-items: center;
-    position: absolute;
-    right: 0; 
-    top: 50%;
-    padding-right: 20px;
-    transform: translateY(-50%);
-
-    @media screen and (max-width: 768px){
-        display: none;
-    }
-`;
 
 export const NavLogo = styled(Link)`
     justify-self: center;
@@ -51,6 +39,7 @@ export const NavLogo = styled(Link)`
     align-items: center;
     font-weight: bold;
     text-decoration: none;
+    font-family: "Figtree", sans serif;
 `
 
 export const MobileIcon = styled.div`

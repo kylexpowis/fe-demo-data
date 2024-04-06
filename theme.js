@@ -16,15 +16,20 @@ export const dark = createTheme({
             main: '#e83333',
         },
         background: {
-            default: '#1c1c1c',
+            default: '#0a0a0a',
             paper: '#0a0a0a',
+        },
+        text: {
+            main: '#d6d6d6'
         },
     },
     typography: {
-        fontFamily: '"Figtree", "Helvetica", "Arial", sans-serif',
-        fontWeightLight: 400,
+        fontFamily: '"Plus Jakarta Sans" ,"Figtree", "Helvetica", "Arial", sans-serif',
+        fontWeightLight: 300,
         h1: {
-            fontWeight: 500,
+            fontSize: '5rem',
+            fontWeight: 400,
+            letterSpacing: -1,
         },
         h2: {},
         h3: {},
@@ -38,6 +43,7 @@ export const dark = createTheme({
         caption: {},
         overline: {},
     },
+    transitions: 'all 0.2s ease-in-out',
     components: {
         MuiSnackbarContent: {
             styleOverrides: {
@@ -121,6 +127,16 @@ export const dark = createTheme({
                         backgroundColor: 'rgb(51, 143, 100, 0.2)',
                     },
                 },
+                ghost: {
+                    color: '#247550',
+                    backgroundColor: 'transparent',
+                    fontWeight: '400',
+                    border: 'transparent',
+                    '&:hover': {
+                        color: '#4effae',
+                        backgroundColor: 'transparent'
+                    },
+                }
             },
         },
         MuiIconButton: {
@@ -270,10 +286,11 @@ export const dark = createTheme({
                 },
                 underline: {
                     '&:before': {
-                        borderBottom: '1px solid #3fbf77',
+                        borderBottom: '1px solid #d6d6d6',
                     },
                     '&:hover:not(.Mui-disabled):before': {
-                        borderBottom: '2px solid #3fbf77',
+                        borderBottom: '2px solid #d6d6d6',
+                        
                     },
                     '&:after': {
                         borderBottom: '2px solid #3FBF77',
@@ -284,12 +301,15 @@ export const dark = createTheme({
         MuiCard: {
             styleOverrides: {
                 root: {
-                    background: '#232323',
+                    background: '#111111',
                     color: '#ffffff',
-                    outline: '1px solid rgba(62, 207, 142, 0.25)',
+                    outline: '1px solid #343434',
+                    transition: 'all 0.2s ease-in-out',
                     boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.1), 0px 2px 6px rgba(0, 0, 0, 0.2)',
                     '&:hover': {
                         boxShadow: '0px 10px 15px rgba(0, 0, 0, 0.18), 0px 4px 20px rgba(0, 0, 0, 0.15)',
+                        transition: 'all 0.2s ease-in-out',
+                        outline: '1px solid rgba(62, 207, 142, 0.3)',
                     },
                     borderRadius: '10px',
                     overflow: 'hidden',
@@ -324,17 +344,23 @@ export const light = createTheme({
             main: '#3FBF77',
         },
         background: {
+            default:'#f1f1f1',
             paper: '#0a0a0a',
         },
         error: {
             main: '#e83333',
         },
+        text: {
+            main: '#d6d6d6'
+        },
     },
     typography: {
-        fontFamily: '"Figtree", "Helvetica", "Arial", sans-serif',
-        fontWeightLight: 400,
+        fontFamily: '"Plus Jakarta Sans", "Figtree", "Helvetica", "Arial", sans-serif',
+        fontWeightLight: 300,
         h1: {
-            fontWeight: 500,
+            fontSize: '5rem',
+            fontWeight: 400,
+            letterSpacing: -1,
         },
         h2: {},
         h3: {},
@@ -349,6 +375,7 @@ export const light = createTheme({
         overline: {},
     },
     components: {
+        transition: 'all 0.2s ease-in-out',
         MuiButton: {
             styleOverrides: {
                 root: {
@@ -412,6 +439,16 @@ export const light = createTheme({
                         backgroundColor: 'rgb(51, 143, 100, 0.2)',
                     },
                 },
+                ghost: {
+                    color: '#3cc285',
+                    fontWeight: '400',
+                    backgroundColor: 'transparent',
+                    border: 'transparent',
+                    '&:hover': {
+                        color: '#33a973',
+                        backgroundColor: 'transparent',
+                    },
+                }
             },
         },
         MuiIconButton: {
@@ -594,10 +631,13 @@ export const light = createTheme({
                 root: {
                     background: '#ffffff',
                     color: '#000000',
-                    outline: '1px solid rgba(62, 207, 142, 0.25)',
+                    outline: '1px solid #cccccc',
+                    transition: 'all 0.2s ease-in-out',
                     boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.1), 0px 2px 6px rgba(0, 0, 0, 0.2)',
                     '&:hover': {
                         boxShadow: '0px 10px 15px rgba(0, 0, 0, 0.18), 0px 4px 20px rgba(0, 0, 0, 0.15)',
+                        transition: 'all 0.2s ease-in-out',
+                        outline: '1px solid rgba(62, 207, 142, 0.1)',
                     },
                     borderRadius: '10px',
                     overflow: 'hidden',
