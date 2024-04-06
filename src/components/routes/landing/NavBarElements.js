@@ -42,6 +42,8 @@ export const NavLogo = styled(Link)`
     font-family: "Figtree", sans serif;
 `
 
+
+
 export const MobileIcon = styled.div`
     display: none;
     position: absolute;

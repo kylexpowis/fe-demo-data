@@ -283,6 +283,9 @@ export const dark = createTheme({
                     '&:hover': {
                         color: '#fff',
                     },
+                    '&.Mui-focused input': {
+                        color: '#ffffff', 
+                    },
                 },
                 underline: {
                     '&:before': {
@@ -290,9 +293,10 @@ export const dark = createTheme({
                     },
                     '&:hover:not(.Mui-disabled):before': {
                         borderBottom: '2px solid #d6d6d6',
-                        
+
                     },
                     '&:after': {
+                        color: '#ffffff',
                         borderBottom: '2px solid #3FBF77',
                     },
                 },
@@ -344,7 +348,7 @@ export const light = createTheme({
             main: '#3FBF77',
         },
         background: {
-            default:'#f1f1f1',
+            default: '#f1f1f1',
             paper: '#0a0a0a',
         },
         error: {
@@ -612,6 +616,9 @@ export const light = createTheme({
                     '&:hover': {
                         color: '#000000',
                     },
+                    '&.Mui-focused input': {
+                        color: '#ffffff', 
+                    },
                 },
                 underline: {
                     '&:before': {
@@ -621,6 +628,7 @@ export const light = createTheme({
                         borderBottom: '2px solid #3fbf77',
                     },
                     '&:after': {
+                        color: '#ffffff',
                         borderBottom: '2px solid #3FBF77',
                     },
                 },

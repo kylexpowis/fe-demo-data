@@ -4,7 +4,7 @@ import Navbar from "../../custom/Navbar";
 import { Typography, Container, Box } from '@mui/material';
 
 function LandingPage() {
-
+        
     return (
         <>
             <Box>

@@ -13,7 +13,7 @@ function App() {
       <CssBaseline /> 
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login-portal" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/coins/:coin_id" element={<SingleCoinView />} />
       </Routes>
