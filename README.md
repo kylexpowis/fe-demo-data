@@ -35,8 +35,8 @@ This project is private and intended for use by the developers and the owner. If
    - Create a `.env` file at the root of the project and populate it with your API keys:
      ```
      COINMARKETCAP_API_KEY=your_api_key_here
-     SUPABASE_URL=your_supabase_url
-     SUPABASE_KEY=your_supabase_key
+     VITE_SUPABASE_URL=your_supabase_url
+     VITE_SUPABASE_KEY=your_supabase_key
      ```
 4. **Run the Application**:
    ```bash
