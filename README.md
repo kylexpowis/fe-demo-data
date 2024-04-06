@@ -14,7 +14,8 @@ Welcome to the PairSniper project repository! PairSniper is a sophisticated cryp
 
 - **CoinMarketCap API**: Utilized for accessing live, reliable cryptocurrency data.
 - **Supabase**: Offers real-time database functionality, enhancing the application's ability to deliver immediate data insights.
-- **(Additional Technologies)**: While the core of our application relies on CoinMarketCap's API and Supabase, we integrate various other technologies to support our analytics and UI/UX. (Please detail any other key technologies/frameworks used in the project.)
+- **(Additional Technologies)**: While the core of our application relies on CoinMarketCap's API and Supabase, we integrate various other technologies to support our analytics and UI/UX such as MUI, Tailwind and others. 
+- React ViteJS as our build tool.
 
 ## Getting Started
 
