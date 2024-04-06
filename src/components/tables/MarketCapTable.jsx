@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { getMarketCapROC } from "../../../config/api";
+import { getMarketCapStats } from "../../../config/api";
 
-export default function MCROCTable() {
+function MarketCapTable() {
   const [coins, setCoins] = useState([]);
   useEffect(() => {
-    getMarketCapROC()
+    getMarketCapStats()
       .then((coins) => {
         console.log(coins);
         setCoins(coins);
@@ -27,3 +27,5 @@ export default function MCROCTable() {
     </div>
   );
 }
+
+export default MarketCapTable;

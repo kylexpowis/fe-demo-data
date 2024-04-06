@@ -1,13 +1,15 @@
-import path from "path"
-import react from "@vitejs/plugin-react"
-import { defineConfig } from "vite"
+import { fileURLToPath, URL } from 'url';
+import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [react()],
+  server: {
+    hmr: true, // Enables Hot Module Replacement
+  },
   resolve: {
     alias: {
-      // eslint-disable-next-line no-undef
-      "@": path.resolve(__dirname, "./src"),
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
-})
+});

@@ -65,7 +65,7 @@ export const getNewPairs = () => {
         });
 };
 
-export const getMarketCapROC = () => {
+export const getMarketCapStats = () => {
     return fetch(
         "https://pairs-sniper-api-v1-0-release.onrender.com/api/rankings/marketcap"
     )
@@ -91,7 +91,7 @@ export const getPairsByCoinId = (coin_id) => {
         });
 }
 
-export const get24HrVol = () => {
+export const getVolumeChange = () => {
     return fetch(
         "https://pairs-sniper-api-v1-0-release.onrender.com/api/rankings/volumeroc"
     )

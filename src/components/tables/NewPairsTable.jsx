@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import { format } from "date-fns";
 
-export default function NewPairTable() {
+function NewPairsTable() {
     const [newPairs, setNewPairs] = useState([]);
     const [loading, setLoading] = useState(true);
     const [page, setPage] = useState(1);
@@ -100,17 +100,5 @@ export default function NewPairTable() {
     );
 }
 
-{/* <div>
-    <h2>New Pairs Table</h2>
-    {Array.isArray(newPairs) && newPairs.length > 0 ? newPairs.map((pair) => (
-        <p>
-            {pair.pair_name}
-            {format(new Date(pair.date_added), "PPpp")}
-            {pair.is_active}
-        </p>
-    )) : (
-        <p>
-            No New Pairs
-        </p>
-    )}
-</div> */}
+
+export default NewPairsTable;

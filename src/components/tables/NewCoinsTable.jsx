@@ -1,4 +1,4 @@
-import {React, useEffect, useState} from 'react'
+import { React, useEffect, useState } from 'react'
 import {
     Table,
     TableHead,
@@ -19,7 +19,7 @@ import { Link } from "react-router-dom";
 import { getNewCoins } from '../../../config/api'
 import { format } from "date-fns";
 
-export default function NewCoinTable() {
+function NewCoinsTable() {
     const [newCoins, setNewCoins] = useState([])
     const [timeFrame, setTimeFrame] = useState('1 day')
     const [isLoading, setIsLoading] = useState(true);
@@ -121,9 +121,10 @@ export default function NewCoinTable() {
                             )}
                         />
                     </Box>
-
                 </>
             )}
         </>
     )
 }
+
+export default NewCoinsTable;

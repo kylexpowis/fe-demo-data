@@ -1,18 +1,15 @@
 import React from "react";
-import NewCoinTable from "../../tables/NewCoinTable";
+import NewCoinsTable from "../../tables/NewCoinsTable";
 import { Summary } from "../../tables/Summary";
-import { SingleCoinSummary } from "../singleCoin/SingleCoinSummary";
-import NewPairTable from "../../tables/NewPairTable";
-import MCROCTable from "../../tables/MCTable";
+import NewPairsTable from "../../tables/NewPairsTable";
+import MCROCTable from "../../tables/MarketCapTable";
 import Vol24HrTable from "../../tables/Vol24HourTable";
-import { Container, Grid, Typography } from "@mui/material";
-import DashboardHeader from "@/components/ui/DashboardHeader";
+import { Container, Grid } from "@mui/material";
 
 function Dashboard() {
   return (
     <>
       <div>
-        <DashboardHeader  />
       </div>
       <div className="main-container">
         <Container maxWidth="xl" sx={{ padding: "0", margin: "0" }}>
@@ -39,7 +36,7 @@ function Dashboard() {
               sx={{ minHeight: "300px", padding: "20px", width: "100%" }}
               className="simple-border"
             >
-              <NewCoinTable />
+              <NewCoinsTable />
             </Grid>
             <Grid
               item
@@ -50,7 +47,7 @@ function Dashboard() {
               sx={{ minHeight: "300px", padding: "20px", width: "100%" }}
               className="simple-border"
             >
-              <NewPairTable />
+              <NewPairsTable />
             </Grid>
             <Grid
               item

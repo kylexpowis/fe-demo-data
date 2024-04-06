@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { get24HrVol, getMarketCapROC } from "../../../config/api";
+import { getVolumeChange } from "../../../config/api";
 
-export default function Vol24HrTable() {
+function VolumeRankingTable() {
   const [coins, setCoins] = useState([]);
   useEffect(() => {
-    get24HrVol()
+    getVolumeChange()
       .then((coins) => {
         console.log(coins);
         setCoins(coins);
@@ -27,3 +27,5 @@ export default function Vol24HrTable() {
     </div>
   );
 }
+
+export default VolumeRankingTable;
