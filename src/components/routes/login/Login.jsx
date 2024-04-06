@@ -10,6 +10,7 @@ import Navbar from '@/components/custom/Navbar';
 import { supabase } from '@/lib/supabaseClient';
 import { useSupabaseAuth } from '@/components/context/AuthContext';
 import LoadingScreen from '@/components/custom/LoadingScreen';
+import { useNavigate } from "react-router-dom";
 
 function Login() {
     const [email, setEmail] = useState();
@@ -17,6 +18,7 @@ function Login() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState();
     const { session } = useSupabaseAuth();
+    const navigate = useNavigate()
 
     const signInWithEmail = async (event) => {
         event.preventDefault();
@@ -77,8 +79,8 @@ function Login() {
                         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', padding: '8px' }}>
                             <form onSubmit={signInWithEmail}>
                                 <TextField
-                                    id="username"
-                                    label="Username"
+                                    id="email"
+                                    label="Email"
                                     variant="standard"
                                     margin="normal"
                                     value={email}
@@ -109,14 +111,17 @@ function Login() {
                                 >
                                     Sign In
                                 </Button>
-                                <Button
-                                    type="submit"
-                                    variant="ghost"
-                                    disableRipple
-                                    sx={{ marginTop: '20px', padding: '10px 20px', fontSize: '0.9rem' }}
-                                >
-                                    Forgot Password?
-                                </Button>
+                                <Box sx={{ width: '100%' }}>
+                                    <Button
+                                        type="submit"
+                                        variant="ghost"
+                                        disableRipple
+                                        sx={{ fontSize: '0.9rem', padding: '15px 0' }}
+                                        onClick={() => navigate('/forgot-password')}
+                                    >
+                                        Forgot Password?
+                                    </Button>
+                                </Box>
                             </form>
                         </Box>
                     </Card>
