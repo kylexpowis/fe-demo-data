@@ -128,7 +128,7 @@ export const dark = createTheme({
                     },
                 },
                 ghost: {
-                    color: '#247550',
+                    color: '#33a973',
                     backgroundColor: 'transparent',
                     fontWeight: '400',
                     border: 'transparent',
@@ -617,7 +617,7 @@ export const light = createTheme({
                         color: '#000000',
                     },
                     '&.Mui-focused input': {
-                        color: '#ffffff', 
+                        color: '#0a0a0a', 
                     },
                 },
                 underline: {

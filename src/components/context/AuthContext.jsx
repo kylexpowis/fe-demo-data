@@ -1,33 +1,35 @@
 import { supabase } from '@/lib/supabaseClient';
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
 export function SupabaseAuthProvider({ children }) {
     const [session, setSession] = useState(null);
-    const navigate = useNavigate()
+    const [name, setName] = useState(null);
+    const [email, setEmail] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         supabase.auth.getSession().then(({ data: { session } }) => {
             setSession(session);
-        });
+            setLoading(false)
+        })
 
         const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
             setSession(session);
         });
 
+
         if (!session) {
-            navigate('/login-portal')
-        } else {
-            navigate('/dashboard')
+            setName(null);
+            setEmail(null);
         }
 
         return () => subscription.unsubscribe();
-    }, [navigate, session]);
+    }, [session]);
 
     return (
-        <AuthContext.Provider value={{ session, setSession }}>
+        <AuthContext.Provider value={{ session, setSession, name, setName, email, setEmail, loading }}>
             {children}
         </AuthContext.Provider>
     );

@@ -5,11 +5,13 @@ import NewPairsTable from "../../tables/NewPairsTable";
 import MCROCTable from "../../tables/MarketCapTable";
 import Vol24HrTable from "../../tables/Vol24HourTable";
 import { Container, Grid } from "@mui/material";
+import Header from "@/components/custom/Header";
 
 function Dashboard() {
   return (
     <>
       <div>
+        <Header/>
       </div>
       <div className="main-container">
         <Container maxWidth="xl" sx={{ padding: "0", margin: "0" }}>

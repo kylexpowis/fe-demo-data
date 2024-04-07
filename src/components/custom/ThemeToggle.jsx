@@ -14,24 +14,33 @@ const ThemeToggle = () => {
             selected={isDarkMode}
             onChange={toggleTheme}
             sx={{
-                background: 'none',
-                border: 'none',
+                background: 'rgba(60, 194, 133, 0.1)',
+                border: '1px solid rgba(60, 194, 133, 0.3)',
+                transition: 'background 0.3s ease-in-out, border 0.3s ease-in-out',
+                borderRadius: '10px',
                 '&:hover': {
-                    background: 'none',
+                    background: 'rgba(60, 194, 133, 0.4)',
                 },
                 '&.Mui-selected': {
-                    background: 'none',
+                    background: 'transparent',
                     '&:hover': {
-                        background: 'none',
+                        background: 'rgba(60, 194, 133, 0.4)',
                     },
                 },
-                '&:focus': {
-                    outline: 'none',
+                '&:focus::after': {
+                    content: '""',
+                    position: 'absolute',
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    left: 0,
+                    border: '1.5px solid rgba(60, 194, 133, 0.5)',
+                    borderRadius: 'inherit',
                 },
-                padding: 0, 
+                padding: 1,
             }}
         >
-            {isDarkMode ? <LightModeIcon /> : <DarkModeIcon />}
+            {isDarkMode ? <LightModeIcon sx={{ width: '30px', height: '30px' }} /> : <DarkModeIcon sx={{ width: '30px', height: '30px' }} />}
         </ToggleButton>
     );
 };

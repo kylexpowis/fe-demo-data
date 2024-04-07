@@ -33,20 +33,21 @@ function Login() {
             password,
         });
 
-        setLoading(false);
+        
 
         if (error) {
             setError(error.message)
             console.error('Error signing in:', error.message);
             setPassword('')
         } else {
+            setLoading(false);
             console.log('Login success', data);
         }
     };
 
     if (session) {
         console.log('Already logged in, redirecting...');
-
+        
     }
 
     if (loading && !error) {
