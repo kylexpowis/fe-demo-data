@@ -69,6 +69,7 @@ function NewPairsTable() {
                         <MenuItem value="1 hour">1 hour</MenuItem>
                         <MenuItem value="8 hours">8 hours</MenuItem>
                         <MenuItem value="1 day">1 Day</MenuItem>
+                        <MenuItem value="3 day">3 Day</MenuItem>
                         <MenuItem value="7 days">7 Days</MenuItem>
                         <MenuItem value="14 days">14 Days</MenuItem>
                         <MenuItem value="28 days">28 Days</MenuItem>
