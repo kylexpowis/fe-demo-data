@@ -8,7 +8,7 @@ function Rankings() {
     return (
         <>
             <Header />
-            <Container maxWidth="xl">
+            <Container maxWidth="xlg">
                 <Grid container spacing={2} p={2} sx={{
                     minHeight: "300px",
                     flexWrap: "wrap",
