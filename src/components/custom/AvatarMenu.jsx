@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -8,10 +8,12 @@ import LoadingScreen from './LoadingScreen';
 import { useSupabaseAuth } from '../context/AuthContext';
 
 function AvatarMenu() {
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const [loading, setLoading] = React.useState();
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [loading, setLoading] = useState();
+    const [tempName, setTempName] = useState(`User${Math.floor(Math.random() * 100000)}`);
     const open = Boolean(anchorEl);
     const navigate = useNavigate();
+
 
     const { userDetails } = useSupabaseAuth()
     const { name, email } = userDetails;
@@ -56,7 +58,7 @@ function AvatarMenu() {
                 variant='ghost'
                 sx={{ fontSize: '1rem', fontWeight: '500' }}
             >
-                {name}
+                {name || tempName}
             </Button>
             <Menu
                 id="avatar-menu"

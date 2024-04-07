@@ -6,7 +6,7 @@ const AuthContext = createContext();
 export function SupabaseAuthProvider({ children }) {
     const [session, setSession] = useState(null);
     const [userDetails, setUserDetails] = useState({
-        name: null,
+        name: `User${Math.floor(Math.random() * 1000)}`,
         email: null,
     });
     const [loading, setLoading] = useState(true);
@@ -23,10 +23,17 @@ export function SupabaseAuthProvider({ children }) {
                     name: displayName, 
                     email: email,
                 });
+                if (displayName === '') {
+                    setUserDetails({
+                        name: `User${Math.floor(Math.random() * 1000)}`
+                    })
+                }
             } else {
                 setUserDetails({ name: null, email: null });
             }
         })
+
+        
 
         const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
             setSession(session);

@@ -64,7 +64,7 @@ function AccountPage() {
                         <EditIcon color='primary' />
                     </IconButton>
                     <Stack sx={{width: '100:', display: 'flex', justifyContent: 'center', AlignItems: 'center', pb: '10px'}} spacing={1}>
-                            <Typography variant='h4' color='primary' sx={{fontWeight: '500'}}>{name}</Typography>
+                            <Typography variant='h4' color='primary' sx={{fontWeight: '500'}}>{name || 'Set Display Name'}</Typography>
                             <Typography variant='h7' sx={{alignSelf: 'center'}} color='#777'>{email}</Typography>
                         </Stack>  
                     <Typography component="h" variant="h5" sx={{ mb: 1, mt: '2' }}>
