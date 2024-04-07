@@ -1,18 +1,25 @@
-import "../src/app.css";
-import { Routes, Route } from "react-router-dom";
-import Dashboard from "./components/routes/dashboard/Dashboard";
-import { SingleCoinView } from "./components/routes/singleCoin/SingleCoinView";
-import LandingPage from "./components/routes/landing/LandingPage";
-import Login from "./components/routes/login/Login";
+import React, { useEffect } from 'react';
+import { useSupabaseAuth } from './components/context/AuthContext';
+import { ThemeProvider } from './components/context/ThemeContext';
+import CssBaseline from '@mui/material/CssBaseline';
+import { LoggedIn, LoggedOut } from './components/routes/navigation/RouteManager';
+import { useNavigate } from "react-router-dom";
 
 function App() {
+  const { session, loading } = useSupabaseAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!loading && session && window.location.pathname === '/login-portal') {
+      navigate('/');
+    } 
+  }, [session, loading, navigate]);
+
   return (
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/coins/:coin_id" element={<SingleCoinView />} />
-      </Routes>
+    <ThemeProvider>
+      <CssBaseline />
+      {session ? <LoggedIn /> : <LoggedOut />}
+    </ThemeProvider>
   );
 }
 

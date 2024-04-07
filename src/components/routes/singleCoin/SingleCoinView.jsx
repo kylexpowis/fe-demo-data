@@ -2,7 +2,7 @@ import React from 'react'
 import { SingleCoinPairs } from './SingleCoinPairs'
 import { SingleCoinSummary } from './SingleCoinSummary'
 
-export const SingleCoinView = () => {
+const SingleCoinView = () => {
     return (
         <div>
             <SingleCoinSummary />
@@ -11,3 +11,5 @@ export const SingleCoinView = () => {
         </div>
     )
 }
+
+export default SingleCoinView

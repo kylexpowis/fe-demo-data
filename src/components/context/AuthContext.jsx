@@ -1,33 +1,54 @@
-import React, { createContext, useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabaseClient';
-import { useNavigate } from 'react-router-dom';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
-export const SessionContext = createContext(null);
+const AuthContext = createContext();
 
-export const SessionProvider = ({ children }) => {
+export function SupabaseAuthProvider({ children }) {
     const [session, setSession] = useState(null);
-    const navigate = useNavigate()
+    const [userDetails, setUserDetails] = useState({
+        name: `User${Math.floor(Math.random() * 1000)}`,
+        email: null,
+    });
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
-            if (event === 'SIGNED_OUT') {
-                setSession(null);
-                navigate('/')
-            } else if (session) {
-                setSession(session);
+        supabase.auth.getSession().then(({ data: { session } }) => {
+            setSession(session);
+            if (session && session.user) {
+                setLoading(false)
+                const displayName = session.user.user_metadata?.displayName; 
+                const email = session.user.email;
+
+                setUserDetails({
+                    name: displayName, 
+                    email: email,
+                });
+                if (displayName === '') {
+                    setUserDetails({
+                        name: `User${Math.floor(Math.random() * 1000)}`
+                    })
+                }
+            } else {
+                setUserDetails({ name: null, email: null });
             }
+        })
+
+        
+
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+            setSession(session);
         });
 
-        return () => {
-            authListener.unsubscribe();
-        };
-    }, [navigate]);
+        return () => subscription.unsubscribe();
+    }, [session]);
 
     return (
-        <SessionContext.Provider value={session}>
+        <AuthContext.Provider value={{ session, setSession, userDetails, loading }}>
             {children}
-        </SessionContext.Provider>
+        </AuthContext.Provider>
     );
-};
+}
 
-
+export const useSupabaseAuth = () => {
+    return useContext(AuthContext);
+}
