@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { getVolumeChange } from "../../../config/api";
 import { DataGrid } from '@mui/x-data-grid';
 import { Box, Typography, Card, CardHeader } from '@mui/material';
-import LoadingScreen from '../custom/LoadingScreen';
 import moment from 'moment/moment';
 import { Link } from "react-router-dom";
+import CircularLoad from "../custom/CircularLoad";
 
 function VolumeRankingTable() {
   const [coins, setCoins] = useState([]);
@@ -81,9 +81,9 @@ function VolumeRankingTable() {
   return (
     <Card>
       <CardHeader title='Volume/MarketCap'/>
-      <Box sx={{ height: 800, width: '100%' }}>
+      <Box sx={{ height: 1200, width: '100%' }}>
         {loading ? (
-          <LoadingScreen />
+          <CircularLoad />
         ) : coins.length > 0 ? (
           <DataGrid
             rows={coins}

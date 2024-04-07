@@ -6,7 +6,8 @@ import Dashboard from '../dashboard/Dashboard';
 import SingleCoinView from '../singleCoin/SingleCoinView';
 import AccountPage from '../account/AccountPage';
 import Login from '../login/Login';
-import Rankings from '../rankings/Rankings';
+import MarketcapRanking from '../rankings/MarketcapRanking';
+import VolumesRanking from '../rankings/VolumesRanking';
 
 export const LoggedOut = () => {
     return (
@@ -25,7 +26,8 @@ export const LoggedIn = () => {
         <div>
             <Routes>
                 <Route path="/" element={<Dashboard />} />
-                <Route path="/rankings" element={<Rankings /> } />
+                <Route path="/rankings/marketcap" element={<MarketcapRanking />} />
+                <Route path="/rankings/volume" element={<VolumesRanking /> } />
                 <Route path="/coins/:coin_id" element={<SingleCoinView />}  />
                 <Route path="/my-account" element={ <AccountPage />}/>
             </Routes>
