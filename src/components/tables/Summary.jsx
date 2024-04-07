@@ -56,30 +56,35 @@ export const Summary = () => {
       field: 'symbol',
       headerName: 'Symbol',
       type: 'string',
+      
       renderCell: (params) => params.value ?? '—'
     },
     {
       field: 'coin_name',
       headerName: 'Coin Name',
       type: 'string',
+      flex: 1,
       renderCell: (params) => params.value ?? '—'
     },
     {
       field: 'pairs_added',
       headerName: 'Pairs Added (24h)',
       type: 'int',
+      flex: 1,
       renderCell: (params) => params.value ?? '—'
     },
     {
       field: 'pairs_removed',
       headerName: 'Pairs removed (24h)',
       type: 'int',
+      flex: 1,
       renderCell: (params) => params.value ?? '—'
     },
     {
       field: 'pair_count',
       headerName: 'Total Pairs',
       type: 'int',
+      flex: 1,
       renderCell: (params) => params.value ?? '—'
     }
   ]

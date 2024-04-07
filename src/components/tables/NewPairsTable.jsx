@@ -3,6 +3,7 @@ import { getNewPairs } from '../../../config/api'
 import { DataGrid } from '@mui/x-data-grid';
 import { Box, Typography, Card, CardHeader, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import LoadingScreen from '../custom/LoadingScreen';
+import moment from 'moment/moment';
 
 function NewPairsTable() {
     const [newPairs, setNewPairs] = useState([]);
@@ -26,13 +27,12 @@ function NewPairsTable() {
         {
             field: 'pair_name',
             headerName: 'Pair Name',
-            width: 100,
+            flex: 1,
             renderCell: (params) => params.value ?? '—'
         },
         {
             field: 'is_active',
-            headerName: 'Active',
-            width: 100,
+            headerName: 'Status',
             renderCell: (params) => {
                 if (params.value === null || params.value === undefined) {
                     return <span>—</span>;
@@ -48,8 +48,8 @@ function NewPairsTable() {
             field: 'date_added',
             headerName: 'Date Added',
             type: 'timestamp',
-            renderCell: (params) => params.value ?? '—',
-            width: 500,
+            flex: 1,
+            renderCell: (params) => moment(params.value).format('lll') ?? '—',
         },
     ];
 
@@ -75,7 +75,7 @@ function NewPairsTable() {
                     </Select>
                 </FormControl>
             } />
-            <Box sx={{ height: 400, width: '100%' }}>
+            <Box sx={{ height: 300, width: '100%' }}>
                 {loading ? (
                     <LoadingScreen />
                 ) : newPairs.length > 0 ? (
@@ -89,7 +89,9 @@ function NewPairsTable() {
                         className='MuiDataGrid-virtualScroller'
                     />
                 ) : (
-                    <Typography>No new pairs available for the selected timeframe.</Typography>
+                    <Box sx={{width: '100%', height: '75%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                        <Typography color='error' sx={{fontWeight: '600'}}>No new pairs recorded for the selected timeframe.</Typography>
+                    </Box>
                 )}
             </Box>
         </Card>

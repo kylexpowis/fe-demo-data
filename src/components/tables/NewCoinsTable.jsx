@@ -3,7 +3,7 @@ import { getNewCoins } from '../../../config/api';
 import { DataGrid } from '@mui/x-data-grid';
 import { Box, Typography, Card, CardHeader, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import LoadingScreen from '../custom/LoadingScreen';
-import { format } from 'date-fns';
+import moment from 'moment/moment';
 
 function NewCoinsTable() {
     const [newCoins, setNewCoins] = useState([]);
@@ -44,8 +44,8 @@ function NewCoinsTable() {
                             style={{
                                 width: 30,
                                 height: 30,
-                                borderRadius: '50%', 
-                                border: 'none', 
+                                borderRadius: '50%',
+                                border: 'none',
                             }}
                         />
                     ) : (
@@ -62,17 +62,12 @@ function NewCoinsTable() {
         {
             field: 'coin_name',
             headerName: 'Coin Name',
-            renderCell: (params) => params.value ?? '—'
-        },
-        {
-            field: 'date_added',
-            headerName: 'Date Added',
-            type: 'timestamp',
+            flex: 1,
             renderCell: (params) => params.value ?? '—'
         },
         {
             field: 'is_active',
-            headerName: 'Active',
+            headerName: 'Status',
             renderCell: (params) => {
                 if (params.value === null || params.value === undefined) {
                     return <span>—</span>;
@@ -85,9 +80,11 @@ function NewCoinsTable() {
             },
         },
         {
-            field: 'currency_type',
-            headerName: 'Currency Type',
-            renderCell: (params) => params.value ?? '—'
+            field: 'date_added',
+            headerName: 'Date Added',
+            type: 'timestamp',
+            flex: 1,
+            renderCell: (params) => moment(params.value).format('lll') ?? '—'
         }
     ];
 
@@ -108,13 +105,14 @@ function NewCoinsTable() {
                         <MenuItem value="1 hour">1 hour</MenuItem>
                         <MenuItem value="8 hours">8 hours</MenuItem>
                         <MenuItem value="1 day">1 Day</MenuItem>
+                        <MenuItem value="3 day">3 Days</MenuItem>
                         <MenuItem value="7 days">7 Days</MenuItem>
                         <MenuItem value="14 days">14 Days</MenuItem>
                         <MenuItem value="28 days">28 Days</MenuItem>
                     </Select>
                 </FormControl>
             } />
-            <Box sx={{ height: 400, width: '100%' }}>
+            <Box sx={{ height: 300, width: '100%' }}>
                 {isLoading ? (
                     <LoadingScreen />
                 ) : newCoins.length > 0 ? (
@@ -128,7 +126,9 @@ function NewCoinsTable() {
                         className='MuiDataGrid-virtualScroller'
                     />
                 ) : (
-                    <Typography>No new coins available for the selected timeframe.</Typography>
+                    <Box sx={{ width: '100%', height: '75%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <Typography color='error' sx={{fontWeight: '600'}}>No new coins recorded for the selected timeframe.</Typography>
+                    </Box>
                 )}
             </Box>
         </Card>

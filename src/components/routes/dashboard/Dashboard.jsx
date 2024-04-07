@@ -12,8 +12,8 @@ function Dashboard() {
     <>
       <>
         <Header />
-        <Container maxWidth="xlg"> 
-          <Grid container spacing={3} p={2} sx={{
+        <Container maxWidth="xl"> 
+          <Grid container spacing={2} p={2} sx={{
             minHeight: "300px",
             flexWrap: "wrap", 
             alignContent: "center",
