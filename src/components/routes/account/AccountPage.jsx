@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { Box, TextField, Button, Typography, Container, Card, Avatar, IconButton, Alert } from '@mui/material';
+import { Box, TextField, Button, Typography, Container, Card, Avatar, IconButton, Alert, Stack } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { supabase } from '@/lib/supabaseClient';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/custom/Header';
+import { useSupabaseAuth } from '@/components/context/AuthContext';
 
 function AccountPage() {
-    const [userDetails, setUserDetails] = useState({
+    const [newUserDetails, setUserDetails] = useState({
         displayName: '',
         email: '',
         currentPassword: '',
@@ -15,6 +16,8 @@ function AccountPage() {
     });
     const [message, setMessage] = useState({ type: '', content: '' });
     const navigate = useNavigate();
+    const { userDetails } = useSupabaseAuth();
+    const { name, email } = userDetails;
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -28,21 +31,21 @@ function AccountPage() {
         event.preventDefault();
         setMessage({ type: '', content: '' });
 
-        if (userDetails.newPassword !== userDetails.confirmPassword) {
+        if (newUserDetails.newPassword !== newUserDetails.confirmPassword) {
             setMessage({ type: 'error', content: 'New passwords do not match.' });
             return;
         }
 
         try {
-            if (userDetails.email) {
-                await supabase.auth.updateUser({ email: userDetails.email });
+            if (newUserDetails.email) {
+                await supabase.auth.updateUser({ email: newUserDetails.email });
             }
-            if (userDetails.newPassword) {
-                await supabase.auth.updateUser({ password: userDetails.newPassword });
+            if (newUserDetails.newPassword) {
+                await supabase.auth.updateUser({ password: newUserDetails.newPassword });
             }
-            await supabase.auth.updateUser({ data: { displayName: userDetails.displayName } });
+            await supabase.auth.updateUser({ data: { displayName: newUserDetails.displayName } });
 
-            console.log(userDetails);
+            console.log(newUserDetails);
             setMessage({ type: 'success', content: 'Account updated successfully.' });
         } catch (error) {
             setMessage({ type: 'error', content: error.error_description || error.message });
@@ -54,13 +57,17 @@ function AccountPage() {
             <Header />
             <Container component="main" maxWidth="md">
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', my: 4 }}>
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main', width: 56, height: 56 }}>
+                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main', width: 60, height: 60 }}>
                     </Avatar>
                     <IconButton color="primary" aria-label="upload picture" component="label">
                         <input hidden accept="image/*" type="file" />
-                        <EditIcon color='primary'/>
+                        <EditIcon color='primary' />
                     </IconButton>
-                    <Typography component="h1" variant="h5" sx={{ mb: 2 }}>
+                    <Stack sx={{width: '100:', display: 'flex', justifyContent: 'center', AlignItems: 'center', pb: '10px'}} spacing={1}>
+                            <Typography variant='h4' color='primary' sx={{fontWeight: '500'}}>{name}</Typography>
+                            <Typography variant='h7' sx={{alignSelf: 'center'}} color='#777'>{email}</Typography>
+                        </Stack>  
+                    <Typography component="h" variant="h5" sx={{ mb: 1, mt: '2' }}>
                         Account Settings
                     </Typography>
                     {message.content && (
@@ -85,7 +92,7 @@ function AccountPage() {
                                     label="Enter new display name"
                                     type="text"
                                     variant="outlined"
-                                    value={userDetails.displayName}
+                                    value={newUserDetails.displayName}
                                     onChange={handleChange}
                                 />
                             </Box>
@@ -101,7 +108,7 @@ function AccountPage() {
                                     label="Enter new email address"
                                     type="email"
                                     variant="outlined"
-                                    value={userDetails.email}
+                                    value={newUserDetails.email}
                                     onChange={handleChange}
                                 />
                             </Box>
