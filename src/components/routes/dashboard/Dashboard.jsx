@@ -1,11 +1,9 @@
 import React from "react";
-import { Container, Grid, Box } from "@mui/material";
+import { Container, Grid } from "@mui/material";
 import Header from "@/components/custom/Header";
 import NewCoinsTable from "../../tables/NewCoinsTable";
 import NewPairsTable from "../../tables/NewPairsTable";
 import { Summary } from "../../tables/Summary";
-import MCROCTable from "../../tables/MarketCapTable";
-import Vol24HrTable from "../../tables/Vol24HourTable";
 
 function Dashboard() {
   return (
