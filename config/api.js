@@ -17,9 +17,6 @@ export const getNewCoins = (timeFrame = "1 day") => {
         .then((res) => res.json())
         .then((data) => {
             console.log(data);
-            if (!data.coins || data.coins.length === 0) {
-                return "No new coins found for the selected timeframe.";
-            }
             return data.coins;
         })
         .catch((error) => {

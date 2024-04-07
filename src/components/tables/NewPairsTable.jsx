@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { getNewPairs } from '../../../config/api'
-import { getNewCoins } from '../../../config/api';
 import { DataGrid } from '@mui/x-data-grid';
 import { Box, Typography, Card, CardHeader, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import LoadingScreen from '../custom/LoadingScreen';
@@ -76,7 +75,7 @@ function NewPairsTable() {
                     </Select>
                 </FormControl>
             } />
-            <Box sx={{ height: 600, width: '100%' }}>
+            <Box sx={{ height: 400, width: '100%' }}>
                 {loading ? (
                     <LoadingScreen />
                 ) : newPairs.length > 0 ? (
@@ -90,7 +89,7 @@ function NewPairsTable() {
                         className='MuiDataGrid-virtualScroller'
                     />
                 ) : (
-                    <Typography>No new coins available for the selected timeframe.</Typography>
+                    <Typography>No new pairs available for the selected timeframe.</Typography>
                 )}
             </Box>
         </Card>

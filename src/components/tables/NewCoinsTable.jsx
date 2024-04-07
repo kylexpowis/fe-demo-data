@@ -114,7 +114,7 @@ function NewCoinsTable() {
                     </Select>
                 </FormControl>
             } />
-            <Box sx={{ height: 600, width: '100%' }}>
+            <Box sx={{ height: 400, width: '100%' }}>
                 {isLoading ? (
                     <LoadingScreen />
                 ) : newCoins.length > 0 ? (
