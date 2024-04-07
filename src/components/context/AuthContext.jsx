@@ -5,31 +5,38 @@ const AuthContext = createContext();
 
 export function SupabaseAuthProvider({ children }) {
     const [session, setSession] = useState(null);
-    const [name, setName] = useState(null);
-    const [email, setEmail] = useState(null);
+    const [userDetails, setUserDetails] = useState({
+        name: null,
+        email: null,
+    });
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         supabase.auth.getSession().then(({ data: { session } }) => {
             setSession(session);
-            setLoading(false)
+            if (session && session.user) {
+                setLoading(false)
+                const displayName = session.user.user_metadata?.displayName; 
+                const email = session.user.email;
+
+                setUserDetails({
+                    name: displayName, 
+                    email: email,
+                });
+            } else {
+                setUserDetails({ name: null, email: null });
+            }
         })
 
         const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
             setSession(session);
         });
 
-
-        if (!session) {
-            setName(null);
-            setEmail(null);
-        }
-
         return () => subscription.unsubscribe();
     }, [session]);
 
     return (
-        <AuthContext.Provider value={{ session, setSession, name, setName, email, setEmail, loading }}>
+        <AuthContext.Provider value={{ session, setSession, userDetails, loading }}>
             {children}
         </AuthContext.Provider>
     );

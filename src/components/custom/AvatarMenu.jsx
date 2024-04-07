@@ -5,12 +5,16 @@ import MenuItem from '@mui/material/MenuItem';
 import { supabase } from '@/lib/supabaseClient';
 import { useNavigate } from "react-router-dom";
 import LoadingScreen from './LoadingScreen';
+import { useSupabaseAuth } from '../context/AuthContext';
 
 function AvatarMenu() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [loading, setLoading] = React.useState();
     const open = Boolean(anchorEl);
     const navigate = useNavigate();
+
+    const { userDetails } = useSupabaseAuth()
+    const { name, email } = userDetails;
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -52,7 +56,7 @@ function AvatarMenu() {
                 variant='ghost'
                 sx={{ fontSize: '1rem', fontWeight: '500' }}
             >
-                Display Name
+                {name}
             </Button>
             <Menu
                 id="avatar-menu"
@@ -63,7 +67,7 @@ function AvatarMenu() {
                     'aria-labelledby': 'avatar-button',
                 }}
             >
-                <MenuItem disabled>email@provider.com</MenuItem>
+                <MenuItem disabled>{email}</MenuItem>
                 <MenuItem onClick={() => navigate('/my-account')}>My Account</MenuItem>
                 <MenuItem onClick={() => signOut()}>Logout</MenuItem>
             </Menu>
