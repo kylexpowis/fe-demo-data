@@ -1,27 +1,13 @@
 import { getSummary } from "../../../config/api";
 import { useEffect, useState } from "react";
-import {
-  Table,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableCell,
-  Typography,
-  TableContainer,
-  Link as MuiLink,
-  Pagination,
-  Grid,
-  MenuItem,
-  PaginationItem,
-  Select,
-} from "@mui/material";
+import { DataGrid } from '@mui/x-data-grid';
+import { Box, Typography, Card, CardHeader } from '@mui/material';
+import LoadingScreen from '../custom/LoadingScreen';
 import { Link } from "react-router-dom";
 
 export const Summary = () => {
   const [coins, setCoins] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [page, setPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   useEffect(() => {
     getSummary()
@@ -35,162 +21,95 @@ export const Summary = () => {
       });
   }, []);
 
-  const handleChangePage = (event, value) => {
-    setPage(value);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(event.target.value);
-    setPage(1);
-  };
-
-  if (isLoading) return <p>Loading...</p>;
-
-  const totalCoins = coins.length;
-  const totalPages = Math.ceil(totalCoins / rowsPerPage);
-  const startIndex = (page - 1) * rowsPerPage;
-  const endIndex = Math.min(startIndex + rowsPerPage, totalCoins);
-  const paginatedCoins = coins.slice(startIndex, endIndex);
+  const columns = [
+    {
+      field: 'logo_url',
+      headerName: '',
+      type: 'string',
+      renderCell: (params) => (
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100%',
+          }}
+        >
+          {params.value ? (
+            <img
+              src={params.value}
+              alt={params.row.coin_name}
+              style={{
+                width: 30,
+                height: 30,
+                borderRadius: '50%',
+                border: 'none',
+              }}
+            />
+          ) : (
+            <span> </span>
+          )}
+        </Box>
+      ),
+    },
+    {
+      field: 'symbol',
+      headerName: 'Symbol',
+      type: 'string',
+      
+      renderCell: (params) => params.value ?? '—'
+    },
+    {
+      field: 'coin_name',
+      headerName: 'Coin Name',
+      type: 'string',
+      flex: 1,
+      renderCell: (params) => params.value ?? '—'
+    },
+    {
+      field: 'pairs_added',
+      headerName: 'Pairs Added (24h)',
+      type: 'int',
+      flex: 1,
+      renderCell: (params) => params.value ?? '—'
+    },
+    {
+      field: 'pairs_removed',
+      headerName: 'Pairs removed (24h)',
+      type: 'int',
+      flex: 1,
+      renderCell: (params) => params.value ?? '—'
+    },
+    {
+      field: 'pair_count',
+      headerName: 'Total Pairs',
+      type: 'int',
+      flex: 1,
+      renderCell: (params) => params.value ?? '—'
+    }
+  ]
 
   return (
-    <>
-      <Typography variant="h5" component="div">
-        Summary
-      </Typography>
-      <TableContainer>
-        <Table aria-label="coin table">
-          <TableHead>
-            <TableRow>
-              <TableCell
-                sx={{
-                  color: "white",
-                }}
-              >
-                Coin Name
-              </TableCell>
-              <TableCell
-                sx={{
-                  color: "white",
-                }}
-              >
-                Symbol
-              </TableCell>
-              <TableCell
-                sx={{
-                  color: "white",
-                }}
-              >
-                Pairs Added (24hr)
-              </TableCell>
-              <TableCell
-                sx={{
-                  color: "white",
-                }}
-              >
-                Pairs Removed (24hr)
-              </TableCell>
-              <TableCell
-                sx={{
-                  color: "white",
-                }}
-              >
-                Pair Count
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {paginatedCoins.map((coin) => (
-              <TableRow key={coin.coin_name}>
-                <TableCell style={{ width: "fit-content" }}>
-                  <MuiLink
-                    component={Link}
-                    to={`/coins/${coin.coin_id}`}
-                    sx={{
-                      color: "white",
-                      textDecoration: "none",
-                      display: "flex",
-                      alignItems: "center",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    <img
-                      src={coin.logo_url}
-                      alt="coin icon"
-                      style={{
-                        width: "24px",
-                        marginRight: "8px",
-                        padding: "0",
-                      }}
-                    />
-                    {coin.coin_name}
-                  </MuiLink>
-                </TableCell>
-                <TableCell
-                  sx={{
-                    color: "white",
-                  }}
-                >
-                  {coin.symbol}
-                </TableCell>
-                <TableCell
-                  sx={{
-                    color: "white",
-                  }}
-                >
-                  {coin.pairs_added}
-                </TableCell>
-                <TableCell
-                  sx={{
-                    color: "white",
-                  }}
-                >
-                  {coin.pairs_removed}
-                </TableCell>
-                <TableCell
-                  sx={{
-                    color: "white",
-                  }}
-                >
-                  {coin.pair_count}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <Grid container justifyContent="center" marginTop={2} marginBottom={2}>
-        <div className="rowSelect">
-          <Pagination
-            count={totalPages}
-            page={page}
-            onChange={handleChangePage}
-            renderItem={(item) => (
-              <PaginationItem
-                {...item}
-                style={{
-                  background:
-                    item.page === page
-                      ? "linear-gradient(to right, #00e99b, #4fd1c5)"
-                      : "transparent",
-                  color: "white",
-                }}
-              />
-            )}
+    <Card>
+      <CardHeader title='Market Overview'/>
+      <Box sx={{ height: 800, width: '100%' }}>
+        {isLoading ? (
+          <LoadingScreen />
+        ) : coins.length > 0 ? (
+          <DataGrid
+            rows={coins}
+            columns={columns}
+            pageSize={5}
+            rowsPerPageOptions={[5, 10, 20]}
+            pagination
+            loading={isLoading}
+            getRowId={(row) => row.coin_id || Math.random()}
           />
-          <Select
-            id="rowCount"
-            sx={{ height: "30px" }}
-            value={rowsPerPage}
-            onChange={handleChangeRowsPerPage}
-            variant="outlined"
-          >
-            <MenuItem value={10}>10</MenuItem>
-            <MenuItem value={25}>25</MenuItem>
-            <MenuItem value={50}>50</MenuItem>
-            <MenuItem value={100}>100</MenuItem>
-          </Select>
-        </div>
-      </Grid>
-    </>
+        ) : (
+          <Typography>No data available</Typography>
+        )}
+      </Box>
+    </Card>
   );
+
 };

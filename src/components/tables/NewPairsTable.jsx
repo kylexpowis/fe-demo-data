@@ -1,26 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { getNewPairs } from '../../../config/api'
-import {
-    Table,
-    TableHead,
-    TableRow,
-    TableCell,
-    TableBody,
-    Typography,
-    TableContainer,
-    Pagination,
-    PaginationItem,
-    Box,
-    Link as MuiLink,
-} from "@mui/material";
-import { format } from "date-fns";
+import { DataGrid } from '@mui/x-data-grid';
+import { Box, Typography, Card, CardHeader, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import LoadingScreen from '../custom/LoadingScreen';
+import moment from 'moment/moment';
 
 function NewPairsTable() {
     const [newPairs, setNewPairs] = useState([]);
+    const [timeFrame, setTimeFrame] = useState('1 day');
     const [loading, setLoading] = useState(true);
-    const [page, setPage] = useState(1);
+
     useEffect(() => {
-        getNewPairs()
+        getNewPairs(timeFrame)
             .then((pairs) => {
                 console.log(pairs);
                 setNewPairs(pairs);
@@ -30,73 +21,81 @@ function NewPairsTable() {
                 console.error("Failed to fetch new pairs.", err);
                 setLoading(false);
             });
-    }, []);
+    }, [timeFrame]);
 
-    const pairsPerPage = 1;
-    const totalPairs = newPairs.length;
-    const totalPages = Math.ceil(totalPairs / pairsPerPage);
-    const startIndex = (page - 1) * pairsPerPage;
-    const endIndex = startIndex + pairsPerPage;
-    const currentPairs = newPairs.slice(startIndex, endIndex);
+    const columns = [
+        {
+            field: 'pair_name',
+            headerName: 'Pair Name',
+            flex: 1,
+            renderCell: (params) => params.value ?? '—'
+        },
+        {
+            field: 'is_active',
+            headerName: 'Status',
+            renderCell: (params) => {
+                if (params.value === null || params.value === undefined) {
+                    return <span>—</span>;
+                }
+                return (
+                    <span style={{ color: params.value ? 'green' : 'red' }}>
+                        {params.value ? 'Active' : 'Inactive'}
+                    </span>
+                );
+            },
+        },
+        {
+            field: 'date_added',
+            headerName: 'Date Added',
+            type: 'timestamp',
+            flex: 1,
+            renderCell: (params) => moment(params.value).format('lll') ?? '—',
+        },
+    ];
 
-    const handlePageChange = (event, value) => {
-        setPage(value);
-    };
-
-    const renderTableRows = () => {
-        if (newPairs.length === 0) {
-            return (
-                <TableRow>
-                    <TableCell colSpan={2}>No New Pairs</TableCell>
-                </TableRow>
-            );
-        }
-
-        return currentPairs.slice(0, 10).map((pair, index) => (
-            <TableRow key={index}>
-                <TableCell>{pair.pair_name}</TableCell>
-                <TableCell>{format(new Date(pair.date_added), "PPpp")}</TableCell>
-                <TableCell>{String(pair.is_active)}</TableCell>
-            </TableRow>
-        ));
-    };
-
-    if (loading) return <Typography>Loading...</Typography>;
     return (
-        <>
-            <Typography variant="h5" component="div">
-                New Pairs
-            </Typography>
-            <TableContainer>
-                <Table aria-label="new pairs table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Coin Name</TableCell>
-                            <TableCell>Date Added</TableCell>
-                            <TableCell>Active</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>{renderTableRows()}</TableBody>
-                </Table>
-            </TableContainer>
-            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Pagination sx={{ marginTop: '67px', alignItems: 'center', alignContent: 'center' }}
-                    count={totalPages}
-                    page={page}
-                    onChange={handlePageChange}
-                    renderItem={(item) => (
-                        <PaginationItem
-                            {...item}
-                            style={{
-                                background: item.page === page ? 'linear-gradient(to right, #00e99b, #4fd1c5)' : 'transparent',
-                                color: item.page === page ? 'white' : 'black',
-                            }}
-                        />
-                    )}
-                />
+        <Card sx={{ boxShadow: 'none' }}>
+            <CardHeader title='New Pairs' action={
+                <FormControl size="small">
+                    <InputLabel id="timeframe-select-label">Time Frame</InputLabel>
+                    <Select
+                        labelId="timeframe-select-label"
+                        id="timeframe-select"
+                        value={timeFrame}
+                        label="Time Frame"
+                        onChange={(e) => setTimeFrame(e.target.value)}
+                        sx={{ minWidth: 120 }}
+                    >
+                        <MenuItem value="1 hour">1 hour</MenuItem>
+                        <MenuItem value="8 hours">8 hours</MenuItem>
+                        <MenuItem value="1 day">1 Day</MenuItem>
+                        <MenuItem value="3 day">3 Day</MenuItem>
+                        <MenuItem value="7 days">7 Days</MenuItem>
+                        <MenuItem value="14 days">14 Days</MenuItem>
+                        <MenuItem value="28 days">28 Days</MenuItem>
+                    </Select>
+                </FormControl>
+            } />
+            <Box sx={{ height: 300, width: '100%' }}>
+                {loading ? (
+                    <LoadingScreen />
+                ) : newPairs.length > 0 ? (
+                    <DataGrid
+                        rows={newPairs}
+                        columns={columns}
+                        rowsPerPageOptions={[5, 10, 20]}
+                        pagination
+                        loading={loading}
+                        getRowId={(row) => row.coin_id || Math.random()}
+                        className='MuiDataGrid-virtualScroller'
+                    />
+                ) : (
+                    <Box sx={{width: '100%', height: '75%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                        <Typography color='error' sx={{fontWeight: '600'}}>No new pairs recorded for the selected timeframe.</Typography>
+                    </Box>
+                )}
             </Box>
-
-        </>
+        </Card>
     );
 }
 
