@@ -91,7 +91,12 @@ function NewCoinsTable() {
 
 
     return (
-        <Card sx={{ boxShadow: 'none' }}>
+        <Card sx={{
+            ':hover': {
+                outline: '1px solid #cccccc',
+                boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.1), 0px 2px 6px rgba(0, 0, 0, 0.2)'
+            },
+        }}>
             <CardHeader title='New Coins' action={
                 <FormControl size="small">
                     <InputLabel id="timeframe-select-label">Time Frame</InputLabel>
@@ -112,7 +117,7 @@ function NewCoinsTable() {
                         <MenuItem value="28 days">28 Days</MenuItem>
                     </Select>
                 </FormControl>
-            } />
+            } sx={{'& .MuiCardHeader-title': { fontWeight: '600' }}}/>
             <Box sx={{ height: 300, width: '100%' }}>
                 {isLoading ? (
                     <LoadingScreen />
@@ -127,7 +132,7 @@ function NewCoinsTable() {
                         className='MuiDataGrid-virtualScroller'
                     />
                 ) : (
-                    <NoResults/>
+                    <NoResults />
                 )}
             </Box>
         </Card>

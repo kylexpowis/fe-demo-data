@@ -56,7 +56,7 @@ export const Summary = () => {
       field: 'symbol',
       headerName: 'Symbol',
       type: 'string',
-      
+
       renderCell: (params) => params.value ?? '—'
     },
     {
@@ -90,8 +90,13 @@ export const Summary = () => {
   ]
 
   return (
-    <Card>
-      <CardHeader title='Market Overview'/>
+    <Card sx={{
+      ':hover': {
+        outline: '1px solid #cccccc',
+        boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.1), 0px 2px 6px rgba(0, 0, 0, 0.2)'
+      },
+    }}>
+      <CardHeader title='Market Overview' sx={{'& .MuiCardHeader-title': { fontWeight: '600' }}}/>
       <Box sx={{ height: 800, width: '100%' }}>
         {isLoading ? (
           <LoadingScreen />

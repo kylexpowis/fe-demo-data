@@ -15,11 +15,3 @@ h1 a {
   text-decoration: none;
 }
 
-.MuiDataGrid-virtualScroller::-webkit-scrollbar {
-  display: none;
-}
-
-.MuiDataGrid-virtualScroller {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}

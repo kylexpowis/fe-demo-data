@@ -46,6 +46,45 @@ export const dark = createTheme({
     },
     transitions: 'all 0.2s ease-in-out',
     components: {
+        MuiCssBaseline: {
+            styleOverrides: {
+                '&::-webkit-scrollbar': {
+                    width: '10px',
+                    height: '10px',
+                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                },
+                '&::-webkit-scrollbar-button': {
+                    width: '22px',
+                    height: '22px',
+                },
+                '&::-webkit-scrollbar-thumb': {
+                    background: 'rgba(255, 255, 255, 0.2)',
+                    border: '4px solid rgba(0, 0, 0, 0)',
+                    borderRadius: '50px',
+                    transition: 'background-color 0.3s ease',
+                    '&:hover': {
+                        background: 'rgba(255, 255, 255, 0.4)',
+                    },
+                    '&:active': {
+                        background: 'rgba(255, 255, 255, 0.5)',
+                    },
+                },
+                '&::-webkit-scrollbar-track': {
+                    background: 'rgba(0, 0, 0, 0.2)',
+                    borderRadius: '50px',
+                    transition: 'background-color 0.3s ease',
+                    '&:hover': {
+                        background: 'rgba(0, 0, 0, 0.3)',
+                    },
+                    '&:active': {
+                        background: 'rgba(0, 0, 0, 0.4)',
+                    },
+                },
+                '&::-webkit-scrollbar-corner': {
+                    background: 'transparent',
+                },
+            },
+        },
         MuiSnackbarContent: {
             styleOverrides: {
                 root: {
@@ -207,8 +246,8 @@ export const dark = createTheme({
                     backgroundColor: '#121212',
                     color: '#36AB6D',
                     fontWeight: 'bold',
-                    borderTop: '1px solid #2a2a2a', 
-                    borderBottom: '2px solid #333333', 
+                    borderTop: '1px solid #2a2a2a',
+                    borderBottom: '2px solid #333333',
                 },
                 row: {
                     '&:hover': {
@@ -218,16 +257,16 @@ export const dark = createTheme({
                 cell: {
                     borderBottomColor: '#2a2a2a',
                     '&:focus': {
-                        outline: '2px solid #36AB6D', 
+                        outline: '2px solid #36AB6D',
                     },
                 },
                 columnHeader: {
                     '&:hover': {
-                        color: '#3FBF77', 
+                        color: '#3FBF77',
                     },
                 },
                 sortIcon: {
-                    color: '#36AB6D', 
+                    color: '#36AB6D',
                 },
             },
         },
@@ -416,6 +455,47 @@ export const light = createTheme({
     },
     components: {
         transition: 'all 0.2s ease-in-out',
+        MuiCssBaseline: {
+            styleOverrides: {
+                '&::-webkit-scrollbar': {
+                    width: '10px',
+                    height: '10px',
+                    backgroundColor: 'rgba(0, 0, 0, 0.1)', 
+                },
+                '&::-webkit-scrollbar-button': {
+                    width: '22px',
+                    height: '22px',
+                },
+                '&::-webkit-scrollbar-thumb': {
+                    background: 'rgba(0, 0, 0, 0.2)', 
+                    border: '4px solid rgba(255, 255, 255, 0)', 
+                    borderRadius: '50px',
+                    transition: 'background-color 0.3s ease-in-out', 
+                    '&:hover': {
+                        transition: 'background-color 0.3s ease-in-out',
+                        background: 'rgba(0, 0, 0, 0.3)', 
+                    },
+                    '&:active': {
+                        transition: 'background-color 0.3s ease-in-out',
+                        background: 'rgba(0, 0, 0, 0.4)', 
+                    },
+                },
+                '&::-webkit-scrollbar-track': {
+                    background: 'rgba(255, 255, 255, 0.5)', 
+                    borderRadius: '50px',
+                    transition: 'background-color 0.3s ease-in-out', 
+                    '&:hover': {
+                        background: 'rgba(255, 255, 255, 0.6)', 
+                    },
+                    '&:active': {
+                        background: 'rgba(255, 255, 255, 0.7)', 
+                    },
+                },
+                '&::-webkit-scrollbar-corner': {
+                    background: 'transparent',
+                },
+            },
+        },
         MuiButton: {
             styleOverrides: {
                 root: {
@@ -739,3 +819,5 @@ export const light = createTheme({
         },
     },
 });
+
+

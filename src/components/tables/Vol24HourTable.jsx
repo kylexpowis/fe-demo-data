@@ -84,8 +84,13 @@ function VolumeRankingTable() {
 
 
   return (
-    <Card>
-      <CardHeader title='Volume/MarketCap'/>
+    <Card sx={{
+      ':hover': {
+        outline: '1px solid #cccccc',
+        boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.1), 0px 2px 6px rgba(0, 0, 0, 0.2)'
+      },
+    }}>
+      <CardHeader title='Volume/MarketCap' sx={{'& .MuiCardHeader-title': { fontWeight: '600' }}}/>
       <Box sx={{ height: 1200, width: '100%' }}>
         {loading ? (
           <CircularLoad />
