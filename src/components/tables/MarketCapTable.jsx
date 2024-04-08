@@ -14,14 +14,22 @@ function MarketCapTable() {
     setLoading(true)
     getMarketCapStats()
       .then((coins) => {
-        console.log(coins);
-        setCoins(coins);
+        const deduplicatedCoins = deduplicateCoins(coins);
+        setCoins(deduplicatedCoins);
         setLoading(false)
       })
       .catch((err) => {
         console.error("Failed to fetch marketcap data.", err);
       });
   }, []);
+
+  const deduplicateCoins = (fetchedCoins) => {
+    const uniqueCoins = new Map();
+    fetchedCoins.forEach((coin) => {
+      uniqueCoins.set(coin.coin_id, coin);
+    });
+    return Array.from(uniqueCoins.values());
+  };
 
   const columns = [
     {
@@ -78,7 +86,7 @@ function MarketCapTable() {
     },
     {
       field: "latest_timestamp",
-      headerName: "Latest Update",
+      headerName: "Last Updated",
       flex: 1,
       renderCell: (params) => moment(params.value).format('LTS') ?? '—',
     },
@@ -87,7 +95,7 @@ function MarketCapTable() {
 
   return (
     <Card>
-      <CardHeader title='Marketcap (24hr)' />
+      <CardHeader title='Marketcap  (24hr)' />
       <Box sx={{ height: 1200, width: '100%' }}>
         {loading ? (
           <CircularLoad />

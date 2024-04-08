@@ -14,7 +14,6 @@ function VolumeRankingTable() {
     setLoading(true)
     getVolumeChange()
       .then((coins) => {
-        console.log(coins);
         setCoins(coins);
         setLoading(false)
       })
@@ -27,7 +26,6 @@ function VolumeRankingTable() {
     {
       field: 'logo_url',
       headerName: '',
-      width: 70,
       renderCell: (params) => (
         <Box
           sx={{
@@ -54,12 +52,19 @@ function VolumeRankingTable() {
         </Box>
       ),
     },
-    { field: 'symbol', headerName: 'Symbol', width: 130 },
-    { field: 'coin_name', headerName: 'Coin Name', flex: 1 },
+    {
+      field: 'symbol',
+      headerName: 'Symbol'
+    },
+    {
+      field: 'coin_name',
+      headerName: 'Coin Name',
+      flex: 1
+    },
     {
       field: 'volume_over_marketcap',
       headerName: 'Volume/Market Cap',
-      width: 180,
+      flex: 1,
       type: 'number',
       renderCell: (params) => {
         if (params.value === null || params.value === undefined || isNaN(params.value)) return '—';
@@ -72,7 +77,7 @@ function VolumeRankingTable() {
     {
       field: 'timestamp',
       headerName: 'Latest Update',
-      width: 180,
+      flex: 1,
       renderCell: (params) => moment(params.value).format('LTS') ?? '—',
     },
   ];

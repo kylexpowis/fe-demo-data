@@ -4,6 +4,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import { Box, Typography, Card, CardHeader, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import LoadingScreen from '../custom/LoadingScreen';
 import moment from 'moment/moment';
+import NoResults from '../custom/NoResults';
 
 function NewPairsTable() {
     const [newPairs, setNewPairs] = useState([]);
@@ -33,6 +34,7 @@ function NewPairsTable() {
         {
             field: 'is_active',
             headerName: 'Status',
+            flex: 1,
             renderCell: (params) => {
                 if (params.value === null || params.value === undefined) {
                     return <span>—</span>;
@@ -90,9 +92,7 @@ function NewPairsTable() {
                         className='MuiDataGrid-virtualScroller'
                     />
                 ) : (
-                    <Box sx={{width: '100%', height: '75%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                        <Typography color='error' sx={{fontWeight: '600'}}>No new pairs recorded for the selected timeframe.</Typography>
-                    </Box>
+                    <NoResults/>
                 )}
             </Box>
         </Card>
