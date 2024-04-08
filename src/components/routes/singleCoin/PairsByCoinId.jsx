@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { getPairsByCoinId } from '../../../../config/api';
 import { DataGrid } from '@mui/x-data-grid';
-import { Box, Link, Paper, CardHeader } from '@mui/material';
+import { Box, Link as MuiLink, Paper, CardHeader } from '@mui/material';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import moment from 'moment/moment';
 import NoResults from '@/components/custom/NoResults';
 import LoadingScreen from '@/components/custom/LoadingScreen';
@@ -27,34 +28,61 @@ export function PairsByCoinId() {
 
     const columns = [
         {
+            field: 'quote_logo_url',
+            headerName: '',
+            width: 20,
+            sortable: false,
+            filterable: false,
+            disableColumnMenu: true,
+            renderCell: (params) => (
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        height: '100%',
+                    }}
+                >
+                    {params.value ? (
+                        <img
+                            src={params.value}
+                            alt={params.row.coin_name}
+                            style={{
+                                width: 30,
+                                height: 30,
+                                borderRadius: '50%',
+                                border: 'none',
+                            }}
+                        />
+                    ) : (
+                        <span> </span>
+                    )}
+                </Box>
+            ),
+        },
+        {
             field: 'pair_name',
             headerName: 'Pair Name',
             flex: 1,
             renderCell: (params) => (
-                <Link to={`/coins/${params.row.coin_id}`} target="_blank" rel="noopener noreferrer"
-                    sx={{
-                        fontWeight: 'bold',
-                        color: 'inherit',
-                        textDecoration: 'none',
-                        cursor: 'pointer',
-                        transition: 'all 0.2s ease-in-out',
-                        '&:hover': {
-                            color: 'primary.main',
-                        },
-                    }}>
+                <Box sx={{
+                    fontWeight: 'bold',
+                    color: 'inherit',
+                    textDecoration: 'none',
+                }}>
                     {params.value}
-                </Link>
+                    <MuiLink
+                        href={`https://www.binance.com/en-GB/trade/${replaceSlashWithUnderscore(params.row.pair_name)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        sx={{
+                            alignSelf: 'center',
+                        }}
+                    >
+                        <OpenInNewIcon sx={{ ml: 0.5, color: '#474c5c', fontSize: '1rem' }}  />
+                    </MuiLink>
+                </Box>
             )
-        },
-        {
-            field: 'is_active',
-            headerName: 'Status',
-            flex: 1,
-            renderCell: (params) => (
-                <span style={{ color: params.value ? 'green' : 'red' }}>
-                    {params.value ? 'Active' : 'Inactive'}
-                </span>
-            ),
         },
         {
             field: 'date_added',
@@ -64,70 +92,24 @@ export function PairsByCoinId() {
             renderCell: (params) => moment(params.value).format('lll') ?? '—',
         },
         {
-            field: 'base_logo_url',
-            headerName: 'Base Logo',
-            width: 130,
+            field: 'is_active',
+            headerName: 'Status',
+            flexGrow: 0,
             renderCell: (params) => (
-                <Box
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        height: '100%',
-                    }}
-                >
-                    {params.value ? (
-                        <img
-                            src={params.value}
-                            alt={params.row.coin_name}
-                            style={{
-                                width: 30,
-                                height: 30,
-                                borderRadius: '50%',
-                                border: 'none',
-                            }}
-                        />
-                    ) : (
-                        <span> </span>
-                    )}
-                </Box>
-            ),
-        },
-        {
-            field: 'quote_logo_url',
-            headerName: 'Quote Logo',
-            width: 130,
-            renderCell: (params) => (
-                <Box
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        height: '100%',
-                    }}
-                >
-                    {params.value ? (
-                        <img
-                            src={params.value}
-                            alt={params.row.coin_name}
-                            style={{
-                                width: 30,
-                                height: 30,
-                                borderRadius: '50%',
-                                border: 'none',
-                            }}
-                        />
-                    ) : (
-                        <span> </span>
-                    )}
-                </Box>
+                <span style={{ color: params.value ? 'green' : 'red' }}>
+                    {params.value ? 'Active' : 'Inactive'}
+                </span>
             ),
         },
     ];
 
+    const replaceSlashWithUnderscore = (str) => {
+        return str.replace(/\//g, '_');
+    }
+
     return (
         <>
-            <Box sx={{ height: '800px', width: '100%', padding: 10 }}>
+            <Box sx={{ height: '1200px', width: '100%', }}>
                 {loading ? (
                     <LoadingScreen />
                 ) : pairs.length > 0 ? (
@@ -138,10 +120,27 @@ export function PairsByCoinId() {
                         pagination
                         loading={loading}
                         getRowId={(row) => row.coin_id || Math.random()}
-                        className='MuiDataGrid-virtualScroller'
-                            sx={{
-                                borderRadius: '0',
-                            }}
+                        sx={{
+                            borderRadius: 0,
+                            border: 'none',
+                            '& .MuiDataGrid-columnHeader': {
+                                backgroundColor: 'transparent',
+                            },
+                            '& .MuiDataGrid-columnHeaderTitle': {
+                                backgroundColor: 'transparent',
+                                fontWeight: 'bold',
+                            },
+                            '& .MuiDataGrid-cell': {
+                                borderBottomColor: '#e0e0e0',
+                                '&:focus-within': {
+                                    outline: '2px solid #3FBF77',
+                                },
+                            },
+                            '& .MuiDataGrid-columnHeaderTitleContainer:hover': {
+                                color: '#34A853',
+                            },
+                            
+                        }}
                     />
                 ) : (
                     <NoResults />
