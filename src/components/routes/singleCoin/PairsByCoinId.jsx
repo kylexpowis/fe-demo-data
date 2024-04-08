@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from "react-router-dom";
 import { getPairsByCoinId } from '../../../../config/api';
 import { DataGrid } from '@mui/x-data-grid';
-import { Box, Link, Card, CardHeader } from '@mui/material';
+import { Box, Link, Paper, CardHeader } from '@mui/material';
 import moment from 'moment/moment';
 import NoResults from '@/components/custom/NoResults';
 import LoadingScreen from '@/components/custom/LoadingScreen';
 
-export function SingleCoinPairs() {
+export function PairsByCoinId() {
     const [pairs, setPairs] = useState([]);
     const [loading, setLoading] = useState(true);
     const { coin_id } = useParams();
@@ -68,9 +68,29 @@ export function SingleCoinPairs() {
             headerName: 'Base Logo',
             width: 130,
             renderCell: (params) => (
-                params.value ? (
-                    <img src={params.value} alt="Base Logo" style={{ width: 30, height: 30, borderRadius: '50%' }} />
-                ) : <span>—</span>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        height: '100%',
+                    }}
+                >
+                    {params.value ? (
+                        <img
+                            src={params.value}
+                            alt={params.row.coin_name}
+                            style={{
+                                width: 30,
+                                height: 30,
+                                borderRadius: '50%',
+                                border: 'none',
+                            }}
+                        />
+                    ) : (
+                        <span> </span>
+                    )}
+                </Box>
             ),
         },
         {
@@ -78,22 +98,36 @@ export function SingleCoinPairs() {
             headerName: 'Quote Logo',
             width: 130,
             renderCell: (params) => (
-                params.value ? (
-                    <img src={params.value} alt="Quote Logo" style={{ width: 30, height: 30, borderRadius: '50%' }} />
-                ) : <span>—</span>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        height: '100%',
+                    }}
+                >
+                    {params.value ? (
+                        <img
+                            src={params.value}
+                            alt={params.row.coin_name}
+                            style={{
+                                width: 30,
+                                height: 30,
+                                borderRadius: '50%',
+                                border: 'none',
+                            }}
+                        />
+                    ) : (
+                        <span> </span>
+                    )}
+                </Box>
             ),
         },
     ];
 
     return (
-        <Card sx={{
-            ':hover': {
-                outline: '1px solid #cccccc',
-                boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.1), 0px 2px 6px rgba(0, 0, 0, 0.2)'
-            },
-        }}>
-            <CardHeader title='New Pairs' sx={{ '& .MuiCardHeader-title': { fontWeight: '600' } }} />
-            <Box sx={{ height: 'auto', width: '100%' }}>
+        <>
+            <Box sx={{ height: '800px', width: '100%', padding: 10 }}>
                 {loading ? (
                     <LoadingScreen />
                 ) : pairs.length > 0 ? (
@@ -105,12 +139,15 @@ export function SingleCoinPairs() {
                         loading={loading}
                         getRowId={(row) => row.coin_id || Math.random()}
                         className='MuiDataGrid-virtualScroller'
+                            sx={{
+                                borderRadius: '0',
+                            }}
                     />
                 ) : (
                     <NoResults />
                 )}
             </Box>
-        </Card>
+        </>
     );
 }
 
