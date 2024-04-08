@@ -1,8 +1,15 @@
 import { getSummary } from "../../../config/api";
 import { useEffect, useState } from "react";
-import { DataGrid } from '@mui/x-data-grid';
-import { Box, Typography, Card, CardHeader, Link } from '@mui/material';
-import LoadingScreen from '../custom/LoadingScreen';
+import { DataGrid } from "@mui/x-data-grid";
+import {
+  Box,
+  Typography,
+  Card,
+  CardHeader,
+  Link as MuiLink,
+} from "@mui/material";
+import LoadingScreen from "../custom/LoadingScreen";
+import { Link } from "react-router-dom";
 
 export const Summary = () => {
   const [coins, setCoins] = useState([]);
@@ -22,16 +29,16 @@ export const Summary = () => {
 
   const columns = [
     {
-      field: 'logo_url',
-      headerName: '',
-      type: 'string',
+      field: "logo_url",
+      headerName: "",
+      type: "string",
       renderCell: (params) => (
         <Box
           sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '100%',
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
           }}
         >
           {params.value ? (
@@ -41,8 +48,8 @@ export const Summary = () => {
               style={{
                 width: 30,
                 height: 30,
-                borderRadius: '50%',
-                border: 'none',
+                borderRadius: "50%",
+                border: "none",
               }}
             />
           ) : (
@@ -52,67 +59,78 @@ export const Summary = () => {
       ),
     },
     {
-      field: 'symbol',
-      headerName: 'Symbol',
-      type: 'string',
+      field: "symbol",
+      headerName: "Symbol",
+      type: "string",
       flexGrow: 0,
       renderCell: (params) => (
-        <Link to={`/coins/${params.row.coin_id}`} target="_blank" rel="noopener noreferrer"
+        <MuiLink
+          component={Link}
+          to={`/coins/${params.row.coin_id}`}
+          target="_blank"
+          rel="noopener noreferrer"
           sx={{
-            fontWeight: 'bold',
-            color: 'inherit',
-            textDecoration: 'none',
-            cursor: 'pointer',
-            transition: 'all 0.2s ease-in-out',
-            '&:hover': {
-              color: 'primary.main',
+            fontWeight: "bold",
+            color: "inherit",
+            textDecoration: "none",
+            cursor: "pointer",
+            transition: "all 0.2s ease-in-out",
+            "&:hover": {
+              color: "primary.main",
             },
-          }}>
+          }}
+        >
           {params.value}
-        </Link>
-      )
-    },
-    {
-      field: 'coin_name',
-      headerName: 'Coin Name',
-      type: 'string',
-      flex: 1,
-      renderCell: (params) => (
-        <span style={{ opacity: 0.7, fontWeight: '600' }}>{params.value}</span>
+        </MuiLink>
       ),
     },
     {
-      field: 'pairs_added',
-      headerName: 'Pairs Added (24h)',
-      type: 'int',
+      field: "coin_name",
+      headerName: "Coin Name",
+      type: "string",
       flex: 1,
-      renderCell: (params) => params.value ?? '—'
+      renderCell: (params) => (
+        <span style={{ opacity: 0.7, fontWeight: "600" }}>{params.value}</span>
+      ),
     },
     {
-      field: 'pairs_removed',
-      headerName: 'Pairs removed (24h)',
-      type: 'int',
+      field: "pairs_added",
+      headerName: "Pairs Added (24h)",
+      type: "int",
       flex: 1,
-      renderCell: (params) => params.value ?? '—'
+      renderCell: (params) => params.value ?? "—",
     },
     {
-      field: 'pair_count',
-      headerName: 'Total Pairs',
-      type: 'int',
+      field: "pairs_removed",
+      headerName: "Pairs removed (24h)",
+      type: "int",
       flex: 1,
-      renderCell: (params) => params.value ?? '—'
-    }
-  ]
+      renderCell: (params) => params.value ?? "—",
+    },
+    {
+      field: "pair_count",
+      headerName: "Total Pairs",
+      type: "int",
+      flex: 1,
+      renderCell: (params) => params.value ?? "—",
+    },
+  ];
 
   return (
-    <Card sx={{
-      ':hover': {
-        outline: '1px solid #cccccc',
-        boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.1), 0px 2px 6px rgba(0, 0, 0, 0.2)'
-      },
-    }}>
-      <CardHeader title='Market Overview' sx={{ '& .MuiCardHeader-title': { fontWeight: '600' } }} />
-      <Box sx={{ height: 800, width: '100%' }}>
+    <Card
+      sx={{
+        ":hover": {
+          outline: "1px solid #cccccc",
+          boxShadow:
+            "0px 3px 6px rgba(0, 0, 0, 0.1), 0px 2px 6px rgba(0, 0, 0, 0.2)",
+        },
+      }}
+    >
+      <CardHeader
+        title="Market Overview"
+        sx={{ "& .MuiCardHeader-title": { fontWeight: "600" } }}
+      />
+      <Box sx={{ height: 800, width: "100%" }}>
         {isLoading ? (
           <LoadingScreen />
         ) : coins.length > 0 ? (
@@ -131,5 +149,4 @@ export const Summary = () => {
       </Box>
     </Card>
   );
-
 };

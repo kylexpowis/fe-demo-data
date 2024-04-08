@@ -1,21 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { getMarketCapStats } from "../../../config/api";
-import { DataGrid } from '@mui/x-data-grid';
-import { Box, Typography, Card, CardHeader, Link } from '@mui/material';
-import moment from 'moment/moment';
+import { DataGrid } from "@mui/x-data-grid";
+import {
+  Box,
+  Typography,
+  Card,
+  CardHeader,
+  Link as MuiLink,
+} from "@mui/material";
+import moment from "moment/moment";
 import CircularLoad from "../custom/CircularLoad";
+import { Link } from "react-router-dom";
 
 function MarketCapTable() {
   const [coins, setCoins] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     getMarketCapStats()
       .then((coins) => {
         const deduplicatedCoins = deduplicateCoins(coins);
         setCoins(deduplicatedCoins);
-        setLoading(false)
+        setLoading(false);
       })
       .catch((err) => {
         console.error("Failed to fetch marketcap data.", err);
@@ -32,19 +39,19 @@ function MarketCapTable() {
 
   const columns = [
     {
-      field: 'logo_url',
-      headerName: '',
+      field: "logo_url",
+      headerName: "",
       flexGrow: 0,
-      sortable: false, 
-      filterable: false, 
+      sortable: false,
+      filterable: false,
       disableColumnMenu: true,
       renderCell: (params) => (
         <Box
           sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '100%',
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
           }}
         >
           {params.value ? (
@@ -54,8 +61,8 @@ function MarketCapTable() {
               style={{
                 width: 30,
                 height: 30,
-                borderRadius: '50%',
-                border: 'none',
+                borderRadius: "50%",
+                border: "none",
               }}
             />
           ) : (
@@ -69,19 +76,24 @@ function MarketCapTable() {
       headerName: "Symbol",
       flexGrow: 0,
       renderCell: (params) => (
-        <Link to={`/coins/${params.row.coin_id}`} target="_blank" rel="noopener noreferrer"
-              sx={{
-                fontWeight: 'bold',
-                color: 'inherit',
-                textDecoration: 'none',
-                cursor: 'pointer',
-                transition: 'all 0.2s ease-in-out',
-                '&:hover': {
-                  color: 'primary.main', 
-                },
-              }}>
+        <MuiLink
+          component={Link}
+          to={`/coins/${params.row.coin_id}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          sx={{
+            fontWeight: "bold",
+            color: "inherit",
+            textDecoration: "none",
+            cursor: "pointer",
+            transition: "all 0.2s ease-in-out",
+            "&:hover": {
+              color: "primary.main",
+            },
+          }}
+        >
           {params.value}
-        </Link>
+        </MuiLink>
       ),
     },
     {
@@ -89,7 +101,7 @@ function MarketCapTable() {
       headerName: "Coin Name",
       flex: 1,
       renderCell: (params) => (
-        <span style={{ opacity: 0.7, fontWeight: '500' }}>{params.value}</span>
+        <span style={{ opacity: 0.7, fontWeight: "500" }}>{params.value}</span>
       ),
     },
     {
@@ -98,10 +110,16 @@ function MarketCapTable() {
       type: "number",
       flex: 1,
       renderCell: (params) => {
-        if (params.value === null || params.value === undefined || isNaN(params.value)) return '—';
+        if (
+          params.value === null ||
+          params.value === undefined ||
+          isNaN(params.value)
+        )
+          return "—";
         const numericValue = parseFloat(params.value);
         const formattedValue = `${numericValue.toFixed(2)}%`;
-        const color = numericValue > 0 ? 'green' : numericValue < 0 ? 'red' : 'inherit';
+        const color =
+          numericValue > 0 ? "green" : numericValue < 0 ? "red" : "inherit";
         return <span style={{ color }}>{formattedValue}</span>;
       },
     },
@@ -109,19 +127,25 @@ function MarketCapTable() {
       field: "latest_timestamp",
       headerName: "Last Updated",
       flex: 1,
-      renderCell: (params) => moment(params.value).format('LTS') ?? '—',
+      renderCell: (params) => moment(params.value).format("LTS") ?? "—",
     },
   ];
 
   return (
-    <Card sx={{
-      ':hover': {
-        outline: '1px solid #cccccc',
-        boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.1), 0px 2px 6px rgba(0, 0, 0, 0.2)'
-      },
-    }}>
-      <CardHeader title='Marketcap  (24hr)' sx={{ '& .MuiCardHeader-title': { fontWeight: '600' } }} />
-      <Box sx={{ height: 1200, width: '100%' }}>
+    <Card
+      sx={{
+        ":hover": {
+          outline: "1px solid #cccccc",
+          boxShadow:
+            "0px 3px 6px rgba(0, 0, 0, 0.1), 0px 2px 6px rgba(0, 0, 0, 0.2)",
+        },
+      }}
+    >
+      <CardHeader
+        title="Marketcap  (24hr)"
+        sx={{ "& .MuiCardHeader-title": { fontWeight: "600" } }}
+      />
+      <Box sx={{ height: 1200, width: "100%" }}>
         {loading ? (
           <CircularLoad />
         ) : coins.length > 0 ? (

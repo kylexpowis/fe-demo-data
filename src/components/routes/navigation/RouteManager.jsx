@@ -30,6 +30,7 @@ export const LoggedIn = () => {
                 <Route path="/rankings/volume" element={<VolumesRanking /> } />
                 <Route path="/coins/:coin_id" element={<SingleCoinView />}  />
                 <Route path="/my-account" element={ <AccountPage />}/>
+
             </Routes>
         </div>
     )
