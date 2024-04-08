@@ -1,9 +1,8 @@
 import { getSummary } from "../../../config/api";
 import { useEffect, useState } from "react";
 import { DataGrid } from '@mui/x-data-grid';
-import { Box, Typography, Card, CardHeader } from '@mui/material';
+import { Box, Typography, Card, CardHeader, Link } from '@mui/material';
 import LoadingScreen from '../custom/LoadingScreen';
-import { Link } from "react-router-dom";
 
 export const Summary = () => {
   const [coins, setCoins] = useState([]);
@@ -56,15 +55,31 @@ export const Summary = () => {
       field: 'symbol',
       headerName: 'Symbol',
       type: 'string',
-      
-      renderCell: (params) => params.value ?? '—'
+      flexGrow: 0,
+      renderCell: (params) => (
+        <Link to={`/coins/${params.row.coin_id}`} target="_blank" rel="noopener noreferrer"
+          sx={{
+            fontWeight: 'bold',
+            color: 'inherit',
+            textDecoration: 'none',
+            cursor: 'pointer',
+            transition: 'all 0.2s ease-in-out',
+            '&:hover': {
+              color: 'primary.main',
+            },
+          }}>
+          {params.value}
+        </Link>
+      )
     },
     {
       field: 'coin_name',
       headerName: 'Coin Name',
       type: 'string',
       flex: 1,
-      renderCell: (params) => params.value ?? '—'
+      renderCell: (params) => (
+        <span style={{ opacity: 0.7, fontWeight: '600' }}>{params.value}</span>
+      ),
     },
     {
       field: 'pairs_added',
@@ -90,8 +105,13 @@ export const Summary = () => {
   ]
 
   return (
-    <Card>
-      <CardHeader title='Market Overview'/>
+    <Card sx={{
+      ':hover': {
+        outline: '1px solid #cccccc',
+        boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.1), 0px 2px 6px rgba(0, 0, 0, 0.2)'
+      },
+    }}>
+      <CardHeader title='Market Overview' sx={{ '& .MuiCardHeader-title': { fontWeight: '600' } }} />
       <Box sx={{ height: 800, width: '100%' }}>
         {isLoading ? (
           <LoadingScreen />

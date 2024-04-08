@@ -9,7 +9,7 @@ export const dark = createTheme({
             contrastText: 'rgba(255,255,255,0.87)',
         },
         secondary: {
-            main: '#3FBF77',
+            main: '#36AB6D',
             contrastText: 'rgba(255,255,255,0.87)',
         },
         error: {
@@ -17,10 +17,11 @@ export const dark = createTheme({
         },
         background: {
             default: '#0a0a0a',
-            paper: '#0a0a0a',
+            paper: '#121212',
         },
         text: {
-            main: '#d6d6d6'
+            main: '#d6d6d6',
+            secondary: '#E0E0E0',
         },
     },
     typography: {
@@ -45,6 +46,45 @@ export const dark = createTheme({
     },
     transitions: 'all 0.2s ease-in-out',
     components: {
+        MuiCssBaseline: {
+            styleOverrides: {
+                '&::-webkit-scrollbar': {
+                    width: '10px',
+                    height: '10px',
+                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                },
+                '&::-webkit-scrollbar-button': {
+                    width: '22px',
+                    height: '22px',
+                },
+                '&::-webkit-scrollbar-thumb': {
+                    background: 'rgba(255, 255, 255, 0.2)',
+                    border: '4px solid rgba(0, 0, 0, 0)',
+                    borderRadius: '50px',
+                    transition: 'background-color 0.3s ease',
+                    '&:hover': {
+                        background: 'rgba(255, 255, 255, 0.4)',
+                    },
+                    '&:active': {
+                        background: 'rgba(255, 255, 255, 0.5)',
+                    },
+                },
+                '&::-webkit-scrollbar-track': {
+                    background: 'rgba(0, 0, 0, 0.2)',
+                    borderRadius: '50px',
+                    transition: 'background-color 0.3s ease',
+                    '&:hover': {
+                        background: 'rgba(0, 0, 0, 0.3)',
+                    },
+                    '&:active': {
+                        background: 'rgba(0, 0, 0, 0.4)',
+                    },
+                },
+                '&::-webkit-scrollbar-corner': {
+                    background: 'transparent',
+                },
+            },
+        },
         MuiSnackbarContent: {
             styleOverrides: {
                 root: {
@@ -195,6 +235,41 @@ export const dark = createTheme({
                 },
             },
         },
+        MuiDataGrid: {
+            styleOverrides: {
+                root: {
+                    fontSize: '0.875rem',
+                    borderColor: '#333333',
+                    color: '#E0E0E0',
+                },
+                columnHeaders: {
+                    backgroundColor: '#121212',
+                    color: '#36AB6D',
+                    fontWeight: 'bold',
+                    borderTop: '1px solid #2a2a2a',
+                    borderBottom: '2px solid #333333',
+                },
+                row: {
+                    '&:hover': {
+                        backgroundColor: '#1a1a1a',
+                    },
+                },
+                cell: {
+                    borderBottomColor: '#2a2a2a',
+                    '&:focus': {
+                        outline: '2px solid #36AB6D',
+                    },
+                },
+                columnHeader: {
+                    '&:hover': {
+                        color: '#3FBF77',
+                    },
+                },
+                sortIcon: {
+                    color: '#36AB6D',
+                },
+            },
+        },
         MuiTable: {
             styleOverrides: {
                 root: {
@@ -284,7 +359,7 @@ export const dark = createTheme({
                         color: '#fff',
                     },
                     '&.Mui-focused input': {
-                        color: '#ffffff', 
+                        color: '#ffffff',
                     },
                 },
                 underline: {
@@ -345,17 +420,17 @@ export const light = createTheme({
             contrastText: 'rgba(255,255,255,0.87)',
         },
         secondary: {
-            main: '#3FBF77',
+            main: '#34A853',
+        },
+        error: {
+            main: '#D32F2F',
         },
         background: {
             default: '#f1f1f1',
-            paper: '#0a0a0a',
-        },
-        error: {
-            main: '#e83333',
+            paper: '#FFFFFF',
         },
         text: {
-            main: '#d6d6d6'
+            main: '#333333',
         },
     },
     typography: {
@@ -380,6 +455,47 @@ export const light = createTheme({
     },
     components: {
         transition: 'all 0.2s ease-in-out',
+        MuiCssBaseline: {
+            styleOverrides: {
+                '&::-webkit-scrollbar': {
+                    width: '10px',
+                    height: '10px',
+                    backgroundColor: 'rgba(0, 0, 0, 0.1)', 
+                },
+                '&::-webkit-scrollbar-button': {
+                    width: '22px',
+                    height: '22px',
+                },
+                '&::-webkit-scrollbar-thumb': {
+                    background: 'rgba(0, 0, 0, 0.2)', 
+                    border: '4px solid rgba(255, 255, 255, 0)', 
+                    borderRadius: '50px',
+                    transition: 'background-color 0.3s ease-in-out', 
+                    '&:hover': {
+                        transition: 'background-color 0.3s ease-in-out',
+                        background: 'rgba(0, 0, 0, 0.3)', 
+                    },
+                    '&:active': {
+                        transition: 'background-color 0.3s ease-in-out',
+                        background: 'rgba(0, 0, 0, 0.4)', 
+                    },
+                },
+                '&::-webkit-scrollbar-track': {
+                    background: 'rgba(255, 255, 255, 0.5)', 
+                    borderRadius: '50px',
+                    transition: 'background-color 0.3s ease-in-out', 
+                    '&:hover': {
+                        background: 'rgba(255, 255, 255, 0.6)', 
+                    },
+                    '&:active': {
+                        background: 'rgba(255, 255, 255, 0.7)', 
+                    },
+                },
+                '&::-webkit-scrollbar-corner': {
+                    background: 'transparent',
+                },
+            },
+        },
         MuiButton: {
             styleOverrides: {
                 root: {
@@ -528,6 +644,41 @@ export const light = createTheme({
                 },
             },
         },
+        MuiDataGrid: {
+            styleOverrides: {
+                root: {
+                    fontSize: '0.875rem',
+                    borderColor: '#e0e0e0',
+                    color: '#333333',
+                },
+                columnHeaders: {
+                    backgroundColor: '#f1f1f1',
+                    color: '#3FBF77',
+                    fontWeight: 'bold',
+                    borderTop: '1px solid #e0e0e0',
+                    borderBottom: '2px solid #e0e0e0',
+                },
+                row: {
+                    '&:hover': {
+                        backgroundColor: '#f9f9f9',
+                    },
+                },
+                cell: {
+                    borderBottomColor: '#e0e0e0',
+                    '&:focus': {
+                        outline: '2px solid #3FBF77',
+                    },
+                },
+                columnHeader: {
+                    '&:hover': {
+                        color: '#34A853',
+                    },
+                },
+                sortIcon: {
+                    color: '#3FBF77',
+                },
+            },
+        },
         MuiTable: {
             styleOverrides: {
                 root: {
@@ -617,7 +768,7 @@ export const light = createTheme({
                         color: '#000000',
                     },
                     '&.Mui-focused input': {
-                        color: '#0a0a0a', 
+                        color: '#0a0a0a',
                     },
                 },
                 underline: {
@@ -668,3 +819,5 @@ export const light = createTheme({
         },
     },
 });
+
+

@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { getVolumeChange } from "../../../config/api";
 import { DataGrid } from '@mui/x-data-grid';
-import { Box, Typography, Card, CardHeader } from '@mui/material';
-import LoadingScreen from '../custom/LoadingScreen';
+import { Box, Typography, Card, CardHeader, Link } from '@mui/material';
 import moment from 'moment/moment';
-import { Link } from "react-router-dom";
+import CircularLoad from "../custom/CircularLoad";
 
 function VolumeRankingTable() {
   const [coins, setCoins] = useState([]);
@@ -14,7 +13,6 @@ function VolumeRankingTable() {
     setLoading(true)
     getVolumeChange()
       .then((coins) => {
-        console.log(coins);
         setCoins(coins);
         setLoading(false)
       })
@@ -27,7 +25,10 @@ function VolumeRankingTable() {
     {
       field: 'logo_url',
       headerName: '',
-      width: 70,
+      flexGrow: 0,
+      sortable: false, 
+      filterable: false, 
+      disableColumnMenu: true,
       renderCell: (params) => (
         <Box
           sx={{
@@ -54,12 +55,38 @@ function VolumeRankingTable() {
         </Box>
       ),
     },
-    { field: 'symbol', headerName: 'Symbol', width: 130 },
-    { field: 'coin_name', headerName: 'Coin Name', flex: 1 },
+    {
+      field: 'symbol',
+      headerName: 'Symbol',
+      flexGrow: 0,
+      renderCell: (params) => (
+        <Link to={`/coins/${params.row.coin_id}`} target="_blank" rel="noopener noreferrer"
+              sx={{
+                fontWeight: 'bold',
+                color: 'inherit',
+                textDecoration: 'none',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease-in-out',
+                '&:hover': {
+                  color: 'primary.main', 
+                },
+              }}>
+          {params.value}
+        </Link>
+      )
+    },
+    {
+      field: 'coin_name',
+      headerName: 'Coin Name',
+      flex: 1,
+      renderCell: (params) => (
+        <span style={{ opacity: 0.7, fontWeight: '500' }}>{params.value}</span>
+      ),
+    },
     {
       field: 'volume_over_marketcap',
       headerName: 'Volume/Market Cap',
-      width: 180,
+      flex: 1,
       type: 'number',
       renderCell: (params) => {
         if (params.value === null || params.value === undefined || isNaN(params.value)) return '—';
@@ -71,19 +98,24 @@ function VolumeRankingTable() {
     },
     {
       field: 'timestamp',
-      headerName: 'Latest Update',
-      width: 180,
+      headerName: 'Last Updated',
+      flex: 1,
       renderCell: (params) => moment(params.value).format('LTS') ?? '—',
     },
   ];
 
 
   return (
-    <Card>
-      <CardHeader title='Volume/MarketCap'/>
-      <Box sx={{ height: 800, width: '100%' }}>
+    <Card sx={{
+      ':hover': {
+        outline: '1px solid #cccccc',
+        boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.1), 0px 2px 6px rgba(0, 0, 0, 0.2)'
+      },
+    }}>
+      <CardHeader title='Volume/MarketCap' sx={{'& .MuiCardHeader-title': { fontWeight: '600' }}}/>
+      <Box sx={{ height: 1200, width: '100%' }}>
         {loading ? (
-          <LoadingScreen />
+          <CircularLoad />
         ) : coins.length > 0 ? (
           <DataGrid
             rows={coins}

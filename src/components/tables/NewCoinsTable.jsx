@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { getNewCoins } from '../../../config/api';
 import { DataGrid } from '@mui/x-data-grid';
-import { Box, Typography, Card, CardHeader, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { Box, Link, Card, CardHeader, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import LoadingScreen from '../custom/LoadingScreen';
 import moment from 'moment/moment';
+import NoResults from '../custom/NoResults';
 
 function NewCoinsTable() {
     const [newCoins, setNewCoins] = useState([]);
@@ -57,13 +58,30 @@ function NewCoinsTable() {
         {
             field: 'symbol',
             headerName: 'Symbol',
-            renderCell: (params) => params.value ?? '—'
+            flexGrow: 0,
+            renderCell: (params) => (
+                <Link to={`/coins/${params.row.coin_id}`} target="_blank" rel="noopener noreferrer"
+                    sx={{
+                        fontWeight: 'bold',
+                        color: 'inherit',
+                        textDecoration: 'none',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease-in-out',
+                        '&:hover': {
+                            color: 'primary.main',
+                        },
+                    }}>
+                    {params.value}
+                </Link>
+            )
         },
         {
             field: 'coin_name',
             headerName: 'Coin Name',
             flex: 1,
-            renderCell: (params) => params.value ?? '—'
+            renderCell: (params) => (
+                <span style={{ opacity: 0.7, fontWeight: '600' }}>{params.value}</span>
+            ),
         },
         {
             field: 'is_active',
@@ -90,7 +108,12 @@ function NewCoinsTable() {
 
 
     return (
-        <Card sx={{ boxShadow: 'none' }}>
+        <Card sx={{
+            ':hover': {
+                outline: '1px solid #cccccc',
+                boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.1), 0px 2px 6px rgba(0, 0, 0, 0.2)'
+            },
+        }}>
             <CardHeader title='New Coins' action={
                 <FormControl size="small">
                     <InputLabel id="timeframe-select-label">Time Frame</InputLabel>
@@ -111,7 +134,7 @@ function NewCoinsTable() {
                         <MenuItem value="28 days">28 Days</MenuItem>
                     </Select>
                 </FormControl>
-            } />
+            } sx={{ '& .MuiCardHeader-title': { fontWeight: '600' } }} />
             <Box sx={{ height: 300, width: '100%' }}>
                 {isLoading ? (
                     <LoadingScreen />
@@ -126,9 +149,7 @@ function NewCoinsTable() {
                         className='MuiDataGrid-virtualScroller'
                     />
                 ) : (
-                    <Box sx={{ width: '100%', height: '75%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <Typography color='error' sx={{fontWeight: '600'}}>No new coins recorded for the selected timeframe.</Typography>
-                    </Box>
+                    <NoResults />
                 )}
             </Box>
         </Card>
