@@ -675,7 +675,7 @@ export const light = createTheme({
                     },
                 },
                 sortIcon: {
-                    color: '#3FBF77',
+                    color: '#0d1421',
                 },
             },
         },

@@ -20,13 +20,22 @@ function VolumeRankingTable() {
     setLoading(true);
     getVolumeChange()
       .then((coins) => {
-        setCoins(coins);
-        setLoading(false);
+        const deduplicatedCoins = deduplicateCoins(coins);
+        setCoins(deduplicatedCoins);
+        setLoading(false)
       })
       .catch((err) => {
         console.error("Failed to fetch 24hr volume data.", err);
       });
   }, []);
+
+  const deduplicateCoins = (fetchedCoins) => {
+    const uniqueCoins = new Map();
+    fetchedCoins.forEach((coin) => {
+      uniqueCoins.set(coin.coin_id, coin);
+    });
+    return Array.from(uniqueCoins.values());
+  };
 
   const columns = [
     {
