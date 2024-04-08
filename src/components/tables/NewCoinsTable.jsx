@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getNewCoins } from '../../../config/api';
 import { DataGrid } from '@mui/x-data-grid';
-import { Box, Typography, Card, CardHeader, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { Box, Link, Card, CardHeader, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import LoadingScreen from '../custom/LoadingScreen';
 import moment from 'moment/moment';
 import NoResults from '../custom/NoResults';
@@ -58,13 +58,30 @@ function NewCoinsTable() {
         {
             field: 'symbol',
             headerName: 'Symbol',
-            renderCell: (params) => params.value ?? '—'
+            flexGrow: 0,
+            renderCell: (params) => (
+                <Link to={`/coins/${params.row.coin_id}`} target="_blank" rel="noopener noreferrer"
+                    sx={{
+                        fontWeight: 'bold',
+                        color: 'inherit',
+                        textDecoration: 'none',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease-in-out',
+                        '&:hover': {
+                            color: 'primary.main',
+                        },
+                    }}>
+                    {params.value}
+                </Link>
+            )
         },
         {
             field: 'coin_name',
             headerName: 'Coin Name',
             flex: 1,
-            renderCell: (params) => params.value ?? '—'
+            renderCell: (params) => (
+                <span style={{ opacity: 0.7, fontWeight: '600' }}>{params.value}</span>
+            ),
         },
         {
             field: 'is_active',
@@ -117,7 +134,7 @@ function NewCoinsTable() {
                         <MenuItem value="28 days">28 Days</MenuItem>
                     </Select>
                 </FormControl>
-            } sx={{'& .MuiCardHeader-title': { fontWeight: '600' }}}/>
+            } sx={{ '& .MuiCardHeader-title': { fontWeight: '600' } }} />
             <Box sx={{ height: 300, width: '100%' }}>
                 {isLoading ? (
                     <LoadingScreen />
