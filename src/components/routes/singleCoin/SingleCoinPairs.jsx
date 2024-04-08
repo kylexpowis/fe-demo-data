@@ -1,34 +1,23 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from "react-router-dom";
 import { getPairsByCoinId } from '../../../../config/api';
-import {
-    Table,
-    TableHead,
-    TableBody,
-    TableRow,
-    TableCell,
-    Typography,
-    TableContainer,
-    Link as MuiLink,
-    Pagination,
-    Grid,
-    MenuItem,
-    PaginationItem,
-    Select,
-} from "@mui/material";
-import { Link } from 'react-router-dom'
-import { format } from "date-fns";
+import { DataGrid } from '@mui/x-data-grid';
+import { Box, Link, Card, CardHeader } from '@mui/material';
+import moment from 'moment/moment';
+import NoResults from '@/components/custom/NoResults';
+import LoadingScreen from '@/components/custom/LoadingScreen';
 
 export function SingleCoinPairs() {
-    const [pairs, setPairs] = useState();
-    const [isloading, setLoading] = useState(true);
+    const [pairs, setPairs] = useState([]);
+    const [loading, setLoading] = useState(true);
     const { coin_id } = useParams();
-    const [page, setPage] = useState(1);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+
     useEffect(() => {
+        setLoading(true)
         getPairsByCoinId(coin_id)
-            .then((result) => {
-                setPairs(result);
+            .then((pairs) => {
+                console.log(pairs);
+                setPairs(pairs);
                 setLoading(false);
             })
             .catch((err) => {
@@ -36,103 +25,92 @@ export function SingleCoinPairs() {
             });
     }, [coin_id]);
 
-    const handleChangePage = (event, value) => {
-        setPage(value);
-    };
-
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(event.target.value);
-        setPage(1);
-    }
-
-    if (isloading) return <p>Loading...</p>;
-    
-    const totalCoins = pairs.length;
-    const totalPages = Math.ceil(totalCoins / rowsPerPage);
-    const startIndex = (page - 1) * rowsPerPage;
-    const endIndex = Math.min(startIndex + rowsPerPage, totalCoins);
-    const paginatedPairs = pairs.slice(startIndex, endIndex);
+    const columns = [
+        {
+            field: 'pair_name',
+            headerName: 'Pair Name',
+            flex: 1,
+            renderCell: (params) => (
+                <Link to={`/coins/${params.row.coin_id}`} target="_blank" rel="noopener noreferrer"
+                    sx={{
+                        fontWeight: 'bold',
+                        color: 'inherit',
+                        textDecoration: 'none',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease-in-out',
+                        '&:hover': {
+                            color: 'primary.main',
+                        },
+                    }}>
+                    {params.value}
+                </Link>
+            )
+        },
+        {
+            field: 'is_active',
+            headerName: 'Status',
+            flex: 1,
+            renderCell: (params) => (
+                <span style={{ color: params.value ? 'green' : 'red' }}>
+                    {params.value ? 'Active' : 'Inactive'}
+                </span>
+            ),
+        },
+        {
+            field: 'date_added',
+            headerName: 'Date Added',
+            type: 'timestamp',
+            flex: 1,
+            renderCell: (params) => moment(params.value).format('lll') ?? '—',
+        },
+        {
+            field: 'base_logo_url',
+            headerName: 'Base Logo',
+            width: 130,
+            renderCell: (params) => (
+                params.value ? (
+                    <img src={params.value} alt="Base Logo" style={{ width: 30, height: 30, borderRadius: '50%' }} />
+                ) : <span>—</span>
+            ),
+        },
+        {
+            field: 'quote_logo_url',
+            headerName: 'Quote Logo',
+            width: 130,
+            renderCell: (params) => (
+                params.value ? (
+                    <img src={params.value} alt="Quote Logo" style={{ width: 30, height: 30, borderRadius: '50%' }} />
+                ) : <span>—</span>
+            ),
+        },
+    ];
 
     return (
-        <>
-            <Typography variant="h6" component="div">
-                All Pairs Overview
-            </Typography>
-            <TableContainer>
-                <Table aria-label="coin table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Pair Name</TableCell>
-                            
-                            <TableCell>Is Active</TableCell>
-                            <TableCell>Date Added</TableCell>
-                            <TableCell>Base Logo</TableCell>
-                            <TableCell>Quote Logo</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {paginatedPairs.map((pair) => {
-                            return (
-                                <TableRow key={pair.pair_name}>
-                                    <TableCell style={{ width: 'fit-content' }}>{pair.pair_name}</TableCell>
-                                    <TableCell>
-                                        {pair.is_active ? (
-                                            <Typography style={{ color: 'green' }}>Active</Typography>
-                                        ) : (
-                                            <Typography style={{ color: 'red' }}>Removed</Typography>
-                                        )}
-                                    </TableCell>
-                                    <TableCell style={{ width: 'fit-content' }}>{format(new Date(pair.date_added), 'PPpp')}</TableCell>
-                                    <TableCell style={{ width: 'fit-content' }}>
-                                        {<img src={pair.base_logo_url} alt="coin icon" style={{ width: "24px", marginRight: '8px' }} />}
-                                    </TableCell>
-                                    <TableCell style={{ width: 'fit-content' }}>
-                                        {<img src={pair.quote_logo_url} alt="coin icon" style={{ width: "24px", marginRight: '8px' }} />}
-                                    </TableCell>
-                                </TableRow>
-                            );
-                        })}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            <Grid container justifyContent="center" marginTop={2} marginBottom={2}>
-                <div className="rowSelect">
-                    <Pagination
-                        count={totalPages}
-                        page={page}
-                        onChange={handleChangePage}
-                        renderItem={(item) => (
-                            <PaginationItem
-                                {...item}
-                                style={{
-                                    background: item.page === page ? 'linear-gradient(to right, #00e99b, #4fd1c5)' : 'transparent',
-                                    color: item.page === page ? 'white' : 'black',
-                                }}
-                            />
-                        )}
+        <Card sx={{
+            ':hover': {
+                outline: '1px solid #cccccc',
+                boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.1), 0px 2px 6px rgba(0, 0, 0, 0.2)'
+            },
+        }}>
+            <CardHeader title='New Pairs' sx={{ '& .MuiCardHeader-title': { fontWeight: '600' } }} />
+            <Box sx={{ height: 'auto', width: '100%' }}>
+                {loading ? (
+                    <LoadingScreen />
+                ) : pairs.length > 0 ? (
+                    <DataGrid
+                        rows={pairs}
+                        columns={columns}
+                        rowsPerPageOptions={[5, 10, 20]}
+                        pagination
+                        loading={loading}
+                        getRowId={(row) => row.coin_id || Math.random()}
+                        className='MuiDataGrid-virtualScroller'
                     />
-                    <Select id="rowCount" sx={{ height: "30px" }} value={rowsPerPage} onChange={handleChangeRowsPerPage} variant="outlined">
-                        <MenuItem value={10}>10</MenuItem>
-                        <MenuItem value={25}>25</MenuItem>
-                        <MenuItem value={50}>50</MenuItem>
-                        <MenuItem value={100}>100</MenuItem>
-                    </Select>
-                </div>
-            </Grid>
-
-        </>
-    )
+                ) : (
+                    <NoResults />
+                )}
+            </Box>
+        </Card>
+    );
 }
 
-// {
-//     pairs.map((pair) => (
-//         <p key={pair.pair_name}>
-//             {pair.pair_name}
-//             {String(pair.is_active)}
-//             {pair.date_added}
-//             {pair.current_volume}
-//             {pair.base_logo_url}
-//             {pair.quote_logo_url}
-//         </p>
-//     ))
-// }
