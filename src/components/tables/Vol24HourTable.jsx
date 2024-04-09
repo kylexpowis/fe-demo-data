@@ -8,9 +8,9 @@ import {
   CardHeader,
   Link as MuiLink,
 } from "@mui/material";
-import moment from "moment/moment";
 import CircularLoad from "../custom/CircularLoad";
 import { Link } from "react-router-dom";
+import LoadingScreen from "../custom/LoadingScreen";
 
 function VolumeRankingTable() {
   const [coins, setCoins] = useState([]);
@@ -22,11 +22,12 @@ function VolumeRankingTable() {
       .then((coins) => {
         const deduplicatedCoins = deduplicateCoins(coins);
         setCoins(deduplicatedCoins);
-        setLoading(false)
       })
       .catch((err) => {
         console.error("Failed to fetch 24hr volume data.", err);
-      });
+      }).finally(() => {
+        setLoading(false);
+      })
   }, []);
 
   const deduplicateCoins = (fetchedCoins) => {
@@ -41,7 +42,7 @@ function VolumeRankingTable() {
     {
       field: "logo_url",
       headerName: "",
-      flexGrow: 0,
+      width: 70,
       sortable: false,
       filterable: false,
       disableColumnMenu: true,
@@ -75,6 +76,7 @@ function VolumeRankingTable() {
       field: "symbol",
       headerName: "Symbol",
       flexGrow: 0,
+      type: "string",
       renderCell: (params) => (
         <MuiLink
           component={Link}
@@ -107,8 +109,8 @@ function VolumeRankingTable() {
     {
       field: "volume_over_marketcap",
       headerName: "Volume/Market Cap",
-      flex: 1,
       type: "number",
+      flex: 1,
       renderCell: (params) => {
         if (
           params.value === null ||
@@ -122,14 +124,16 @@ function VolumeRankingTable() {
           numericValue > 0 ? "green" : numericValue < 0 ? "red" : "inherit";
         return <span style={{ color }}>{formattedValue}</span>;
       },
-    },
-    {
-      field: "timestamp",
-      headerName: "Last Updated",
-      flex: 1,
-      renderCell: (params) => moment(params.value).format("LTS") ?? "—",
-    },
+    }
   ];
+
+  if (loading) {
+    return (
+      <>
+        <LoadingScreen />
+      </>
+    )
+  }
 
   return (
     <Card
@@ -144,7 +148,8 @@ function VolumeRankingTable() {
       <CardHeader
         title="Volume/MarketCap"
         sx={{ "& .MuiCardHeader-title": { fontWeight: "600" } }}
-      />
+      >
+      </CardHeader>
       <Box sx={{ height: 1200, width: "100%" }}>
         {loading ? (
           <CircularLoad />

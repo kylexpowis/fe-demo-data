@@ -33,19 +33,20 @@ const CoinPrice = ({ coinSymbol, p }) => {
     const formattedPriceChange = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
+        minimumFractionDigits: 2, 
+        maximumFractionDigits: 8, 
     }).format(priceChange);
-
 
     if (p === 'o') {
         return (
             <>
-                {formattedPriceChange}
+                {priceChange}
             </>
         )
     } else {
         return (
             <>
-                {priceChange.toFixed(2)}%
+                {priceChange}%
             </>
         )
     }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Box, Stack, LinearProgress, keyframes } from '@mui/material';
+import { Container, Box, Stack, LinearProgress, keyframes, Typography } from '@mui/material';
 
 const fadeIn = keyframes`
     from {
@@ -12,17 +12,18 @@ const fadeIn = keyframes`
 function LoadingScreen() {
     return (
         <Container
-            maxWidth='lg'
+            maxWidth='md'
             sx={{
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                height: '100vh',
+                height: '70vh',
                 animation: `${fadeIn} 1s ease-in-out forwards`
             }}
         >
-            <Box sx={{ width: '100%' }}>
-                <Stack sx={{ width: '100%', color: 'grey.500' }} spacing={2}>
+            <Box sx={{ width: '100%', h: '100%' }}>
+                <Stack sx={{ width: '100%', h: '100%', color: 'grey.500', display: 'flex'}} spacing={2}>
+                    <Typography variant='h1' color='primary' sx={{fontWeight: 300, alignSelf: 'center', pb: '15px' }}>Loading</Typography>
                     <LinearProgress color="secondary" />
                 </Stack>
             </Box>
