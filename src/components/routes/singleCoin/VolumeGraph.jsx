@@ -43,7 +43,7 @@ export default function VolumeGraph() {
 
 const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
-        const date = moment(payload[0].payload.timestamp, "DD/MM/YYYY, h:mm:ss A").format("MMM DD, YYYY");
+        const date = moment(payload[0].payload.timestamp, "DD/MM/YYYY, h:mm:ss A").format("DD MM, YYYY");
         const time = moment(payload[0].payload.timestamp, "DD/MM/YYYY, h:mm:ss A").format("h:mm:ss A");
         return (
             <div className="custom-tooltip" style={{ padding: '10px', border: '1px solid teal', backgroundColor: 'rgba(121, 168, 139, 0.25)', borderRadius: '10px' }}>
