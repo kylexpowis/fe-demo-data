@@ -71,6 +71,7 @@ export const getNewPairs = (timeFrame) => {
         "1 day": "1+day",
         "3 days": "3+days",
         "7 days": "7+days",
+        "14 days": "14+days",
         "28 days": "28+days",
     };
 
