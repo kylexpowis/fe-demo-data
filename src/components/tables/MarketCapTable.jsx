@@ -8,7 +8,8 @@ import {
   CardHeader,
   Link as MuiLink,
 } from "@mui/material";
-import moment from "moment/moment";
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import CircularLoad from "../custom/CircularLoad";
 import { Link } from "react-router-dom";
 
@@ -131,13 +132,28 @@ function MarketCapTable() {
           params.value === null ||
           params.value === undefined ||
           isNaN(params.value)
-        )
-          return "—";
+        ) {
+          return <span>—</span>;
+        }
         const numericValue = parseFloat(params.value);
         const formattedValue = `${numericValue.toFixed(2)}%`;
-        const color =
-          numericValue > 0 ? "green" : numericValue < 0 ? "red" : "inherit";
-        return <span style={{ color }}>{formattedValue}</span>;
+        let icon;
+        let color;
+        if (numericValue > 0) {
+          icon = <ArrowDropUpIcon style={{ color: "green", verticalAlign: "middle" }} />;
+          color = "green";
+        } else if (numericValue < 0) {
+          icon = <ArrowDropDownIcon style={{ color: "red", verticalAlign: "middle" }} />;
+          color = "red";
+        } else {
+          color = "inherit"; 
+        }
+        return (
+          <span style={{ display: 'flex', alignItems: 'center', color: color }}>
+            {icon}
+            {formattedValue}
+          </span>
+        );
       },
     }
   ];
