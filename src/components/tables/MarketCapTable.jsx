@@ -116,7 +116,7 @@ function MarketCapTable() {
     {
       field: "marketcap_and_change",
       headerName: "Marketcap & Change",
-      type: "numeric",
+      type: "number",
       flex: 1,
       renderCell: (params) => {
         const marketCapFormatted = formatCurrency(params.row.current_marketcap);
@@ -143,6 +143,9 @@ function MarketCapTable() {
           </span>
         );
       },
+    },
+    {
+      flex: 1
     }
   ];
 
