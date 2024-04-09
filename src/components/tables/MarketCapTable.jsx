@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getMarketCapStats } from "../../../config/api";
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { DataGrid } from "@mui/x-data-grid";
 import {
   Box,
@@ -8,7 +10,6 @@ import {
   CardHeader,
   Link as MuiLink,
 } from "@mui/material";
-import moment from "moment/moment";
 import CircularLoad from "../custom/CircularLoad";
 import { Link } from "react-router-dom";
 
@@ -36,6 +37,14 @@ function MarketCapTable() {
     });
     return Array.from(uniqueCoins.values());
   };
+
+  function formatCurrency(value) {
+    if (value === null || value === undefined || isNaN(value)) return "—";
+    
+    const stringValue = Number(value).toFixed(0); // Convert to a string with no decimal places
+    const withCommas = stringValue.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return `$${withCommas}`;
+  }
 
   const columns = [
     {
@@ -105,30 +114,36 @@ function MarketCapTable() {
       ),
     },
     {
-      field: "marketcap_percentage_change",
-      headerName: "Market Cap Change (%)",
-      type: "number",
+      field: "marketcap_and_change",
+      headerName: "Marketcap & Change",
+      type: "numeric",
       flex: 1,
       renderCell: (params) => {
-        if (
-          params.value === null ||
-          params.value === undefined ||
-          isNaN(params.value)
-        )
-          return "—";
-        const numericValue = parseFloat(params.value);
-        const formattedValue = `${numericValue.toFixed(2)}%`;
-        const color =
-          numericValue > 0 ? "green" : numericValue < 0 ? "red" : "inherit";
-        return <span style={{ color }}>{formattedValue}</span>;
+        const marketCapFormatted = formatCurrency(params.row.current_marketcap);
+        let changeIndicator;
+        let textColor;
+        if (params.row.marketcap_percentage_change > 0) {
+          changeIndicator = <ArrowDropUpIcon style={{ color: "green", }} />;
+          textColor = "green";
+        } else if (params.row.marketcap_percentage_change < 0) {
+          changeIndicator = <ArrowDropDownIcon style={{ color: "red", }} />;
+          textColor = "red";
+        } else {
+          changeIndicator = ""; 
+          textColor = "inherit"; 
+        }
+    
+        const marketCapChangeFormatted = params.row.marketcap_percentage_change !== null && !isNaN(params.row.marketcap_percentage_change)
+          ? `${parseFloat(params.row.marketcap_percentage_change).toFixed(2)}%`
+          : "—";
+        return (
+          <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+            {marketCapFormatted}  {changeIndicator}
+            <span style={{ color: textColor }}> {marketCapChangeFormatted}</span>
+          </span>
+        );
       },
-    },
-    {
-      field: "latest_timestamp",
-      headerName: "Last Updated",
-      flex: 1,
-      renderCell: (params) => moment(params.value).format("LTS") ?? "—",
-    },
+    }
   ];
 
   return (
