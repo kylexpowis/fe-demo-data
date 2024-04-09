@@ -1,22 +1,37 @@
-export const getNewCoins = (timeFrame = "1 day") => {
-    console.log(timeFrame);
-    let apiUrl = "https://pairs-sniper-api-v1-0-release.onrender.com/api/coins/new";
+export const getNewCoins = (timeFrame) => {
+    // Validate timeFrame parameter
+    const validTimeFrames = ["1 hour", "8 hours", "1 day", "3 days", "7 days", "14 days", "28 days"];
+    if (!validTimeFrames.includes(timeFrame)) {
+        throw new Error("Invalid time frame specified");
+    }
+
+    const apiUrl = "https://pairs-sniper-api-v1-0-release.onrender.com/api/coins/new";
     const timeFrameMap = {
         "1 hour": "1+hour",
         "8 hours": "8+hours",
         "1 day": "1+day",
         "3 days": "3+days",
         "7 days": "7+days",
+        "14 days": "14+days",
         "28 days": "28+days",
     };
 
-    if (timeFrame in timeFrameMap) {
-        apiUrl += `?timeframe=${timeFrameMap[timeFrame]}`;
-    }
-    return fetch(apiUrl)
-        .then((res) => res.json())
+    let formattedTimeFrame = timeFrameMap[timeFrame];
+    const queryParams = formattedTimeFrame ? `?timeframe=${formattedTimeFrame}` : "";
+    const fullUrl = apiUrl + queryParams;
+
+    return fetch(fullUrl)
+        .then((res) => {
+            if (!res.ok) {
+                throw new Error(`HTTP error! Status: ${res.status}`);
+            }
+            return res.json();
+        })
         .then((data) => {
-            console.log(data);
+            if (!data || !data.coins || !Array.isArray(data.coins)) {
+                throw new Error("Invalid response from API");
+            }
+            console.log(`Coins for ${timeFrame}:`, data.coins);
             return data.coins;
         })
         .catch((error) => {
@@ -24,6 +39,7 @@ export const getNewCoins = (timeFrame = "1 day") => {
             throw error;
         });
 };
+
 
 export const getSummary = () => {
     return fetch(
