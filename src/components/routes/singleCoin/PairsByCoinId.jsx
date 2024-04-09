@@ -17,7 +17,6 @@ export function PairsByCoinId() {
         setLoading(true)
         getPairsByCoinId(coin_id)
             .then((pairs) => {
-                console.log(pairs);
                 setPairs(pairs);
                 setLoading(false);
             })
