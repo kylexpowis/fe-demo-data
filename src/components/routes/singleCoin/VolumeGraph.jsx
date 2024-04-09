@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
-import { ResponsiveContainer, AreaChart, XAxis, YAxis, CartesianGrid, Tooltip, Area } from 'recharts';
+import { ResponsiveContainer, AreaChart, XAxis, YAxis, Tooltip, Area } from 'recharts';
 import { Box } from '@mui/material';
 import _ from 'lodash';
 import { getVolumeData } from '../../../../config/api';
@@ -36,10 +36,15 @@ export default function VolumeGraph() {
 
     const formattedVolume = useMemo(() => volume, [volume]);
 
+    const maxYValue = useMemo(() => {
+        const maxVolume = Math.max(...volume.map(item => parseFloat(item.volumeOverMarketCap)), 0);
+        return Math.ceil((maxVolume + 100) / 100) * 100; 
+    }, [volume]);
+
 const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
-        const date = moment(payload[0].payload.timestamp, "MM/DD/YYYY, h:mm:ss A").format("MMM DD, YYYY");
-        const time = moment(payload[0].payload.timestamp, "MM/DD/YYYY, h:mm:ss A").format("h:mm:ss A");
+        const date = moment(payload[0].payload.timestamp, "DD/MM/YYYY, h:mm:ss A").format("MMM DD, YYYY");
+        const time = moment(payload[0].payload.timestamp, "DD/MM/YYYY, h:mm:ss A").format("h:mm:ss A");
         return (
             <div className="custom-tooltip" style={{ padding: '10px', border: '1px solid teal', backgroundColor: 'rgba(121, 168, 139, 0.25)', borderRadius: '10px' }}>
                 <div><strong>Date:</strong> {date}</div>
@@ -66,8 +71,7 @@ const CustomTooltip = ({ active, payload }) => {
                         </linearGradient>
                     </defs>
                     <XAxis dataKey="timestamp" tick={{ fontSize: 10 }} />
-                    <YAxis tick={{ fontSize: 10 }} />
-                    <CartesianGrid strokeDasharray="1 0" />
+                    <YAxis tick={{ fontSize: 10 }} domain={[0, maxYValue]}/>
                     <Tooltip content={<CustomTooltip />} />
                     <Area type="monotone" dataKey="volumeOverMarketCap" stroke="#82ca9d" fillOpacity={1} fill="url(#colorVolume)" />
                 </AreaChart>
