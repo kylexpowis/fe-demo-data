@@ -21,9 +21,10 @@ export default function VolumeGraph() {
             getVolumeData(coinId)
                 .then((data) => {
                     const formattedData = data.map(item => ({
-                        volumeOverMarketCap: parseFloat(item.volume_over_marketcap).toFixed(2),
-                        timestamp: new Date(item.timestamp).toLocaleString(),
+                        volumeOverMarketCap: parseFloat(item.avg_volume_over_marketcap).toFixed(2),
+                        timestamp: new Date(item.rounded_timestamp).toISOString(), // Convert epoch to ISO 8601
                     }));
+                    console.log(formattedData);
                     setVolume(formattedData);
                     setLoading(false);
                 })
@@ -103,7 +104,7 @@ export default function VolumeGraph() {
                         </linearGradient>
                     </defs>
                     <XAxis dataKey="timestamp" tick={{ fontSize: 10 }}>
-                        <Label value="Date and Time" offset={-10} position="insideBottom" />
+                        <Label value="Date" offset={-10} position="insideBottom" />
                     </XAxis>
                     <YAxis tick={{ fontSize: 10 }} domain={[0, maxYValue]}>
                         <Label value="Volume/Market Cap" angle={-90} position="insideLeft" style={{ textAnchor: 'middle' }} />
