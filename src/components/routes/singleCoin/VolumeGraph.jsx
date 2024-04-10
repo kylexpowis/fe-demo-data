@@ -87,34 +87,34 @@ export default function VolumeGraph() {
         return null;
     };
 
-    
+
 
     if (loading) {
         return <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}><CircularLoad /></div>;
     }
 
     return (
-        <Box sx={{ width: '100%', height: '500px', padding: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={formattedVolume} margin={{ top: 10, right: 10, left: 5, bottom: 10 }}>
-                    <defs>
-                        <linearGradient id="colorVolume" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
-                            <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
-                        </linearGradient>
-                    </defs>
-                    <XAxis dataKey="timestamp" tick={{ fontSize: 10 }}>
-                        <Label value="Date" offset={-10} position="insideBottom" />
-                    </XAxis>
-                    <YAxis tick={{ fontSize: 10 }} domain={[0, maxYValue]}>
-                        <Label value="Volume/Market Cap" angle={-90} position="insideLeft" style={{ textAnchor: 'middle' }} />
-                    </YAxis>
-                    <Tooltip
-                        content={<CustomTooltip/>}
-                    />
-                    <Area type="monotone" dataKey="volumeOverMarketCap" stroke="#82ca9d" fillOpacity={1} fill="url(#colorVolume)" />
-                </AreaChart>
-            </ResponsiveContainer>
-        </Box>
+            <Box sx={{ width: '100%', height: '500px', padding: '50px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart data={formattedVolume} margin={{ top: 10, right: 10, left: 5, bottom: 10 }}>
+                        <defs>
+                            <linearGradient id="colorVolume" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
+                                <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
+                            </linearGradient>
+                        </defs>
+                        <XAxis dataKey="timestamp" tick={{ fontSize: 10 }}>
+                            <Label value="Date" offset={-10} position="insideBottom" />
+                        </XAxis>
+                        <YAxis tick={{ fontSize: 10 }} domain={[0, maxYValue]}>
+                            <Label value="Volume/Market Cap" angle={-90} position="insideLeft" style={{ textAnchor: 'middle' }} />
+                        </YAxis>
+                        <Tooltip
+                            content={<CustomTooltip />}
+                        />
+                        <Area type="monotone" dataKey="volumeOverMarketCap" stroke="#82ca9d" fillOpacity={1} fill="url(#colorVolume)" />
+                    </AreaChart>
+                </ResponsiveContainer>
+            </Box>
     );
 }
