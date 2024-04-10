@@ -40,7 +40,7 @@ const CoinPrice = ({ coinSymbol, p }) => {
     if (p === 'o') {
         return (
             <>
-                {priceChange}
+                {formattedPriceChange}
             </>
         )
     } else {
