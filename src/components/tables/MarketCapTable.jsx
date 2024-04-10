@@ -41,7 +41,7 @@ function MarketCapTable() {
   function formatCurrency(value) {
     if (value === null || value === undefined || isNaN(value)) return "—";
     
-    const stringValue = Number(value).toFixed(0); // Convert to a string with no decimal places
+    const stringValue = Number(value).toFixed(0);
     const withCommas = stringValue.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return `$${withCommas}`;
   }

@@ -108,7 +108,7 @@ export function PairsByCoinId() {
 
     return (
         <>
-            <Box sx={{ height: '1200px', width: '100%', }}>
+            <Box sx={{ height: '440px', width: '100%', }}>
                 {loading ? (
                     <LoadingScreen />
                 ) : pairs.length > 0 ? (
