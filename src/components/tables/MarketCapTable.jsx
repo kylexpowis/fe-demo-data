@@ -7,15 +7,38 @@ import {
   Card,
   CardHeader,
   Link as MuiLink,
+  FormControlLabel,
+  Switch
 } from "@mui/material";
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import CircularLoad from "../custom/CircularLoad";
 import { Link } from "react-router-dom";
+import { styled } from '@mui/material/styles';
+
+const PriceChangeIndicator = styled(Typography)(() => ({
+  display: 'inline-flex',
+  fontSize: '0.9rem',
+  fontWeight: '600'
+}));
+
+const ChangeIndicator = ({ value }) => {
+  const isPositive = value > 0;
+  const Icon = isPositive ? ArrowDropUpIcon : ArrowDropDownIcon;
+  const color = isPositive ? 'success.main' : 'error.main';
+
+  return (
+    <PriceChangeIndicator sx={{ color }}>
+      <Icon fontSize="inherit" sx={{alignSelf: 'center', fontSize: '1.25rem'}}/>
+      {value.toFixed(2)}%
+    </PriceChangeIndicator>
+  );
+};
 
 function MarketCapTable() {
   const [coins, setCoins] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [density, setDensity] = useState('standard');
 
   useEffect(() => {
     setLoading(true);
@@ -40,20 +63,22 @@ function MarketCapTable() {
 
   function formatCurrency(value) {
     if (value === null || value === undefined || isNaN(value)) return "—";
-    
-    const stringValue = Number(value).toFixed(0);
+
+    const stringValue = Number(value).toFixed(2);
     const withCommas = stringValue.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return `$${withCommas}`;
   }
+
+  const handleDensityChange = (event) => {
+    setDensity(event.target.checked ? 'compact' : 'standard');
+  };
 
   const columns = [
     {
       field: "logo_url",
       headerName: "",
-      flexGrow: 0,
-      sortable: false,
-      filterable: false,
-      disableColumnMenu: true,
+      type: "string",
+
       renderCell: (params) => (
         <Box
           sx={{
@@ -75,7 +100,7 @@ function MarketCapTable() {
               }}
             />
           ) : (
-            <span>—</span>
+            <span> </span>
           )}
         </Box>
       ),
@@ -83,6 +108,7 @@ function MarketCapTable() {
     {
       field: "symbol",
       headerName: "Symbol",
+      type: "string",
       flexGrow: 0,
       renderCell: (params) => (
         <MuiLink
@@ -108,53 +134,25 @@ function MarketCapTable() {
     {
       field: "coin_name",
       headerName: "Coin Name",
+      type: "string",
       flex: 1,
       renderCell: (params) => (
-        <span style={{ opacity: 0.7, fontWeight: "500" }}>{params.value}</span>
+        <span style={{ opacity: 0.7, fontWeight: "600" }}>{params.value}</span>
       ),
     },
     {
       field: "current_marketcap",
       headerName: "Marketcap",
-      type: "numeric",
+      type: "int",
       flex: 1,
-      renderCell: (params) => (
-        <span>{formatCurrency(params.value)}</span>
-      ),
+      renderCell: (params) => formatCurrency(params.value) ?? " ",
     },
     {
       field: "marketcap_percentage_change",
-      headerName: "Market Cap Change (%)",
-      type: "number",
+      headerName: "Change (%)",
+      type: "int",
       flex: 1,
-      renderCell: (params) => {
-        if (
-          params.value === null ||
-          params.value === undefined ||
-          isNaN(params.value)
-        ) {
-          return <span>—</span>;
-        }
-        const numericValue = parseFloat(params.value);
-        const formattedValue = `${numericValue.toFixed(2)}%`;
-        let icon;
-        let color;
-        if (numericValue > 0) {
-          icon = <ArrowDropUpIcon style={{ color: "green", verticalAlign: "middle" }} />;
-          color = "green";
-        } else if (numericValue < 0) {
-          icon = <ArrowDropDownIcon style={{ color: "red", verticalAlign: "middle" }} />;
-          color = "red";
-        } else {
-          color = "inherit"; 
-        }
-        return (
-          <span style={{ display: 'flex', alignItems: 'center', color: color }}>
-            {icon}
-            {formattedValue}
-          </span>
-        );
-      },
+      renderCell: (params) => <span style={{display: 'inline-flex'}}><ChangeIndicator value={parseFloat(params.value)}/></span> ?? "—",
     }
   ];
 
@@ -171,6 +169,14 @@ function MarketCapTable() {
       <CardHeader
         title="Marketcap  (24hr)"
         sx={{ "& .MuiCardHeader-title": { fontWeight: "600" } }}
+        action={
+          <FormControlLabel
+            control={<Switch checked={density === 'compact'} onChange={handleDensityChange} />}
+            label="Condensed View"
+            labelPlacement="start"
+            sx={{ pr: '10px' }}
+          />
+        }
       />
       <Box sx={{ height: 1200, width: "100%" }}>
         {loading ? (
@@ -184,6 +190,7 @@ function MarketCapTable() {
             pagination
             loading={loading}
             getRowId={(row) => row.coin_id || Math.random()}
+            density={density}
           />
         ) : (
           <Typography>No data available</Typography>

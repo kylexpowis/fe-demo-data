@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { livePrice } from '../../../config/api';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { CircularProgress, Box, Typography } from '@mui/material'
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import React, { useState, useEffect } from 'react';
+import { livePrice } from '../../../config/api';
 import { styled } from '@mui/material/styles';
 
 const PriceChangeIndicator = styled(Typography)(({ theme }) => ({

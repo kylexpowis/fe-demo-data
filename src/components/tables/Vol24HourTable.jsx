@@ -1,20 +1,45 @@
-import React, { useEffect, useState } from "react";
 import { getVolumeChange } from "../../../config/api";
+import LoadingScreen from "../custom/LoadingScreen";
+import React, { useEffect, useState } from "react";
+import CircularLoad from "../custom/CircularLoad";
 import { DataGrid } from "@mui/x-data-grid";
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { styled } from '@mui/material/styles';
+import { Link } from "react-router-dom";
 import {
   Box,
   Typography,
   Card,
   CardHeader,
   Link as MuiLink,
+  FormControlLabel,
+  Switch
 } from "@mui/material";
-import CircularLoad from "../custom/CircularLoad";
-import { Link } from "react-router-dom";
-import LoadingScreen from "../custom/LoadingScreen";
+
+const PriceChangeIndicator = styled(Typography)(() => ({
+  display: 'inline-flex',
+  fontSize: '0.9rem',
+  fontWeight: '600'
+}));
+
+const ChangeIndicator = ({ value }) => {
+  const isPositive = value > 0;
+  const Icon = isPositive ? ArrowDropUpIcon : ArrowDropDownIcon;
+  const color = isPositive ? 'success.main' : 'error.main';
+
+  return (
+    <PriceChangeIndicator sx={{ color }}>
+      <Icon fontSize="inherit" sx={{alignSelf: 'center', fontSize: '1.25rem'}}/>
+      {value.toFixed(2)}%
+    </PriceChangeIndicator>
+  );
+};
 
 function VolumeRankingTable() {
   const [coins, setCoins] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [density, setDensity] = useState('standard');
 
   useEffect(() => {
     setLoading(true);
@@ -38,11 +63,17 @@ function VolumeRankingTable() {
     return Array.from(uniqueCoins.values());
   };
 
+  const handleDensityChange = (event) => {
+    setDensity(event.target.checked ? 'compact' : 'standard');
+  };
+
   const columns = [
     {
       field: "logo_url",
       headerName: "",
-      width: 70,
+      type: "string",
+      width: 50,
+      flexGrow: 0,
       sortable: false,
       filterable: false,
       disableColumnMenu: true,
@@ -67,7 +98,7 @@ function VolumeRankingTable() {
               }}
             />
           ) : (
-            <span>—</span>
+            <span> </span>
           )}
         </Box>
       ),
@@ -75,8 +106,8 @@ function VolumeRankingTable() {
     {
       field: "symbol",
       headerName: "Symbol",
-      flexGrow: 0,
       type: "string",
+      flexGrow: 0,
       renderCell: (params) => (
         <MuiLink
           component={Link}
@@ -101,29 +132,18 @@ function VolumeRankingTable() {
     {
       field: "coin_name",
       headerName: "Coin Name",
+      type: "string",
       flex: 1,
       renderCell: (params) => (
-        <span style={{ opacity: 0.7, fontWeight: "500" }}>{params.value}</span>
+        <span style={{ opacity: 0.7, fontWeight: "600" }}>{params.value}</span>
       ),
     },
     {
       field: "volume_over_marketcap",
-      headerName: "Volume/Market Cap",
-      type: "number",
+      headerName: "Volume/Marketcap",
+      type: "int",
       flex: 1,
-      renderCell: (params) => {
-        if (
-          params.value === null ||
-          params.value === undefined ||
-          isNaN(params.value)
-        )
-          return "—";
-        const numericValue = parseFloat(params.value);
-        const formattedValue = `${numericValue.toFixed(2)}%`;
-        const color =
-          numericValue > 0 ? "green" : numericValue < 0 ? "red" : "inherit";
-        return <span style={{ color }}>{formattedValue}</span>;
-      },
+      renderCell: (params) => <span style={{display: 'inline-flex'}}><ChangeIndicator value={parseFloat(params.value)}/></span> ?? "—",
     }
   ];
 
@@ -140,14 +160,21 @@ function VolumeRankingTable() {
       sx={{
         ":hover": {
           outline: "1px solid #cccccc",
-          boxShadow:
-            "0px 3px 6px rgba(0, 0, 0, 0.1), 0px 2px 6px rgba(0, 0, 0, 0.2)",
+          boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.1), 0px 2px 6px rgba(0, 0, 0, 0.2)",
         },
       }}
     >
       <CardHeader
         title="Volume/MarketCap"
         sx={{ "& .MuiCardHeader-title": { fontWeight: "600" } }}
+        action={
+          <FormControlLabel
+            control={<Switch checked={density === 'compact'} onChange={handleDensityChange} />}
+            label="Condensed View"
+            labelPlacement="start"
+            sx={{ pr: '10px' }}
+          />
+        }
       >
       </CardHeader>
       <Box sx={{ height: 1200, width: "100%" }}>
@@ -162,6 +189,7 @@ function VolumeRankingTable() {
             pagination
             loading={loading}
             getRowId={(row) => row.coin_id || Math.random()}
+            density={density}
           />
         ) : (
           <Typography>No data available</Typography>

@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react'
-import { Link, useParams } from "react-router-dom";
-import { getPairsByCoinId } from '../../../../config/api';
-import { DataGrid } from '@mui/x-data-grid';
-import { Box, Link as MuiLink, Paper, CardHeader } from '@mui/material';
-import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import moment from 'moment/moment';
-import NoResults from '@/components/custom/NoResults';
+import { Box, Link as MuiLink, CardHeader } from '@mui/material';
 import LoadingScreen from '@/components/custom/LoadingScreen';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import { getPairsByCoinId } from '../../../../config/api';
+import NoResults from '@/components/custom/NoResults';
+import React, { useState, useEffect } from 'react'
+import { DataGrid } from '@mui/x-data-grid';
+import {useParams } from "react-router-dom";
+import moment from 'moment/moment';
 
 export function PairsByCoinId() {
     const [pairs, setPairs] = useState([]);

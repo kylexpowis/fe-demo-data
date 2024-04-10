@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { getCoinById } from '../../../../config/api';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { Box, Typography, Stack, Divider } from '@mui/material';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { styled } from '@mui/material/styles';
 import CoinPrice from '@/components/custom/CoinPrice';
+import { getCoinById } from '../../../../config/api';
+import React, { useState, useEffect } from 'react';
+import { styled } from '@mui/material/styles';
+import { useParams } from 'react-router-dom';
 
 const PriceTypography = styled(Typography)({
   fontWeight: 'bold',
@@ -128,24 +128,24 @@ export function CoinSummary() {
           <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ pt: '25px' }}>
             <Typography variant="subtitle1" fontWeight="500">Marketcap</Typography>
             <span style={{ display: 'inline-flex', alignItems: 'center' }}>
-              <ChangeIndicator value={parseFloat(coin.marketcap_percentage_change)} />
-              <Typography sx={{ ml: '5px' }}>{formatCurrency(coin.current_marketcap)}</Typography>
+              <ChangeIndicator value={parseFloat(coin.marketcap_percentage_change)}/>
+              <Typography sx={{ ml: '5px', fontWeight: '600', fontSize: '0.9rem'}} >{formatCurrency(coin.current_marketcap)}</Typography>
             </span>
           </Stack>
-          <Divider variant="full" />
+          <Divider variant="full"/>
   
           <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ pt: '40px' }}>
             <Typography variant="subtitle1" fontWeight="500">Volume</Typography>
             <span style={{ display: 'inline-flex', alignItems: 'center' }}>
               <ChangeIndicator value={parseFloat(coin.vol_percentage_change)} />
-              <Typography sx={{ ml: '5px' }}>{formatCurrency(coin.current_volume)}</Typography>
+              <Typography sx={{ ml: '5px', fontWeight: '600', fontSize: '0.9rem'}}>{formatCurrency(coin.current_volume)}</Typography>
             </span>
           </Stack>
           <Divider variant="full" />
   
           <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ pt: '40px' }}>
             <Typography variant="subtitle1" fontWeight="500">Volume/Market Cap</Typography>
-            <Typography variant="body2" fontWeight="regular">{parseFloat(coin.volume_over_marketcap).toFixed(2)}%</Typography>
+            <Typography variant="body2" fontWeight="600">{parseFloat(coin.volume_over_marketcap).toFixed(2)}%</Typography>
           </Stack>
           <Divider variant="full" />
         </Box>

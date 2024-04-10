@@ -15,7 +15,8 @@ function VolumesRanking() {
                     justifyContent: "center",
                     width: "100%",
                     m: 0,
-                    p: 0
+                    p: 0,
+                    pt: '15px'
                 }}>
                     <Grid item xs={12} sm={12} md={12} lg={10} sx={{
                         minHeight: "300px",

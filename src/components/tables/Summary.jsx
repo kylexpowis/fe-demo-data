@@ -1,19 +1,22 @@
+import LoadingScreen from "../custom/LoadingScreen";
 import { getSummary } from "../../../config/api";
 import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
+import { Link } from "react-router-dom";
 import {
   Box,
   Typography,
   Card,
   CardHeader,
   Link as MuiLink,
+  FormControlLabel,
+  Switch
 } from "@mui/material";
-import LoadingScreen from "../custom/LoadingScreen";
-import { Link } from "react-router-dom";
 
 export const Summary = () => {
-  const [coins, setCoins] = useState([]);
+  const [density, setDensity] = useState('standard')
   const [isLoading, setIsLoading] = useState(true);
+  const [coins, setCoins] = useState([]);
 
   useEffect(() => {
     getSummary()
@@ -27,11 +30,16 @@ export const Summary = () => {
       });
   }, []);
 
+  const handleDensityChange = (event) => {
+    setDensity(event.target.checked ? 'compact' : 'standard');
+  };
+
   const columns = [
     {
       field: "logo_url",
       headerName: "",
       type: "string",
+      
       renderCell: (params) => (
         <Box
           sx={{
@@ -129,6 +137,14 @@ export const Summary = () => {
       <CardHeader
         title="Market Overview"
         sx={{ "& .MuiCardHeader-title": { fontWeight: "600" } }}
+        action={
+          <FormControlLabel
+            control={<Switch checked={density === 'compact'} onChange={handleDensityChange} />}
+            label="Condensed View"
+            labelPlacement="start"
+            sx={{ pr: '10px' }}
+          />
+        }
       />
       <Box sx={{ height: 800, width: "100%" }}>
         {isLoading ? (
@@ -142,6 +158,7 @@ export const Summary = () => {
             pagination
             loading={isLoading}
             getRowId={(row) => row.coin_id || Math.random()}
+            density={density}
           />
         ) : (
           <Typography>No data available</Typography>
