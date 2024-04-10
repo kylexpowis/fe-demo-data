@@ -17,7 +17,9 @@ import { Link } from "react-router-dom";
 import { styled } from '@mui/material/styles';
 
 const PriceChangeIndicator = styled(Typography)(() => ({
-  display: 'inline-flex',
+  display: 'flex',
+  height: '100%',
+  alignItems: 'center',
   fontSize: '0.9rem',
   fontWeight: '600'
 }));
@@ -152,7 +154,7 @@ function MarketCapTable() {
       headerName: "Change (%)",
       type: "int",
       flex: 1,
-      renderCell: (params) => <span style={{display: 'inline-flex'}}><ChangeIndicator value={parseFloat(params.value)}/></span> ?? "—",
+      renderCell: (params) => <ChangeIndicator value={parseFloat(params.value)}/> ?? "—",
     }
   ];
 

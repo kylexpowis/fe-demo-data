@@ -5,11 +5,11 @@ export const dark = createTheme({
     palette: {
         mode: 'dark',
         primary: {
-            main: '#3FBF77',
+            main: '#34A853', // Your new primary color
             contrastText: 'rgba(255,255,255,0.87)',
         },
         secondary: {
-            main: '#36AB6D',
+            main: '#3FBF77', // Your new secondary color
             contrastText: 'rgba(255,255,255,0.87)',
         },
         error: {
@@ -20,12 +20,12 @@ export const dark = createTheme({
             paper: '#121212',
         },
         text: {
-            main: '#d6d6d6',
+            primary: '#d6d6d6',
             secondary: '#E0E0E0',
         },
     },
     typography: {
-        fontFamily: '"Plus Jakarta Sans" ,"Figtree", "Helvetica", "Arial", sans-serif',
+        fontFamily: '"Inter" ,"Plus Jakarta Sans" ,"Figtree", "Helvetica", "Arial", sans-serif',
         fontWeightLight: 300,
         h1: {
             fontSize: '5rem',
@@ -244,6 +244,7 @@ export const dark = createTheme({
                 },
                 columnHeaders: {
                     backgroundColor: '#121212',
+                    fontSize: '1rem',
                     color: '#36AB6D',
                     fontWeight: 'bold',
                     borderTop: '1px solid #2a2a2a',
@@ -251,6 +252,7 @@ export const dark = createTheme({
                 },
                 row: {
                     '&:hover': {
+                        transition: 'all 0.2s ease-in-out',
                         backgroundColor: '#1a1a1a',
                     },
                 },
@@ -267,6 +269,9 @@ export const dark = createTheme({
                 },
                 sortIcon: {
                     color: '#36AB6D',
+                },
+                menuIcon: {
+                    color: '#0a0a0a'
                 },
             },
         },
@@ -416,11 +421,10 @@ export const light = createTheme({
     palette: {
         mode: 'light',
         primary: {
-            main: '#3FBF77',
-            contrastText: 'rgba(255,255,255,0.87)',
+            main: '#34A853', 
         },
         secondary: {
-            main: '#34A853',
+            main: '#3FBF77', 
         },
         error: {
             main: '#D32F2F',
@@ -430,11 +434,11 @@ export const light = createTheme({
             paper: '#FFFFFF',
         },
         text: {
-            main: '#333333',
+            primary: '#333333',
         },
     },
     typography: {
-        fontFamily: '"Plus Jakarta Sans", "Figtree", "Helvetica", "Arial", sans-serif',
+        fontFamily: '"Inter" ,"Plus Jakarta Sans" ,"Figtree", "Helvetica", "Arial", sans-serif',
         fontWeightLight: 300,
         h1: {
             fontSize: '5rem',
@@ -460,35 +464,35 @@ export const light = createTheme({
                 '&::-webkit-scrollbar': {
                     width: '10px',
                     height: '10px',
-                    backgroundColor: 'rgba(0, 0, 0, 0.1)', 
+                    backgroundColor: 'rgba(0, 0, 0, 0.1)',
                 },
                 '&::-webkit-scrollbar-button': {
                     width: '22px',
                     height: '22px',
                 },
                 '&::-webkit-scrollbar-thumb': {
-                    background: 'rgba(0, 0, 0, 0.2)', 
-                    border: '4px solid rgba(255, 255, 255, 0)', 
+                    background: 'rgba(0, 0, 0, 0.2)',
+                    border: '4px solid rgba(255, 255, 255, 0)',
                     borderRadius: '50px',
-                    transition: 'background-color 0.3s ease-in-out', 
+                    transition: 'background-color 0.3s ease-in-out',
                     '&:hover': {
                         transition: 'background-color 0.3s ease-in-out',
-                        background: 'rgba(0, 0, 0, 0.3)', 
+                        background: 'rgba(0, 0, 0, 0.3)',
                     },
                     '&:active': {
                         transition: 'background-color 0.3s ease-in-out',
-                        background: 'rgba(0, 0, 0, 0.4)', 
+                        background: 'rgba(0, 0, 0, 0.4)',
                     },
                 },
                 '&::-webkit-scrollbar-track': {
-                    background: 'rgba(255, 255, 255, 0.5)', 
+                    background: 'rgba(255, 255, 255, 0.5)',
                     borderRadius: '50px',
-                    transition: 'background-color 0.3s ease-in-out', 
+                    transition: 'background-color 0.3s ease-in-out',
                     '&:hover': {
-                        background: 'rgba(255, 255, 255, 0.6)', 
+                        background: 'rgba(255, 255, 255, 0.6)',
                     },
                     '&:active': {
-                        background: 'rgba(255, 255, 255, 0.7)', 
+                        background: 'rgba(255, 255, 255, 0.7)',
                     },
                 },
                 '&::-webkit-scrollbar-corner': {
@@ -574,7 +578,6 @@ export const light = createTheme({
         MuiIconButton: {
             styleOverrides: {
                 root: {
-                    color: '#fff',
                     '&:hover': {
                         backgroundColor: 'rgba(255, 255, 255, 0.08)',
                     },
@@ -653,6 +656,7 @@ export const light = createTheme({
                 },
                 columnHeaders: {
                     backgroundColor: '#f1f1f1',
+                    fontSize: '1rem',
                     color: '#3FBF77',
                     fontWeight: 'bold',
                     borderTop: '1px solid #e0e0e0',
@@ -660,11 +664,13 @@ export const light = createTheme({
                 },
                 row: {
                     '&:hover': {
+                        transition: 'all 0.2s ease-in-out',
                         backgroundColor: '#f9f9f9',
                     },
                 },
                 cell: {
                     borderBottomColor: '#e0e0e0',
+                    color: '#000000',
                     '&:focus': {
                         outline: '2px solid #3FBF77',
                     },
@@ -676,6 +682,9 @@ export const light = createTheme({
                 },
                 sortIcon: {
                     color: '#0d1421',
+                },
+                menuIconButton: {
+                    color: '#0d1421'
                 },
             },
         },
@@ -690,7 +699,6 @@ export const light = createTheme({
             styleOverrides: {
                 root: {
                     backgroundColor: '#ffffff',
-                    padding: '6px 10px',
                     color: '#000000',
                 },
                 head: {
