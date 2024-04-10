@@ -3,7 +3,6 @@ import { getNewCoins } from "../../../config/api";
 import { DataGrid } from "@mui/x-data-grid";
 import {
   Box,
-  Link as MuiLink,
   Card,
   CardHeader,
   FormControl,
@@ -12,9 +11,9 @@ import {
   MenuItem,
 } from "@mui/material";
 import LoadingScreen from "../custom/LoadingScreen";
-import moment from "moment/moment";
 import NoResults from "../custom/NoResults";
-import { Link } from "react-router-dom";
+import { NewCoinsColumns } from "./columns/NewCoinsColumn";
+import CircularLoad from "../custom/CircularLoad";
 
 function NewCoinsTable() {
   const [newCoins, setNewCoins] = useState([]);
@@ -34,92 +33,6 @@ function NewCoinsTable() {
         setIsLoading(false);
       });
   }, [timeFrame]);
-
-  const columns = [
-    {
-      field: "logo_url",
-      headerName: "",
-      renderCell: (params) => (
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100%",
-          }}
-        >
-          {params.value ? (
-            <img
-              src={params.value}
-              alt={params.row.coin_name}
-              style={{
-                width: 30,
-                height: 30,
-                borderRadius: "50%",
-                border: "none",
-              }}
-            />
-          ) : (
-            <span> </span>
-          )}
-        </Box>
-      ),
-    },
-    {
-      field: "symbol",
-      headerName: "Symbol",
-      flexGrow: 0,
-      renderCell: (params) => (
-        <MuiLink
-          component={Link}
-          to={`/coins/${params.row.coin_id}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          sx={{
-            fontWeight: "bold",
-            color: "inherit",
-            textDecoration: "none",
-            cursor: "pointer",
-            transition: "all 0.2s ease-in-out",
-            "&:hover": {
-              color: "primary.main",
-            },
-          }}
-        >
-          {params.value}
-        </MuiLink>
-      ),
-    },
-    {
-      field: "coin_name",
-      headerName: "Coin Name",
-      flex: 1,
-      renderCell: (params) => (
-        <span style={{ opacity: 0.7, fontWeight: "600" }}>{params.value}</span>
-      ),
-    },
-    {
-      field: "is_active",
-      headerName: "Status",
-      renderCell: (params) => {
-        if (params.value === null || params.value === undefined) {
-          return <span>—</span>;
-        }
-        return (
-          <span style={{ color: params.value ? "green" : "red" }}>
-            {params.value ? "Active" : "Inactive"}
-          </span>
-        );
-      },
-    },
-    {
-      field: "date_added",
-      headerName: "Date Added",
-      type: "timestamp",
-      flex: 1,
-      renderCell: (params) => moment(params.value).format("lll") ?? "—",
-    },
-  ];
 
   return (
     <Card
@@ -162,7 +75,7 @@ function NewCoinsTable() {
         ) : newCoins.length > 0 ? (
           <DataGrid
             rows={newCoins}
-            columns={columns}
+            columns={NewCoinsColumns}
             rowsPerPageOptions={[5, 10, 20]}
             pagination
             loading={isLoading}

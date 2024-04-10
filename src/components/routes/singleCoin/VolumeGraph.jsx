@@ -22,7 +22,7 @@ export default function VolumeGraph() {
                 .then((data) => {
                     const formattedData = data.map(item => ({
                         volumeOverMarketCap: parseFloat(item.avg_volume_over_marketcap).toFixed(2),
-                        timestamp: new Date(item.rounded_timestamp).toISOString(), // Convert epoch to ISO 8601
+                        timestamp: new Date(item.rounded_timestamp).toISOString(),
                     }));
                     console.log(formattedData);
                     setVolume(formattedData);
@@ -103,7 +103,7 @@ export default function VolumeGraph() {
                                 <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
                             </linearGradient>
                         </defs>
-                        <XAxis dataKey="timestamp" tick={{ fontSize: 10 }}>
+                        <XAxis dataKey="timestamp" tick={{ fontSize: 10 }} tickFormatter={(value) => moment(value).format('DD/MM/YY')}>
                             <Label value="Date" offset={-10} position="insideBottom" />
                         </XAxis>
                         <YAxis tick={{ fontSize: 10 }} domain={[0, maxYValue]}>

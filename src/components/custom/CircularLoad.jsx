@@ -24,7 +24,7 @@ function CircularLoad() {
             <Box sx={{ width: '100%', display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center', }}>
-                    <CircularProgress color="secondary" />
+                    <CircularProgress color="primary" />
             </Box>
         </Container>
     );

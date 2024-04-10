@@ -24,7 +24,6 @@ const SingleCoinView = () => {
                                 <CoinSummary />
                             </Box>
                         </Card>
-
                     </Grid>
                     <Grid item xs={12} lg={9} sx={{ border: 'transparent' }}>
                         <Card>
