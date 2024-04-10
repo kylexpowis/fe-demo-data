@@ -16,8 +16,8 @@ const SingleCoinView = () => {
                 justifyContent: 'center',
                 alignItems: 'center'
             }} maxWidth='xlg' >
-                <Grid container spacing={4} sx={{ pt: 5 }}>
-                    <Grid item xs={12} lg={3}>
+                <Grid container spacing={4} sx={{ pt: 5, h: '100vh' }}>
+                    <Grid item xs={12} lg={3} sx={{ pt: 5, h: '100vh' }}>
                         <Card>
                             <Box sx={{ p: '25px', border: 'transparent' }}>
                                 <CoinSummary />
@@ -31,7 +31,7 @@ const SingleCoinView = () => {
                                 <VolumeGraph />
                             </Box>
                         </Card>
-                        <Box sx={{borderRadius: 0, border: 'transparent', pt: '25px' }}>
+                        <Box sx={{borderRadius: 0, border: 'transparent', pt: '35px' }}>
                             <Card >
                                 <PairsByCoinId />
                             </Card>
