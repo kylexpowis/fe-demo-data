@@ -14,25 +14,43 @@ const SingleCoinView = () => {
                 width: '100%',
                 display: 'flex',
                 justifyContent: 'center',
-                alignItems: 'center'
+                alignItems: 'center',
+                pb: '30px'
             }} maxWidth='xlg' >
-                <Grid container spacing={4} sx={{ pt: 5, h: '100vh' }}>
-                    <Grid item xs={12} lg={3} sx={{ pt: 5, h: '100vh' }}>
-                        <Card>
+                <Grid container spacing={4} sx={{ pt: 4, h: '100vh' }}>
+                    <Grid item xs={12} lg={3} sx={{ h: '100vh' }}>
+                        <Card sx={{
+                            ":hover": {
+                                outline: "1px solid #cccccc",
+                                boxShadow:
+                                    "0px 3px 6px rgba(0, 0, 0, 0.1), 0px 2px 6px rgba(0, 0, 0, 0.2)",
+                            },
+                        }}>
                             <Box sx={{ p: '25px', border: 'transparent' }}>
                                 <CoinSummary />
                             </Box>
                         </Card>
-
                     </Grid>
                     <Grid item xs={12} lg={9} sx={{ border: 'transparent' }}>
-                        <Card>
+                        <Card sx={{
+                            ":hover": {
+                                outline: "1px solid #cccccc",
+                                boxShadow:
+                                    "0px 3px 6px rgba(0, 0, 0, 0.1), 0px 2px 6px rgba(0, 0, 0, 0.2)",
+                            },
+                        }}>
                             <Box sx={{ height: '500px', borderRadius: 0, border: 'transparent' }}>
                                 <VolumeGraph />
                             </Box>
                         </Card>
-                        <Box sx={{borderRadius: 0, border: 'transparent', pt: '35px' }}>
-                            <Card >
+                        <Box sx={{ borderRadius: 0, border: 'transparent', pt: '29.25px' }}>
+                            <Card sx={{
+                                ":hover": {
+                                    outline: "1px solid #cccccc",
+                                    boxShadow:
+                                        "0px 3px 6px rgba(0, 0, 0, 0.1), 0px 2px 6px rgba(0, 0, 0, 0.2)",
+                                },
+                            }}>
                                 <PairsByCoinId />
                             </Card>
                         </Box>

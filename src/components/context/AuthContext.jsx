@@ -1,54 +1,47 @@
-import { supabase } from '@/lib/supabaseClient';
+/* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import LoadingScreen from '../custom/LoadingScreen';
+import { supabase } from '@/lib/supabaseClient';
 
 const AuthContext = createContext();
 
 export function SupabaseAuthProvider({ children }) {
     const [session, setSession] = useState(null);
+    const [loading, setLoading] = useState(true);
     const [userDetails, setUserDetails] = useState({
         name: `User${Math.floor(Math.random() * 1000)}`,
         email: null,
     });
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        supabase.auth.getSession().then(({ data: { session } }) => {
-            setSession(session);
-            if (session && session.user) {
-                setLoading(false)
-                const displayName = session.user.user_metadata?.displayName; 
-                const email = session.user.email;
-
-                setUserDetails({
-                    name: displayName, 
-                    email: email,
-                });
-                if (displayName === '') {
-                    setUserDetails({
-                        name: `User${Math.floor(Math.random() * 1000)}`
-                    })
-                }
-            } else {
-                setUserDetails({ name: null, email: null });
-            }
-        })
-
-        
-
+        checkSession();
         const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-            setSession(session);
+            updateSession(session);
         });
-
         return () => subscription.unsubscribe();
-    }, [session]);
+    });
+    const checkSession = async () => {
+        const { data: { session } } = await supabase.auth.getSession();
+        updateSession(session);
+    };
+    const updateSession = (session) => {
+        setSession(session);
+        setLoading(true);
+        if (session && session.user) {
+            const displayName = session.user.user_metadata?.displayName || `User${Math.floor(Math.random() * 1000)}`;
+            const email = session.user.email;
+            setUserDetails({ name: displayName, email });
+        } else {
+            setUserDetails({ name: null, email: null });
+        }
+        setLoading(false);
+    };
 
     return (
         <AuthContext.Provider value={{ session, setSession, userDetails, loading }}>
-            {children}
+            {loading ? <LoadingScreen sx={{ zIndex: 5 }} /> : children}
         </AuthContext.Provider>
     );
 }
 
-export const useSupabaseAuth = () => {
-    return useContext(AuthContext);
-}
+export const useSupabaseAuth = () => useContext(AuthContext);

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import React from "react";
 import Navbar from "../../custom/Navbar";
 import { Typography, Container, Box } from "@mui/material";
@@ -5,7 +6,7 @@ import video from "../../../assets/video.mp4";
 
 function LandingPage() {
   return (
-    <div className="landing">
+    <div className="landing" style={{ position: "relative" }}>
       <video
         src={video}
         autoPlay
@@ -18,7 +19,7 @@ function LandingPage() {
           width: "100%",
           height: "100%",
           objectFit: "cover",
-          zIndex: -1,
+          zIndex: -2, 
         }}
       ></video>
       <div
@@ -29,11 +30,11 @@ function LandingPage() {
           width: "100%",
           height: "100%",
           backgroundColor: "rgba(0, 0, 0, 0.65)",
-          zIndex: 0,
+          zIndex: -1, 
         }}
       ></div>
 
-      <Box sx={{ position: "relative", zIndex: 1 }}>
+      <Box sx={{ zIndex: 1, position: 'relative' }}> 
         <Navbar />
       </Box>
 
@@ -46,8 +47,7 @@ function LandingPage() {
           justifyContent: "center",
           alignItems: "center",
           height: "100vh",
-          position: "relative",
-          zIndex: 1,
+          zIndex: 2, 
         }}
       >
         <Box
