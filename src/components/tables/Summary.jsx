@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { getSummary } from "../../../config/api";
 import { DataGrid } from "@mui/x-data-grid";
 import { Box, Card, CardHeader, Typography, FormControlLabel, Switch } from "@mui/material";
-import LoadingScreen from "../custom/LoadingScreen";
 import { SummaryColumns } from "./columns/SummaryColumns";
+import CircularLoad from "../custom/CircularLoad";
 
 export const Summary = () => {
   const [density, setDensity] = useState('standard');
@@ -44,7 +44,7 @@ export const Summary = () => {
         }
       />
       <Box sx={{ height: 800, width: "100%" }}>
-        {isLoading ? <LoadingScreen /> : error ? <Typography>{error}</Typography> : coins.length > 0 ? (
+        {isLoading ? <CircularLoad /> : error ? <Typography>{error}</Typography> : coins.length > 0 ? (
           <DataGrid
             rows={coins}
             columns={SummaryColumns}

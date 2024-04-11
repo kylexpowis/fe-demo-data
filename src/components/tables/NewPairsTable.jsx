@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { getNewPairs } from '../../../config/api';
 import { DataGrid } from '@mui/x-data-grid';
-import { Box, Card, CardHeader, FormControl, InputLabel, Select, MenuItem, Typography } from '@mui/material';
-import LoadingScreen from '../custom/LoadingScreen';
+import { Box, Card, CardHeader, FormControl, InputLabel, Select, MenuItem, Typography, CircularProgress } from '@mui/material';
 import NoResults from '../custom/NoResults';
 import { NewPairsColumns } from './columns/NewPairsColumns';
+import CircularLoad from '../custom/CircularLoad';
 
 const timeFrameOptions = [
     "1 hour", "8 hours", "1 day", "3 days", "7 days", "14 days", "28 days"
@@ -36,7 +36,13 @@ function NewPairsTable() {
     };
 
     return (
-        <Card>
+        <Card sx={{
+            ":hover": {
+                outline: "1px solid #cccccc",
+                boxShadow:
+                    "0px 3px 6px rgba(0, 0, 0, 0.1), 0px 2px 6px rgba(0, 0, 0, 0.2)",
+            },
+        }}>
             <CardHeader
                 title="New Pairs"
                 action={
@@ -58,7 +64,7 @@ function NewPairsTable() {
                 sx={{ '& .MuiCardHeader-title': { fontWeight: '600' } }}
             />
             <Box sx={{ height: 300, width: '100%' }}>
-                {loading ? <LoadingScreen /> : error ? <Typography>{error}</Typography> : newPairs.length > 0 ? (
+                {loading ? <CircularLoad /> : error ? <Typography>{error}</Typography> : newPairs.length > 0 ? (
                     <DataGrid
                         rows={newPairs}
                         columns={NewPairsColumns}

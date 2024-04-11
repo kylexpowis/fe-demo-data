@@ -10,7 +10,6 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import LoadingScreen from "../custom/LoadingScreen";
 import NoResults from "../custom/NoResults";
 import { NewCoinsColumns } from "./columns/NewCoinsColumn";
 import CircularLoad from "../custom/CircularLoad";
@@ -55,7 +54,7 @@ function NewCoinsTable() {
               value={timeFrame}
               label="Time Frame"
               onChange={(e) => setTimeFrame(e.target.value)}
-              sx={{ minWidth: 120 }}
+              sx={{ minWidth: 120, position: 'relative' }}
             >
               <MenuItem value="1 hour">1 hour</MenuItem>
               <MenuItem value="8 hours">8 hours</MenuItem>
@@ -71,7 +70,7 @@ function NewCoinsTable() {
       />
       <Box sx={{ height: 300, width: "100%" }}>
         {isLoading ? (
-          <LoadingScreen />
+          <CircularLoad />
         ) : newCoins.length > 0 ? (
           <DataGrid
             rows={newCoins}

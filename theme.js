@@ -5,11 +5,11 @@ export const dark = createTheme({
     palette: {
         mode: 'dark',
         primary: {
-            main: '#34A853', // Your new primary color
+            main: '#47e89f', 
             contrastText: 'rgba(255,255,255,0.87)',
         },
         secondary: {
-            main: '#3FBF77', // Your new secondary color
+            main: '#4effba', 
             contrastText: 'rgba(255,255,255,0.87)',
         },
         error: {
