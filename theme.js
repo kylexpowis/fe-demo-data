@@ -517,7 +517,7 @@ export const light = createTheme({
                     textTransform: 'none',
                     '&:hover': {
                         backgroundColor: '#32805c',
-                        color: '#fff',
+                        color: '#0a0a0a',
                     },
                 },
                 textPrimary: {

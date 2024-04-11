@@ -9,6 +9,8 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  FormControlLabel,
+  Switch
 } from "@mui/material";
 import NoResults from "../custom/NoResults";
 import { NewCoinsColumns } from "./columns/NewCoinsColumn";
@@ -16,6 +18,7 @@ import CircularLoad from "../custom/CircularLoad";
 
 function NewCoinsTable() {
   const [newCoins, setNewCoins] = useState([]);
+  const [density, setDensity] = useState('standard');
   const [timeFrame, setTimeFrame] = useState("1 day");
   const [isLoading, setIsLoading] = useState(true);
 
@@ -33,6 +36,10 @@ function NewCoinsTable() {
       });
   }, [timeFrame]);
 
+  const handleDensityChange = () => {
+    setDensity((prevDensity) => (prevDensity === 'standard' ? 'compact' : 'standard'));
+  };
+
   return (
     <Card
       sx={{
@@ -46,25 +53,33 @@ function NewCoinsTable() {
       <CardHeader
         title="New Coins"
         action={
-          <FormControl size="small">
-            <InputLabel id="timeframe-select-label">Time Frame</InputLabel>
-            <Select
-              labelId="timeframe-select-label"
-              id="timeframe-select"
-              value={timeFrame}
-              label="Time Frame"
-              onChange={(e) => setTimeFrame(e.target.value)}
-              sx={{ minWidth: 120, position: 'relative' }}
-            >
-              <MenuItem value="1 hour">1 hour</MenuItem>
-              <MenuItem value="8 hours">8 hours</MenuItem>
-              <MenuItem value="1 day">1 Day</MenuItem>
-              <MenuItem value="3 days">3 Days</MenuItem>
-              <MenuItem value="7 days">7 Days</MenuItem>
-              <MenuItem value="14 days">14 Days</MenuItem>
-              <MenuItem value="28 days">28 Days</MenuItem>
-            </Select>
-          </FormControl>
+          <>
+            <FormControlLabel
+              control={<Switch checked={density === 'compact'} onChange={handleDensityChange} />}
+              label="Condensed View"
+              labelPlacement="start"
+              sx={{ pr: '10px' }}
+            />
+            <FormControl size="small">
+              <InputLabel id="timeframe-select-label">Time Frame</InputLabel>
+              <Select
+                labelId="timeframe-select-label"
+                id="timeframe-select"
+                value={timeFrame}
+                label="Time Frame"
+                onChange={(e) => setTimeFrame(e.target.value)}
+                sx={{ minWidth: 120, position: 'relative' }}
+              >
+                <MenuItem value="1 hour">1 hour</MenuItem>
+                <MenuItem value="8 hours">8 hours</MenuItem>
+                <MenuItem value="1 day">1 Day</MenuItem>
+                <MenuItem value="3 days">3 Days</MenuItem>
+                <MenuItem value="7 days">7 Days</MenuItem>
+                <MenuItem value="14 days">14 Days</MenuItem>
+                <MenuItem value="28 days">28 Days</MenuItem>
+              </Select>
+            </FormControl>
+          </>
         }
         sx={{ "& .MuiCardHeader-title": { fontWeight: "600" } }}
       />
@@ -80,6 +95,7 @@ function NewCoinsTable() {
             loading={isLoading}
             getRowId={(row) => row.coin_id || Math.random()}
             className="MuiDataGrid-virtualScroller"
+            density={density}
           />
         ) : (
           <NoResults />

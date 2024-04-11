@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { getNewPairs } from '../../../config/api';
 import { DataGrid } from '@mui/x-data-grid';
-import { Box, Card, CardHeader, FormControl, InputLabel, Select, MenuItem, Typography, CircularProgress } from '@mui/material';
+import { Box, Card, CardHeader, FormControl, InputLabel, Select, MenuItem, Typography, CircularProgress, FormControlLabel, Switch } from '@mui/material';
 import NoResults from '../custom/NoResults';
 import { NewPairsColumns } from './columns/NewPairsColumns';
 import CircularLoad from '../custom/CircularLoad';
 
-const timeFrameOptions = [
-    "1 hour", "8 hours", "1 day", "3 days", "7 days", "14 days", "28 days"
-];
-
 function NewPairsTable() {
     const [newPairs, setNewPairs] = useState([]);
+    const [density, setDensity] = useState('standard');
     const [timeFrame, setTimeFrame] = useState('1 day');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -31,8 +28,8 @@ function NewPairsTable() {
             });
     }, [timeFrame]);
 
-    const handleTimeFrameChange = (event) => {
-        setTimeFrame(event.target.value);
+    const handleDensityChange = () => {
+        setDensity((prevDensity) => (prevDensity === 'standard' ? 'compact' : 'standard'));
     };
 
     return (
@@ -46,20 +43,33 @@ function NewPairsTable() {
             <CardHeader
                 title="New Pairs"
                 action={
-                    <FormControl size="small" sx={{ minWidth: 120 }}>
-                        <InputLabel id="timeframe-select-label">Time Frame</InputLabel>
-                        <Select
-                            labelId="timeframe-select-label"
-                            id="timeframe-select"
-                            value={timeFrame}
-                            label="Time Frame"
-                            onChange={handleTimeFrameChange}
-                        >
-                            {timeFrameOptions.map((option) => (
-                                <MenuItem key={option} value={option}>{option}</MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
+                    <>
+                        <FormControlLabel
+                            control={<Switch checked={density === 'compact'} onChange={handleDensityChange} />}
+                            label="Condensed View"
+                            labelPlacement="start"
+                            sx={{ pr: '10px' }}
+                        />
+                        <FormControl size="small">
+                            <InputLabel id="timeframe-select-label">Time Frame</InputLabel>
+                            <Select
+                                labelId="timeframe-select-label"
+                                id="timeframe-select"
+                                value={timeFrame}
+                                label="Time Frame"
+                                onChange={(e) => setTimeFrame(e.target.value)}
+                                sx={{ minWidth: 120, position: 'relative' }}
+                            >
+                                <MenuItem value="1 hour">1 hour</MenuItem>
+                                <MenuItem value="8 hours">8 hours</MenuItem>
+                                <MenuItem value="1 day">1 Day</MenuItem>
+                                <MenuItem value="3 days">3 Days</MenuItem>
+                                <MenuItem value="7 days">7 Days</MenuItem>
+                                <MenuItem value="14 days">14 Days</MenuItem>
+                                <MenuItem value="28 days">28 Days</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </>
                 }
                 sx={{ '& .MuiCardHeader-title': { fontWeight: '600' } }}
             />
@@ -71,6 +81,7 @@ function NewPairsTable() {
                         rowsPerPageOptions={[5, 10, 20]}
                         pagination
                         getRowId={(row) => row.pair_id || Math.random()}
+                        density={density}
                     />
                 ) : <NoResults />}
             </Box>
