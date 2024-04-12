@@ -82,7 +82,7 @@ const MarketcapColumns = [
         headerName: "Change (%)",
         type: "int",
         flex: 1,
-        renderCell: (params) => <ChangeIndicator value={parseFloat(params.value)} /> ?? "—",
+        renderCell: (params) => <ChangeIndicator value={params.value} /> ?? "—",
     }
 ];
 
