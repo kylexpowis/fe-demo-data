@@ -8,7 +8,7 @@ import CircularLoad from '../custom/CircularLoad';
 
 function NewPairsTable() {
     const [newPairs, setNewPairs] = useState([]);
-    const [density, setDensity] = useState('standard');
+    const [density, setDensity] = useState('compact');
     const [timeFrame, setTimeFrame] = useState('1 day');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -28,8 +28,8 @@ function NewPairsTable() {
             });
     }, [timeFrame]);
 
-    const handleDensityChange = () => {
-        setDensity((prevDensity) => (prevDensity === 'standard' ? 'compact' : 'standard'));
+    const handleDensityChange = (event) => {
+        setDensity(event.target.checked ? 'standard' : 'compact');
     };
 
     return (
@@ -45,8 +45,8 @@ function NewPairsTable() {
                 action={
                     <>
                         <FormControlLabel
-                            control={<Switch checked={density === 'compact'} onChange={handleDensityChange} />}
-                            label="Condensed View"
+                            control={<Switch checked={density === 'standard'} onChange={handleDensityChange} />}
+                            label="Relaxed View"
                             labelPlacement="start"
                             sx={{ pr: '10px' }}
                         />

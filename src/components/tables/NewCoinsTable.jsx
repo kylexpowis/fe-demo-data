@@ -18,7 +18,7 @@ import CircularLoad from "../custom/CircularLoad";
 
 function NewCoinsTable() {
   const [newCoins, setNewCoins] = useState([]);
-  const [density, setDensity] = useState('standard');
+  const [density, setDensity] = useState('compact');
   const [timeFrame, setTimeFrame] = useState("1 day");
   const [isLoading, setIsLoading] = useState(true);
 
@@ -36,8 +36,8 @@ function NewCoinsTable() {
       });
   }, [timeFrame]);
 
-  const handleDensityChange = () => {
-    setDensity((prevDensity) => (prevDensity === 'standard' ? 'compact' : 'standard'));
+  const handleDensityChange = (event) => {
+    setDensity(event.target.checked ? 'standard' : 'compact');
   };
 
   return (
@@ -55,8 +55,8 @@ function NewCoinsTable() {
         action={
           <>
             <FormControlLabel
-              control={<Switch checked={density === 'compact'} onChange={handleDensityChange} />}
-              label="Condensed View"
+              control={<Switch checked={density === 'standard'} onChange={handleDensityChange} />}
+              label="Relaxed View"
               labelPlacement="start"
               sx={{ pr: '10px' }}
             />

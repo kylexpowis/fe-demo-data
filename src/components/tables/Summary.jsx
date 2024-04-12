@@ -6,7 +6,7 @@ import { SummaryColumns } from "./columns/SummaryColumns";
 import CircularLoad from "../custom/CircularLoad";
 
 export const Summary = () => {
-  const [density, setDensity] = useState('standard');
+  const [density, setDensity] = useState('compact');
   const [isLoading, setIsLoading] = useState(true);
   const [coins, setCoins] = useState([]);
   const [error, setError] = useState('');
@@ -26,8 +26,8 @@ export const Summary = () => {
       });
   }, []);
 
-  const handleDensityChange = () => {
-    setDensity((prevDensity) => (prevDensity === 'standard' ? 'compact' : 'standard'));
+  const handleDensityChange = (event) => {
+    setDensity(event.target.checked ? 'standard' : 'compact');
   };
 
   return (
@@ -36,8 +36,8 @@ export const Summary = () => {
         title={<Typography variant="h5" fontWeight="bold">Market Overview</Typography>}
         action={
           <FormControlLabel
-            control={<Switch checked={density === 'compact'} onChange={handleDensityChange} />}
-            label="Condensed View"
+            control={<Switch checked={density === 'standard'} onChange={handleDensityChange} />}
+            label="Relaxed View"
             labelPlacement="start"
             sx={{ pr: '10px' }}
           />
