@@ -8,7 +8,7 @@ import { VolumeColumns } from "./columns/VolumeColumns";
 function VolumeRankingTable() {
   const [coins, setCoins] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [density, setDensity] = useState('standard');
+  const [density, setDensity] = useState('compact');
 
   useEffect(() => {
     getVolumeChange()
@@ -26,7 +26,9 @@ function VolumeRankingTable() {
 
   const deduplicateCoins = (coins) => Array.from(new Map(coins.map(coin => [coin.coin_id, coin])).values());
 
-  const handleDensityChange = (event) => setDensity(event.target.checked ? 'compact' : 'standard');
+  const handleDensityChange = (event) => {
+    setDensity(event.target.checked ? 'standard' : 'compact');
+};
 
   return loading ? (
     <LoadingScreen />
@@ -36,8 +38,8 @@ function VolumeRankingTable() {
         title={<Typography variant="h5" fontWeight="bold">Volume/Marketcap</Typography>}
         action={
           <FormControlLabel
-            control={<Switch checked={density === 'compact'} onChange={handleDensityChange} />}
-            label="Condensed View"
+            control={<Switch checked={density === 'standard'} onChange={handleDensityChange} />}
+            label="Relaxed View"
             sx={{ mr: 2 }}
           />
         }

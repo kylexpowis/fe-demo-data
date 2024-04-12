@@ -11,7 +11,7 @@ const deduplicateCoins = (coins) =>
 const MarketCapTable = () => {
   const [coins, setCoins] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [density, setDensity] = useState('standard');
+  const [density, setDensity] = useState('compact');
 
   useEffect(() => {
     getMarketCapStats()
@@ -27,7 +27,7 @@ const MarketCapTable = () => {
   }, []);
 
   const handleDensityChange = (event) => {
-    setDensity(event.target.checked ? 'compact' : 'standard');
+    setDensity(event.target.checked ? 'standard' : 'compact');
   };
 
   return (
@@ -36,8 +36,8 @@ const MarketCapTable = () => {
         title={<Typography variant="h5" fontWeight="bold">Marketcap (24hr)</Typography>}
         action={
           <FormControlLabel
-            control={<Switch checked={density === 'compact'} onChange={handleDensityChange} />}
-            label="Condensed View"
+            control={<Switch checked={density === 'standard'} onChange={handleDensityChange} />}
+            label="Relaxed View"
             sx={{ pr: '10px' }}
           />
         }
