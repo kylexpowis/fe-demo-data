@@ -10,20 +10,20 @@ import LoadingScreen from "../custom/LoadingScreen";
 
 const flashGreen = keyframes`
   from, to { background-color: transparent; }
-  10% { background-color: rgba(22, 199, 132, 0.9); }
-  20% { background-color: rgba(22, 199, 132, 0.75); }  
-  50% { background-color: rgba(22, 199, 132, 0.5); }   
-  75% { background-color: rgba(22, 199, 132, 0.25); }
-  90% { background-color: rgba(22, 199, 132, 0.1); }  
+  10% { background-color: rgba(22, 199, 132, 0.2); }
+  20% { background-color: rgba(22, 199, 132, 0.08); }  
+  50% { background-color: rgba(22, 199, 132, 0.06); }   
+  75% { background-color: rgba(22, 199, 132, 0.04); }
+  90% { background-color: rgba(22, 199, 132, 0.02); }  
 `;
 
 const flashRed = keyframes`
   from, to { background-color: transparent; }
-  10% { background-color: rgba(234, 57, 67, 0.9);}
-  20% { background-color: rgba(234, 57, 67, 0.75); }  
-  50% { background-color: rgba(234, 57, 67, 0.5); }  
-  75% { background-color: rgba(234, 57, 67, 0.25); } 
-  90% { background-color: rgba(234, 57, 67, 0.1); } 
+  10% { background-color: rgba(234, 57, 67, 0.2);}
+  20% { background-color: rgba(234, 57, 67, 0.08); }  
+  50% { background-color: rgba(234, 57, 67, 0.06); }  
+  75% { background-color: rgba(234, 57, 67, 0.04); } 
+  90% { background-color: rgba(234, 57, 67, 0.02); } 
 `;
 
 const MarketCapTable = () => {
@@ -95,7 +95,7 @@ const MarketCapTable = () => {
     const coin = displayedCoins.find(coin => coin.coin_id === params.id);
     if (coin && coin.animation && animatingCoinsRef.current.has(coin.coin_id)) {
       return css`
-        animation: ${coin.animation} 1.25s ease-out;
+        animation: ${coin.animation} 0.5s ease-out;
         animation-fill-mode: forwards;
       `;
     }
