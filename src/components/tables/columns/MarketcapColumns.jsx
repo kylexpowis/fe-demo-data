@@ -75,14 +75,14 @@ const MarketcapColumns = [
         headerName: "Marketcap",
         type: "int",
         flex: 1,
-        renderCell: (params) => formatCurrency(params.value) ?? " ",
+        renderCell: (params) => formatCurrency(params.value, 0) ?? " ",
     },
     {
         field: "marketcap_percentage_change",
         headerName: "Change (%)",
         type: "int",
         flex: 1,
-        renderCell: (params) => <ChangeIndicator value={params.value} /> ?? "—",
+        renderCell: (params) => <ChangeIndicator value={params.value} toFixed={2}/> ?? "—",
     }
 ];
 

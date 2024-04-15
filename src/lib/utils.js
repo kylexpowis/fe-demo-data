@@ -1,6 +1,6 @@
-export const formatCurrency = (value) => {
+export const formatCurrency = (value, toFixed = 2) => {
     if (value === null || value === undefined || isNaN(value)) return "—";
-    return `$${Number(value).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+    return `$${Number(value).toFixed(toFixed).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
 };
 
 export const replaceSlashWithUnderscore = (str) => {
