@@ -19,7 +19,7 @@ function LandingPage() {
     const navigateToSignIn = () => {
         setTimeout(() => {
             navigate('/login-portal');
-        }, 3000);
+        }, 500);
     };
     return (
         <div className="landing" style={{ position: "relative" }}>
