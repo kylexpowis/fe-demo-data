@@ -2,11 +2,13 @@ import React, { useContext } from 'react';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import ToggleButton from '@mui/material/ToggleButton';
+import { useMediaQuery } from '@mui/material';
 import { ThemeContext } from '../context/ThemeContext';
 
 const ThemeToggle = () => {
     const { theme, toggleTheme } = useContext(ThemeContext);
     const isDarkMode = theme === 'dark';
+    const isSmallScreen = useMediaQuery('(max-width:600px)');
 
     return (
         <ToggleButton
@@ -40,7 +42,7 @@ const ThemeToggle = () => {
                 padding: 1,
             }}
         >
-            {isDarkMode ? <LightModeIcon sx={{ width: '30px', height: '30px' }} /> : <DarkModeIcon sx={{ width: '30px', height: '30px' }} />}
+            {isDarkMode ? <LightModeIcon variant={isSmallScreen ? 'body2' : 'body1'} /> : <DarkModeIcon variant={isSmallScreen ? 'body2' : 'body1'} />}
         </ToggleButton>
     );
 };

@@ -59,7 +59,7 @@ function Login() {
     return (
         <>
             <Container maxWidth='lg'>
-                <Navbar />
+                {/* <Navbar /> */}
                 <Box
                     sx={{
                         display: 'flex',
