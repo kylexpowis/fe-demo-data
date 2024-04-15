@@ -17,9 +17,7 @@ function LandingPage() {
     const isSmallScreen = useMediaQuery('(max-width:600px)');
 
     const navigateToSignIn = () => {
-        setLoading(true);
         setTimeout(() => {
-            setLoading(false);
             navigate('/login-portal');
         }, 3000);
     };
