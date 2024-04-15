@@ -6,7 +6,6 @@ import CardContent from '@mui/material/CardContent';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import Navbar from '@/components/custom/Navbar';
 import { supabase } from '@/lib/supabaseClient';
 import { useSupabaseAuth } from '@/components/context/AuthContext';
 import LoadingScreen from '@/components/custom/LoadingScreen';
@@ -59,7 +58,7 @@ function Login() {
     return (
         <>
             <Container maxWidth='lg'>
-                <Navbar />
+                {/* <Navbar /> */}
                 <Box
                     sx={{
                         display: 'flex',
