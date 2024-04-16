@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
-import { Typography, Box, IconButton, useMediaQuery, List, Divider, ListItem, ListItemButton, ListItemText } from '@mui/material';
-import { MobileIcon, Nav, NavBarContainer, NavItem, NavLinks, NavLogo, NavMenu } from "../routes/landing/NavBarElements";
+import { Typography, Box, IconButton, useMediaQuery, Divider } from '@mui/material';
+import { MobileIcon, Nav, NavBarContainer, NavItem, NavLinks, NavLogo, NavMenu, Spacer } from "../routes/landing/NavBarElements";
 import ThemeToggle from './ThemeToggle';
 import AvatarMenu from './AvatarMenu';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -62,22 +62,27 @@ const Header = () => {
                             top: '4rem',
                             left: 0,
                             right: 0,
-                            opacity: 0.95
+                            opacity: 0.95,
+                            border: '1px solid',
+                            borderRadius: '0 0 10px 10px',
+                            borderTop: 'none'
                         }}>
-                            <div>
-                                <AvatarMenu />
-                            </div>
-                            <NavItem>
-                                <NavLinks to='/rankings/marketcap'>
-                                    <p style={{ fontSize: '1.75rem' }}>Marketcap</p>
-                                </NavLinks>
-                            </NavItem>
-                            <NavItem>
-                                <NavLinks to='/rankings/volume'>
-                                    <p style={{ fontSize: '2rem' }}>Volume</p>
-                                </NavLinks>
-                            </NavItem>
                             <ThemeToggle />
+                            <Spacer/>
+                            <Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center', paddingTop: '1rem', }}>
+                                <AvatarMenu/>
+                            </Box>
+                            <NavItem>
+                                <NavLinks to='/rankings/marketcap' style={{ fontSize: '1.25rem', padding: '1rem'}}>
+                                    Marketcap
+                                </NavLinks>
+                            </NavItem>
+                            <NavItem>
+                                <NavLinks to='/rankings/volume' style={{ fontSize: '1.25rem', padding: '0.5rem'}}>
+                                    Volume
+                                </NavLinks>
+                            </NavItem>
+                            
                         </NavMenu>
                     )}
                 </Nav>

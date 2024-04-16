@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, Menu, MenuItem, useMediaQuery, Divider, Typography } from '@mui/material';
+import { Box, Button, Menu, MenuItem, MenuList, useMediaQuery, Divider, Typography } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 import HelpIcon from '@mui/icons-material/Help';
@@ -58,11 +58,11 @@ function AvatarMenu() {
                 onClick={handleClick}
                 disableRipple
                 variant='ghost'
-                sx={{ fontSize: isSmallScreen ? '2rem' : '1rem', fontWeight: '700', margin: 0, height: 0, color: 'secondary', padding: isSmallScreen ? '3rem' : '0' }}
+                sx={{ fontSize: isSmallScreen ? '1.5rem' : '1rem', fontWeight: '600', margin: 0, height: 0, color: 'secondary', padding: isSmallScreen ? '1rem' : '0' }}
             >
                 Account
             </Button>
-            <Menu
+            <Menu dense
                 id="avatar-menu"
                 anchorEl={anchorEl}
                 open={open}
@@ -82,6 +82,7 @@ function AvatarMenu() {
                     marginTop: '1.5rem',
                     opacity: '0.95',
                 }}
+
             >
                 <Box sx={{ display: 'flex', flexDirection: 'column', padding: '1rem', JustifyContent: 'center' }}>
                     <Typography variant="subtitle1" color="textPrimary" sx={{ fontWeight: 'bold', justifySelf: 'left', fontSize: '1.25rem', margin: '0', padding: 0 }}>
@@ -94,12 +95,14 @@ function AvatarMenu() {
                         User Since: {moment(joined).format("DD/MM/YYYY")}
                     </Typography>
                 </Box>
-                <Divider sx={{ paddingTop: '0' }} />
-                <MenuItem onClick={() => navigate("/my-account")} sx={{ marginTop: '5px' }}><PersonIcon sx={{ marginRight: '5px', justifySelf: 'left' }} />Profile</MenuItem>
-                <Divider />
-                <MenuItem onClick={signOut}><LogoutIcon sx={{ marginRight: '5px', justifySelf: 'left' }} />Logout</MenuItem>
-                <Divider />
-                <MenuItem onClick={handleClose}><HelpIcon sx={{ marginRight: '5px', justifySelf: 'left' }} />Help</MenuItem>
+                <MenuList dense>
+                    <Divider sx={{ paddingTop: '0' }} />
+                    <MenuItem onClick={() => navigate("/my-account")} sx={{ marginTop: '5px' }}><PersonIcon sx={{ marginRight: '5px', justifySelf: 'left' }} />Profile</MenuItem>
+                    <Divider />
+                    <MenuItem onClick={signOut}><LogoutIcon sx={{ marginRight: '5px', justifySelf: 'left' }} />Logout</MenuItem>
+                    <Divider />
+                    <MenuItem onClick={handleClose}><HelpIcon sx={{ marginRight: '5px', justifySelf: 'left' }} />Help</MenuItem>
+                </MenuList>
             </Menu>
         </Box>
     );
