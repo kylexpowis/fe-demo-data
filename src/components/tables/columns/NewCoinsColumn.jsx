@@ -20,8 +20,8 @@ export const NewCoinsColumns = [
                         src={params.value}
                         alt={params.row.coin_name}
                         style={{
-                            width: 30,
-                            height: 30,
+                            width: '1.25rem',
+                            height: '1.25rem',
                             borderRadius: "50%",
                             border: "none",
                         }}
@@ -43,6 +43,7 @@ export const NewCoinsColumns = [
                 target="_blank"
                 rel="noopener noreferrer"
                 sx={{
+                    fontSize: '0.75rem',
                     fontWeight: "bold",
                     color: "inherit",
                     textDecoration: "none",
@@ -62,7 +63,7 @@ export const NewCoinsColumns = [
         headerName: "Coin Name",
         flex: 1,
         renderCell: (params) => (
-            <span style={{ opacity: 0.7, fontWeight: "600" }}>{params.value}</span>
+            <span style={{ opacity: 0.7, fontWeight: "600", fontSize: '0.8rem' }}>{params.value}</span>
         ),
     },
     {
@@ -70,10 +71,10 @@ export const NewCoinsColumns = [
         headerName: "Status",
         renderCell: (params) => {
             if (params.value === null || params.value === undefined) {
-                return <span>—</span>;
+                return <span></span>;
             }
             return (
-                <span style={{ color: params.value ? "green" : "red" }}>
+                <span style={{ color: params.value ? "green" : "red", fontSize: '0.75rem'}}>
                     {params.value ? "Active" : "Inactive"}
                 </span>
             );
