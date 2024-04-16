@@ -95,7 +95,7 @@ function AvatarMenu() {
                         User Since: {moment(joined).format("DD/MM/YYYY")}
                     </Typography>
                 </Box>
-                <MenuList dense>
+                <MenuList dense="true">
                     <Divider sx={{ paddingTop: '0' }} />
                     <MenuItem onClick={() => navigate("/my-account")} sx={{ marginTop: '5px' }}><PersonIcon sx={{ marginRight: '5px', justifySelf: 'left' }} />Profile</MenuItem>
                     <Divider />

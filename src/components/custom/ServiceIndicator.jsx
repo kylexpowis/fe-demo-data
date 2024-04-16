@@ -46,14 +46,14 @@ const GlowingCircle = styled(Box, {
 }));
 
 function ServiceStatusIndicator({ loading }) {
-    useEffect(() => {
-        console.log(`Loading state is now: ${loading}`);
-        if (loading) {
-            console.log("Starting loading effect...");
-        } else {
-            console.log("Loading complete.");
-        }
-    }, [loading]);
+    // useEffect(() => {
+    //     console.log(`Loading state is now: ${loading}`);
+    //     if (loading) {
+    //         console.log("Starting loading effect...");
+    //     } else {
+    //         console.log("Loading complete.");
+    //     }
+    // }, [loading]);
 
     return (
         <Tooltip title={loading ? "Updating..." : "Real-Time Status: Live"} arrow>

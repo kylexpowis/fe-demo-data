@@ -36,12 +36,12 @@ const Header = () => {
                         ) : (
                             <NavMenu style={{ display: 'inline-flex', alignItems: 'center', flexWrap: 'nowrap', height: '100%', padding: '0', justifyContent: 'flex-end', gap: '1.5rem' }}>
                                 <NavItem>
-                                    <NavLinks to='/rankings/marketcap' activeClassName="active">
+                                    <NavLinks to='/rankings/marketcap' activeclassname="active">
                                         Marketcap
                                     </NavLinks>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLinks to='/rankings/volume' activeClassName="active">
+                                    <NavLinks to='/rankings/volume' activeclassname="active">
                                         Volume
                                     </NavLinks>
                                 </NavItem>

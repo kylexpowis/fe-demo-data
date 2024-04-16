@@ -19,8 +19,8 @@ const fadeIn = keyframes`
 function LoadingScreen() {
   return (
     <Container
-      maxWidth
-      disableGutters
+      maxWidth="true"
+      disableGutters={true}
       sx={{
         display: "flex",
         justifyContent: "center",

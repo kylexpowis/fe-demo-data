@@ -11,11 +11,11 @@ root.render(
   <React.StrictMode>
     <ThemeProvider>
       <CssBaseline />
-      <BrowserRouter>
-        <SupabaseAuthProvider>
+      <SupabaseAuthProvider>
+        <BrowserRouter>
           <App />
-        </SupabaseAuthProvider>
-      </BrowserRouter>
+        </BrowserRouter>
+      </SupabaseAuthProvider>
     </ThemeProvider>
   </React.StrictMode>
 );
