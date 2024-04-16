@@ -1,11 +1,12 @@
 import React from 'react';
-import { Container, Grid, Paper, Box, Card } from '@mui/material';
+import { Container, Grid, Box, Card } from '@mui/material';
 import Header from '@/components/custom/Header';
 import { PairsByCoinId } from './PairsByCoinId';
 import { CoinSummary } from './CoinSummary';
 import VolumeGraph from './VolumeGraph';
 
 const SingleCoinView = () => {
+    
     return (
         <>
             <Header />

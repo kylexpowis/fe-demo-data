@@ -1,3 +1,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
 
+@keyframes flashGreen {
+    from, 50% { color: rgba(74, 240, 164, 1); }   
+    to { color: var(--success-color); }
+}
+
+@keyframes flashRed {
+    from, 50% { color: rgba(234, 57, 67, 1); }   
+    to { color: var(--error-color); }
+}
+
+.flash-green {
+    animation: flashGreen 1.5s ease-out forwards;
+}
+
+.flash-red {
+    animation: flashRed 1.5s ease-out forwards;
+}

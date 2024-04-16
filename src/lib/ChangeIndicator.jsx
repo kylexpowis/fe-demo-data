@@ -1,20 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useRef } from 'react';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { keyframes } from '@emotion/react';
-import { css } from '@emotion/css';
-
-const flashGreen = keyframes`
-    from, 50% { color: rgba(74, 240, 164, 1); }   
-    to { color: isPositive ? 'success.main' : 'error.main' }
-`;
-
-const flashRed = keyframes`
-    from, 50% { color: rgba(234, 57, 67, 1); }   
-    to { color: isPositive ? 'success.main' : 'error.main' }
-`;
+import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
+import { Tooltip } from '@mui/material';
 
 const PriceChangeIndicator = styled(Typography, {
     shouldForwardProp: (prop) => prop !== 'isPositive'
@@ -36,39 +26,33 @@ const ValueDifference = styled('span')(({ isPositive, theme }) => ({
     color: isPositive ? theme.palette.success.main : theme.palette.error.main,
 }));
 
+const HighAlertIcon = ({ value }) => {
+    if (value < 5) {
+        return (
+            <Tooltip title="Large changes detected. Investigate for opportunities." arrow>
+                <PriorityHighIcon fontSize="small" sx={{ ml: 0.5, color: '#e7b63e' }} />
+            </Tooltip>
+        );
+    }
+    return null;
+};
+
 const ChangeIndicator = ({ value, toFixed = 2 }) => {
-    const [prevValue, setPrevValue] = useState(value);
-    const [difference, setDifference] = useState(0);
-    const [hasChanged, setHasChanged] = useState(false);
-    const [animationCss, setAnimationCss] = useState("");
+    const isValuePositive = value >= 0;
+    const Icon = isValuePositive ? ArrowDropUpIcon : ArrowDropDownIcon;
+    const difference = value - (useRef(value).current);
+    useRef(value).current = value;  
 
-    useEffect(() => {
-        if (prevValue !== value) {
-            const diff = value - prevValue;
-            const isValueIncreased = diff > 0;
-
-            setDifference(diff);
-            setHasChanged(true);
-
-            const animationKeyframe = isValueIncreased ? flashGreen : flashRed;
-            setAnimationCss(css`
-                animation: ${animationKeyframe} 1.5s ease-out forwards;
-            `);
-            
-            setPrevValue(value);
-        }
-    }, [value, prevValue]);
-
-    const isValuePositive = value >= 0;  
-    const Icon = isValuePositive ? ArrowDropUpIcon : ArrowDropDownIcon;  
+    const animationClass = difference > 0 ? 'flash-green' : 'flash-red';
 
     return (
-        <PriceChangeIndicator isPositive={isValuePositive} className={animationCss}>
-            <Icon fontSize="inherit" sx={{ alignSelf: 'center', fontSize: '1.25rem' }} />
+        <PriceChangeIndicator isPositive={isValuePositive} className={animationClass}>
+            <Icon fontSize="inherit" />
             {parseFloat(value.toFixed(toFixed))}%
-            {hasChanged && (
+            {difference !== 0 && (
                 <ValueDifference isPositive={difference > 0}>
                     ({difference > 0 ? '+' : ''}{difference.toFixed(toFixed)})%
+                    <HighAlertIcon/>
                 </ValueDifference>
             )}
         </PriceChangeIndicator>
