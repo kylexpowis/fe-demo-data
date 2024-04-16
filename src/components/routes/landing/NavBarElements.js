@@ -1,5 +1,6 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+
 
 export const Nav = styled.nav`
     background: none;
@@ -19,7 +20,7 @@ export const Nav = styled.nav`
 `;
 
 export const NavBarContainer = styled.div`
-    display: flex;
+    display: inline-flex;
     justify-content: space-between; 
     align-items: center;
     position: relative;
@@ -31,7 +32,7 @@ export const NavBarContainer = styled.div`
 `;
 
 
-export const NavLogo = styled(Link)`
+export const NavLogo = styled(NavLink)`
     justify-self: center;
     cursor: pointer;
     font-size: 2.5rem;
@@ -72,19 +73,26 @@ export const NavMenu = styled.ul`
 
 export const NavItem = styled.li`
 `
-export const NavLinks = styled(Link)`
-    color: #fff;
-    display: flex;
+export const NavLinks = styled(NavLink)`
+    color: #3abd81;
+    display: inline-flex;
     align-items: center;
     text-decoration: none;
-    padding: 0 1rem;
-    height: 0 1rem;
+    padding: 0;
+    margin: 0;
+    height: 100%;
     cursor: pointer;
 
-    @.active {
-        border-bottom: 3px solid #32805c;
+    &:hover {
+        color: #4effae; 
     }
-`
+
+    &.active {
+        color: #4effae; 
+        font-weight: bold;
+    }
+`;
+
 export const NavBtn = styled.nav`
     display: flex;
     align-items: center;
@@ -93,7 +101,7 @@ export const NavBtn = styled.nav`
         display: none;
     }
 `
-export const NavBtnLink = styled(Link)`
+export const NavBtnLink = styled(NavLink)`
     color: #fff;
     border-radius: 5px;
     background: #40a677;
