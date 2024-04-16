@@ -56,7 +56,7 @@ const Header = () => {
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
-                            padding: '1.5rem',
+                            padding: '1rem',
                             backgroundColor: '#4d4d4d',
                             position: 'absolute',
                             top: '4rem',
@@ -64,6 +64,9 @@ const Header = () => {
                             right: 0,
                             opacity: 0.95
                         }}>
+                            <div>
+                                <AvatarMenu />
+                            </div>
                             <NavItem>
                                 <NavLinks to='/rankings/marketcap'>
                                     <p style={{ fontSize: '1.75rem' }}>Marketcap</p>
@@ -74,9 +77,6 @@ const Header = () => {
                                     <p style={{ fontSize: '2rem' }}>Volume</p>
                                 </NavLinks>
                             </NavItem>
-                            <div style={{ marginBottom: '2rem' }}>
-                                <AvatarMenu />
-                            </div>
                             <ThemeToggle />
                         </NavMenu>
                     )}
