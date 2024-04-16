@@ -11,7 +11,7 @@ const PriceChangeIndicator = styled(Typography, {
 })(({ theme, isPositive }) => ({
     display: 'flex',
     alignItems: 'center',
-    fontSize: '0.9rem',
+    fontSize: '0.75rem',
     fontWeight: '600',
     height: '100%',
     color: isPositive ? theme.palette.success.main : theme.palette.error.main,
