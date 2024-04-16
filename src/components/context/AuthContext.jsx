@@ -11,6 +11,7 @@ export function SupabaseAuthProvider({ children }) {
     const [userDetails, setUserDetails] = useState({
         name: `User${Math.floor(Math.random() * 1000)}`,
         email: null,
+        joined: null,
     });
 
     useEffect(() => {
@@ -30,7 +31,8 @@ export function SupabaseAuthProvider({ children }) {
         if (session && session.user) {
             const displayName = session.user.user_metadata?.displayName || `User${Math.floor(Math.random() * 1000)}`;
             const email = session.user.email;
-            setUserDetails({ name: displayName, email });
+            const joined = session.user.created_at;
+            setUserDetails({ name: displayName, email, joined });
         } else {
             setUserDetails({ name: null, email: null });
         }

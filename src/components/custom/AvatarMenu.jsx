@@ -1,21 +1,24 @@
 import React, { useState } from 'react';
-import { Box, Button, Menu, MenuItem, useMediaQuery } from '@mui/material'
+import { Box, Button, Menu, MenuItem, useMediaQuery, Divider, Typography } from '@mui/material';
+import PersonIcon from '@mui/icons-material/Person';
+import LogoutIcon from '@mui/icons-material/Logout';
+import HelpIcon from '@mui/icons-material/Help';
 import { supabase } from '@/lib/supabaseClient';
 import { useNavigate } from "react-router-dom";
 import LoadingScreen from './LoadingScreen';
 import { useSupabaseAuth } from '../context/AuthContext';
+import moment from 'moment/moment';
 
 function AvatarMenu() {
     const [anchorEl, setAnchorEl] = useState(null);
     const [loading, setLoading] = useState();
-    const [tempName, setTempName] = useState(`User${Math.floor(Math.random() * 100000)}`);
     const open = Boolean(anchorEl);
-    const navigate = useNavigate();
     const isSmallScreen = useMediaQuery('(max-width:600px)');
+    const navigate = useNavigate();
 
 
     const { userDetails } = useSupabaseAuth()
-    const { name, email } = userDetails;
+    const { name, email, joined } = userDetails;
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -57,7 +60,7 @@ function AvatarMenu() {
                 variant='ghost'
                 sx={{ fontSize: isSmallScreen ? '2rem' : '1rem', fontWeight: '700', margin: 0, height: 0, color: 'secondary', padding: isSmallScreen ? '3rem' : '0' }}
             >
-                {name || tempName}
+                Account
             </Button>
             <Menu
                 id="avatar-menu"
@@ -69,20 +72,34 @@ function AvatarMenu() {
                 }}
                 anchorOrigin={{
                     vertical: 'bottom',
-                    horizontal: 'center', 
+                    horizontal: 'center',
                 }}
                 transformOrigin={{
-                    vertical: 'top', 
-                    horizontal: 'center', 
+                    vertical: 'top',
+                    horizontal: 'center',
                 }}
                 sx={{
-                    marginTop: '1.25rem',
-                    opacity: '0.9'
+                    marginTop: '1.5rem',
+                    opacity: '0.95',
                 }}
             >
-                <MenuItem disabled>{email}</MenuItem>
-                <MenuItem onClick={() => navigate('/my-account')}>My Account</MenuItem>
-                <MenuItem onClick={() => signOut()}>Logout</MenuItem>
+                <Box sx={{ display: 'flex', flexDirection: 'column', padding: '1rem', JustifyContent: 'center' }}>
+                    <Typography variant="subtitle1" color="textPrimary" sx={{ fontWeight: 'bold', justifySelf: 'left', fontSize: '1.25rem', margin: '0', padding: 0 }}>
+                        {name || 'No Name Set'}
+                    </Typography>
+                    <Typography variant="subtitle1" color="textPrimary" sx={{ fontWeight: '400', justifySelf: 'left', fontSize: '1rem' }}>
+                        {email}
+                    </Typography>
+                    <Typography variant="subtitle1" color="textPrimary" sx={{ fontWeight: '500', justifySelf: 'left', fontSize: '0.75rem' }}>
+                        User Since: {moment(joined).format("DD/MM/YYYY")}
+                    </Typography>
+                </Box>
+                <Divider sx={{ paddingTop: '0' }} />
+                <MenuItem onClick={() => navigate("/my-account")} sx={{ marginTop: '5px' }}><PersonIcon sx={{ marginRight: '5px', justifySelf: 'left' }} />Profile</MenuItem>
+                <Divider />
+                <MenuItem onClick={signOut}><LogoutIcon sx={{ marginRight: '5px', justifySelf: 'left' }} />Logout</MenuItem>
+                <Divider />
+                <MenuItem onClick={handleClose}><HelpIcon sx={{ marginRight: '5px', justifySelf: 'left' }} />Help</MenuItem>
             </Menu>
         </Box>
     );
