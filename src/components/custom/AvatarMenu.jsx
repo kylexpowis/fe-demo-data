@@ -27,7 +27,7 @@ function AvatarMenu() {
     };
 
     async function signOut() {
-        setLoading(true)
+        setLoading(false)
         const { data, error } = await supabase.auth.signOut()
 
         if (error) {
