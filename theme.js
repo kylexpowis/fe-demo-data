@@ -35,7 +35,10 @@ export const dark = createTheme({
         h2: {},
         h3: {},
         h4: {},
-        h5: {},
+        h5: {'@media (max-width:600px)': {
+            fontSize: '1.25rem',
+          },
+          fontSize: '1.5rem',},
         h6: {},
         subtitle1: {},
         body1: {},

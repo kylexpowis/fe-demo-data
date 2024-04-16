@@ -9,6 +9,7 @@ export const NewPairsColumns = [
         renderCell: (params) => (
             <MuiLink to={`/coins/${params.row.coin_id}`} target="_blank" rel="noopener noreferrer"
                 sx={{
+                    fontSize: '0.75rem',
                     fontWeight: 'bold',
                     color: 'inherit',
                     textDecoration: 'none',
@@ -31,7 +32,7 @@ export const NewPairsColumns = [
                 return <span>—</span>;
             }
             return (
-                <span style={{ color: params.value ? 'green' : 'red' }}>
+                <span style={{ color: params.value ? 'green' : 'red', fontSize: '0.75rem' }}>
                     {params.value ? 'Active' : 'Inactive'}
                 </span>
             );
@@ -42,6 +43,6 @@ export const NewPairsColumns = [
         headerName: 'Date Added',
         type: 'timestamp',
         flex: 1,
-        renderCell: (params) => moment(params.value).format('lll') ?? '—',
+        renderCell: (params) => <span style={{ fontSize: '0.75rem' }}>{moment(params.value).format('lll')}</span> ?? '—',
     },
 ];
