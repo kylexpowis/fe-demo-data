@@ -23,8 +23,8 @@ const MarketcapColumns = [
                         src={params.value}
                         alt={params.row.coin_name}
                         style={{
-                            width: 30,
-                            height: 30,
+                            width: '1.25rem',
+                            height: '1.25rem',
                             borderRadius: "50%",
                             border: "none",
                         }}
@@ -47,6 +47,7 @@ const MarketcapColumns = [
                 target="_blank"
                 rel="noopener noreferrer"
                 sx={{
+                    fontSize: '0.75rem',
                     fontWeight: "bold",
                     color: "inherit",
                     textDecoration: "none",
@@ -67,7 +68,7 @@ const MarketcapColumns = [
         type: "string",
         flex: 1,
         renderCell: (params) => (
-            <span style={{ opacity: 0.7, fontWeight: "600" }}>{params.value}</span>
+            <span style={{ opacity: 0.7, fontWeight: "600", fontSize: '0.75rem', }}>{params.value}</span>
         ),
     },
     {
@@ -75,14 +76,14 @@ const MarketcapColumns = [
         headerName: "Marketcap",
         type: "int",
         flex: 1,
-        renderCell: (params) => formatCurrency(params.value, 0) ?? " ",
+        renderCell: (params) => <span style={{fontSize: '0.75rem'}}>{formatCurrency(params.value, 0)}</span> ?? " ",
     },
     {
         field: "marketcap_percentage_change",
         headerName: "Change (%)",
         type: "int",
         flex: 1,
-        renderCell: (params) => <ChangeIndicator value={params.value} toFixed={2}/> ?? "—",
+        renderCell: (params) => <span style={{fontSize: '0.75rem'}}><ChangeIndicator value={params.value} toFixed={2}/></span> ?? "—",
     }
 ];
 
