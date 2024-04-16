@@ -58,7 +58,11 @@ function Login() {
     return (
         <>
             <Container maxWidth='lg'>
-                {/* <Navbar /> */}
+                <Typography sx={{
+                    fontWeight: '700', color: '#3cc285', fontSize: '60px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '4rem'}}>
+                    <span style={{ color: '#3cc285' }}>Pair</span>
+                    <span style={{ color: 'grey' }}>Sniper</span>
+                </Typography>
                 <Box
                     sx={{
                         display: 'flex',
