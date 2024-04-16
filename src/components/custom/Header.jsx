@@ -1,11 +1,9 @@
 
 import React, { useState } from 'react';
-import { Typography, Box, Button, IconButton, useMediaQuery } from '@mui/material';
-import { MobileIcon, Nav, NavBarContainer, NavItem, NavLinks, NavLogo, NavMenu, Spacer } from "../routes/landing/NavBarElements";
+import { Typography, Box, IconButton, useMediaQuery, List, Divider, ListItem, ListItemButton, ListItemText } from '@mui/material';
+import { MobileIcon, Nav, NavBarContainer, NavItem, NavLinks, NavLogo, NavMenu } from "../routes/landing/NavBarElements";
 import ThemeToggle from './ThemeToggle';
-import Avatar from '@mui/material/Avatar';
 import AvatarMenu from './AvatarMenu';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import MenuIcon from '@mui/icons-material/Menu';
 
 const Header = () => {
@@ -31,48 +29,55 @@ const Header = () => {
                                 color="inherit"
                                 aria-label="open menu"
                                 onClick={handleMenuOpen}
-                                sx={{ ml: 'auto', fontSize: '1.5rem' }} 
+                                sx={{ ml: 'auto', fontSize: '1.5rem' }}
                             >
                                 <MenuIcon />
                             </IconButton>
                         ) : (
-                            <NavMenu style={{ display: 'flex', alignItems: 'center', flexWrap: 'nowrap' }}>
+                            <NavMenu style={{ display: 'inline-flex', alignItems: 'center', flexWrap: 'nowrap', height: '100%', padding: '0', justifyContent: 'flex-end', gap: '1.5rem' }}>
                                 <NavItem>
-                                    <NavLinks to='/rankings/marketcap'>
-                                        <Button variant='ghost' sx={{ fontWeight: '500', fontSize: isSmallScreen ? '0.8rem' : '1rem', minWidth: '0', whiteSpace: 'nowrap' }}>Marketcap</Button>
+                                    <NavLinks to='/rankings/marketcap' activeClassName="active">
+                                        Marketcap
                                     </NavLinks>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLinks to='/rankings/volume'>
-                                        <Button variant='ghost' sx={{ fontWeight: '500', padding: '4px 8px', fontSize: isSmallScreen ? '0.8rem' : '1rem', minWidth: '0', whiteSpace: 'nowrap' }}>Volume</Button>
+                                    <NavLinks to='/rankings/volume' activeClassName="active">
+                                        Volume
                                     </NavLinks>
                                 </NavItem>
-                                    <AvatarMenu />
-                                    <Avatar sx={{ outline: '1px solid rgba(60, 194, 133, 0.5)', backgroundColor: '#3ecc8b' }}><AccountCircleIcon /></Avatar>
-                                <Spacer />
-                                    <ThemeToggle />
-                                
+                                <Divider orientation='vertical' variant='middle' flexItem sx={{ height: '50%', alignSelf: 'center' }} color="#313131" />
+                                <AvatarMenu />
+                                <ThemeToggle />
                             </NavMenu>
                         )}
                     </NavBarContainer>
                     {isSmallScreen && openMenu && (
-                        <NavMenu style={{ flexDirection: 'column', alignItems: 'center', padding: '3rem', backgroundColor: '#DFE5E0', position: 'absolute', top: '64px', left: 0, right: 0 }}>
+                        <NavMenu style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            padding: '1.5rem',
+                            backgroundColor: '#4d4d4d',
+                            position: 'absolute',
+                            top: '4rem',
+                            left: 0,
+                            right: 0,
+                            opacity: 0.95
+                        }}>
                             <NavItem>
                                 <NavLinks to='/rankings/marketcap'>
-                                    <Button variant='ghost' sx={{ fontWeight: '500', fontSize: '1rem', marginBottom: '10px' }}>Marketcap</Button>
+                                    <p style={{ fontSize: '1.75rem' }}>Marketcap</p>
                                 </NavLinks>
                             </NavItem>
                             <NavItem>
                                 <NavLinks to='/rankings/volume'>
-                                    <Button variant='ghost' sx={{ fontWeight: '500', padding: '8px 16px', fontSize: '1rem', marginBottom: '10px' }}>Volume</Button>
+                                    <p style={{ fontSize: '2rem' }}>Volume</p>
                                 </NavLinks>
                             </NavItem>
-                            <div style={{ marginBottom: '10px' }}>
-                                <AvatarMenu  />
-                                </div>
-                                <ThemeToggle  />
-                            
-                            
+                            <div style={{ marginBottom: '2rem' }}>
+                                <AvatarMenu />
+                            </div>
+                            <ThemeToggle />
                         </NavMenu>
                     )}
                 </Nav>
