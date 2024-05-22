@@ -17,7 +17,11 @@ function Dashboard() {
   return (
     <>
       <Header />
+      
       <Container maxWidth="xl">
+        <Box sx={{ textAlign: 'center', color: 'rgba(255, 255, 0, 0.7)' }} >
+      <p>notice: loading times may be longer due to hosting demo on a free tier</p>
+      </Box>
         <Grid container spacing={2} p={3} sx={{
           minHeight: "300px",
           flexWrap: "wrap",
